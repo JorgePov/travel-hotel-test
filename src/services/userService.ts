@@ -12,7 +12,7 @@ import {
 import { userCollection } from "./db";
 
 export const getUsers = async () => {
-  await getDocs(userCollection).then((data) => {
+  return await getDocs(userCollection).then((data) => {
     return data.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
@@ -54,8 +54,8 @@ const userExist = async (user: User) => {
 };
 
 type loginData = {
-  email: String;
-  password: String;
+  email: string;
+  password: string;
 };
 
 export const loginUser = async (credencial: loginData) => {

@@ -1,11 +1,12 @@
 import { initializeApp } from "firebase/app";
 import { CollectionReference, doc, getFirestore } from "firebase/firestore";
 import { collection } from "firebase/firestore";
+import { booking } from "../interfaces/Booking";
 
 interface newSubcollection {
   collectionFather: CollectionReference;
   collectionFatherID: string;
-  nameSubCollection: string
+  nameSubCollection: string;
 }
 
 const firebaseConfig = {
@@ -23,9 +24,9 @@ export const db = getFirestore(app);
 export const userCollection = collection(db, "users");
 export const hotelCollection = collection(db, "hotels");
 
+export const roomColletion = (collectionHotelID: string) => {
+  const collectionHotel = doc(hotelCollection, collectionHotelID);
+  return collection(collectionHotel, "rooms");
+};
 
-
-export const newSubcolletion = (newsubCollection: newSubcollection) => {
-  const collectionFather = doc(newsubCollection.collectionFather, newsubCollection.collectionFatherID)
-  return collection(collectionFather, newsubCollection.nameSubCollection)
-}
+export const bookingColletion = collection(db, "booking");

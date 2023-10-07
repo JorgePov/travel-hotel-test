@@ -1,22 +1,20 @@
 export interface Hotel {
-  checkIn: String;
-  checkOut: String;
+  checkInTime: string;
+  checkOutTime: string;
   comision: Number;
-  id?: String;
-  name: String;
+  id?: string;
+  name: string;
   state: "inactive" | "active";
-  city: String;
+  city: string;
 }
 
 export interface Room {
-  id?: String;
-  idHotel: String;
-  name: String;
+  id?: string;
+  idHotel: string;
+  name: string;
   price: Number;
-  scheduler: Array<Date>;
   state: "inactive" | "active";
-  status: "busy" | "empty";
   tax: Number;
   roomType: "compartida" | "sencilla" | "double" | "familiar" | "suit";
-  ubication: String;
+  ubication: string;
 }

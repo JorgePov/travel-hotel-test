@@ -1,17 +1,18 @@
-import {
-  addDoc,
-} from "firebase/firestore";
-import { Hotel } from "../interfaces/Hotel";
-import { hotelCollection, newSubcolletion } from "./db";
+import { addDoc } from "firebase/firestore";
+import { Hotel, Room } from "../interfaces/Hotel";
+import { roomColletion } from "./db";
 
-/* export const getHoteles = async () => {
+/* 
+export const getHoteles = async () => {
   await getDocs(roomCollection).then((data) => {
     return data.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
     }));
   });
-};
+}; 
+*/
+/* 
 
 export const getHotelsById = async (idhotel: string) => {
   const q = doc(roomCollection, idhotel);
@@ -30,16 +31,11 @@ export const updatedHotel = async (newhotel: Hotel) => {
   }
 }; */
 
-export const createRoom = async (newhotel: Hotel) => {
+export const createRoom = async (newRoom: Room) => {
   try {
-    //get Hotel Collection
-    const subcollection = newSubcolletion({
-      collectionFather: hotelCollection,
-      collectionFatherID: 'lFUfUFPK2png7Jzk66mO',
-      nameSubCollection: 'rooms'
-    })
-    //insert room data
-    const docRef = await addDoc(subcollection, { idRoom: 5456465465 });
+    const docRef = await addDoc(roomColletion(newRoom.idHotel), {
+      ...newRoom,
+    });
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);

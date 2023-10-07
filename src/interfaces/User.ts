@@ -1,19 +1,19 @@
 export interface User extends personalInfo {
-  id?: String;
-  password: String;
+  id?: string;
+  password: string;
   type: "travel" | "admin";
 }
 
 interface personalInfo {
-  document: String;
+  document: string;
   documentType: "CC" | "DE" | "PA";
-  email: String;
-  genre: String;
-  lastName: String;
-  name: String;
-  phoneNumber: String;
+  email: string;
+  genre: string;
+  lastName: string;
+  name: string;
+  phoneNumber: string;
 }
 
 export interface Travels extends personalInfo {
-  id?: String;
+  id?: string;
 }
