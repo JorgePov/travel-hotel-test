@@ -30,16 +30,22 @@ export const updatedHotel = async (newhotel: Hotel) => {
   }
 }; */
 
-export const createRoom = async (newhotel: Hotel) => {
+export const createBooking = async (newhotel: Hotel) => {
   try {
-    //get Hotel Collection
-    const subcollection = newSubcolletion({
+    //get hotel Collection
+    const subcollectionRoom = newSubcolletion({
       collectionFather: hotelCollection,
-      collectionFatherID: 'lFUfUFPK2png7Jzk66mO',
+      collectionFatherID: 'FMPQQbaTurm40xeQLIb5',
       nameSubCollection: 'rooms'
     })
-    //insert room data
-    const docRef = await addDoc(subcollection, { idRoom: 5456465465 });
+    //get room Collection
+    const subcollectionBooking = newSubcolletion({
+      collectionFather: subcollectionRoom,
+      collectionFatherID: 'ltSdA52PauIG6OwvQHqt',
+      nameSubCollection: 'booking'
+    })
+    //insert booking data
+    const docRef = await addDoc(subcollectionBooking, { idbooking: 5456465465 });
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
