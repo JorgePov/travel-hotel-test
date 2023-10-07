@@ -6,8 +6,9 @@ import {
   getDoc,
   doc,
   collection,
+  setDoc,
 } from "firebase/firestore";
-import { db } from "./db";
+import { db, hotelCollection } from "./db";
 import { Hotel } from "../interfaces/Hotel";
 
 /* export const getHoteles = async () => {
@@ -38,11 +39,9 @@ export const updatedHotel = async (newhotel: Hotel) => {
 
 export const createdHotel = async (newhotel: Hotel) => {
   try {
-    const docRef = doc(db, "hotels", "FMPQQbaTurm40xeQLIb5");
-    const colRef = collection(docRef, "rooms");
-    addDoc(colRef, {
-      ...newhotel,
-    });
+    const val = doc(hotelCollection, 'FMPQQbaTurm40xeQLIb5')
+    const collectionval = collection(val, 'rooms')
+    const docRef = await addDoc(collectionval, { idRoom: 5456465465 });
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);

@@ -16,4 +16,4 @@ export const db = getFirestore(app);
 
 export const userCollection = collection(db, "users");
 export const hotelCollection = collection(db, "hotels");
-export const roomCollection = collection(db, "hotels", "rooms");
+//export const roomCollection = collection(db, "hotels", "rooms");
