@@ -1,11 +1,26 @@
+import { Button, Flex } from "@chakra-ui/react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function NotFound() {
-    // Verificar la autenticación y redirigir según sea necesario
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate('/login')
+    }
 
     return (
-        <div>
+        <Flex align="center" justify="center" flexDirection={"column"} h="100vh">
             <h1>404 - Página no encontrada</h1>
-        </div>
+            <Button
+                type="button"
+                colorScheme="teal"
+                size="lg"
+                alignContent="center"
+                width="50%"
+                onClick={handleClick}
+            >
+                Iniciar sesión
+            </Button>
+        </Flex>
     );
 }

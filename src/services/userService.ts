@@ -1,4 +1,4 @@
-import { User } from "../interfaces/User";
+import { User, loginData } from "../interfaces/User";
 import {
   getDocs,
   addDoc,
@@ -43,25 +43,32 @@ export const updatedUser = async (newUser: User) => {
 };
 
 //crear usuario
-export const createdUser = async (newUser: User) => {
+export const createdUser = async (newUser: User): Promise<User> => {
+  const isExist = await userExist(newUser);
+  if (isExist) {
+    throw new Error("El Correo ya fue usado");
+  }
+  const docRef = await addDoc(userCollection, {
+    ...newUser,
+  });
+
   try {
-    const isExist = await userExist(newUser);
-    if (isExist) {
-      return " existeeee";
-    }
-    const docRef = await addDoc(userCollection, {
-      ...newUser,
-    });
-    console.log("Document written with ID: ", docRef.id);
-  } catch (e) {
-    console.error("Error adding document: ", e);
+    const docSnapshot = await getDoc(docRef);
+
+    const user: User = docSnapshot.data() as User;
+    delete user.password;
+    return user;
+  } catch (error) {
+    throw new Error("Error de servidor");
   }
 };
 
 const userExist = async (user: User) => {
   const q = query(
     userCollection,
-    or(where("email", "==", user.email), where("document", "==", user.document))
+    where("documentType", "==", user.documentType),
+    where("document", "==", user.document),
+    where("email", "==", user.email)
   );
   const data = await getDocs(q);
   if (data.docs.length) {
@@ -70,12 +77,17 @@ const userExist = async (user: User) => {
   return false;
 };
 
-type loginData = {
-  email: string;
-  password: string;
-};
+/* const data = await getDocs(q);
+  if (data.docs.length) {
+    let usuarios!: User;
+    data.forEach((doc) => {
+      const usuario = doc.data() as User;
+      usuarios = { id: doc.id, ...usuario };
+    });
+    return usuarios; */
+
 //login
-export const loginUser = async (credencial: loginData) => {
+export const loginUser = async (credencial: loginData): Promise<User> => {
   const q = query(
     userCollection,
     and(
@@ -85,10 +97,11 @@ export const loginUser = async (credencial: loginData) => {
   );
   const data = await getDocs(q);
   if (data.docs.length) {
-    return data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
+    const [firstDocument] = data.docs;
+    const userData = firstDocument.data() as User;
+    const user: User = { id: firstDocument.id, ...userData };
+    delete user.password;
+    return user;
   }
-  throw new Error("no auth");
+  throw new Error("Credenciales incorrectas");
 };

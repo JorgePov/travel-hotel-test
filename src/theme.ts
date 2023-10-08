@@ -9,7 +9,7 @@ const theme = extendTheme({
       50: "#9ed9f5",
       100: "#00b0e6",
       150: "#0084d1",
-      200: "#013b93", // Color principal
+      200: "#013b93",
     },
     fontColor: {
       white: "#fff",

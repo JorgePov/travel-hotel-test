@@ -13,22 +13,33 @@ import Hotel from "./components/Hotels/Hotel";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
 import NotFound from "./components/NotFound/NotFound";
 import { Layout } from "./components/Layout/Layout";
+import { useGlobalStorage } from "./store/global";
+import AlertComponent from "./components/Alert/AlertComponent";
+import Register from "./components/Register/Register";
 import 'react-datepicker/dist/react-datepicker.css'
 
-export const App = () => (
-  <ChakraProvider theme={theme} >
-    <CSSReset />
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route element={<Layout />}>
-          <Route element={<ProtectedRoute redirectTo="/login" canActived={true} />} >
-            <Route path="/hotel" element={<Hotel />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+export function App() {
+  const isAuth = useGlobalStorage(state => state.isAuth)
+
+
+  return (
+    <ChakraProvider theme={theme} >
+      <CSSReset />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route element={<Layout />}>
+            <Route element={<ProtectedRoute redirectTo="/login" canActived={isAuth} />} >
+              <Route path="/hotel" element={<Hotel />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
           </Route>
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  </ChakraProvider >
-)
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+      <AlertComponent />
+    </ChakraProvider >
+
+  )
+}

@@ -1,34 +1,62 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
+import { User, loginData } from '../../interfaces/User';
 import {
     Box,
     Button,
     Card,
     FormControl,
-    FormErrorMessage,
     FormLabel,
     Heading,
     Input,
+    Spinner,
     Stack,
 } from '@chakra-ui/react';
-
-interface LoginProps {
-    onSubmit: (email: string, password: string) => void;
-}
+import { loginUser } from '../../services/userService';
+import { useGlobalStorage } from '../../store/global';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const { setUserInfo, setShowAlert, isAdmin } = useGlobalStorage()
+    const navigate = useNavigate();
+
     const [isLoading, setIsLoading] = useState(false);
+    const handleClick = () => {
+        navigate('/register')
+    }
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const form = event.target as HTMLFormElement
+        const formData = new FormData(form)
+        const email = formData.get('email') as string;
+        const password = formData.get('password') as string;
 
-        // Simular una solicitud de inicio de sesión (aquí puedes usar Axios, fetch, etc.)
-        setTimeout(() => {
-            //onSubmit(email, password);
-            setIsLoading(false);
-        }, 1000);
+
+
+
+        const credential: loginData = {
+            email,
+            password
+        }
+        setIsLoading(true)
+        await loginUser(credential).then((response) => {
+            setIsLoading(false)
+            setUserInfo(response, true)
+            if (isAdmin) {
+                navigate('/dashboard')
+            } else {
+                navigate('/my-travel')
+            }
+        }).catch(error => {
+            setIsLoading(false)
+            setShowAlert({
+                status: 'error',
+                message: error.message,
+                isShow: true
+            })
+            form.reset()
+        })
+
     };
 
     return (
@@ -37,37 +65,58 @@ export default function Login() {
             justifyContent="center"
             alignItems="center"
             height="100vh"
-            backgroundColor="gray"
+            backgroundColor="whiteAlpha.500"
         >
-            <Card padding="4" boxShadow="md" borderRadius="md" bg="primary.150">
+            <Card padding="4" boxShadow="md" borderRadius="md" bg="primary.200">
                 <Heading as="h2" size="lg" textAlign="center" mb="4">
                     Iniciar sesión
                 </Heading>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <Stack spacing="4">
                         <FormControl id="email" isRequired>
-                            <FormLabel>Email</FormLabel>
-                            <Input type="email" placeholder="travel01@example.com" />
+                            <FormLabel>Correo electrónico</FormLabel>
+                            <Input name="email" type="email" placeholder="travel01@example.com" />
                         </FormControl>
                         <FormControl id="password" isRequired>
                             <FormLabel>Contraseña</FormLabel>
-                            <Input type="password" placeholder="********" />
+                            <Input name="password" type="password" placeholder="121212" />
                         </FormControl>
-                        <Button type="submit" colorScheme="blue" size="lg" width="100%">
+
+                        {isLoading ? (
+                            <Button
+                                colorScheme="blue"
+                                size="lg"
+                                fontSize="md"
+                                mt={4}
+                                disabled={true}
+                            >
+                                <Spinner />
+                            </Button>
+                        ) : <Button type="submit" colorScheme="blue" size="lg" width="100%">
                             Iniciar sesión
-                        </Button>
-                        <Button
+                        </Button>}
+
+                        {isLoading ? (
+                            <Button
+                                colorScheme="teal"
+                                size="lg"
+                                fontSize="md"
+                                mt={4}
+                                disabled={true}
+                            >
+                                <Spinner />
+                            </Button>
+                        ) : <Button
                             type="button"
                             colorScheme="teal"
                             size="lg"
                             width="100%"
-                            onClick={() => {
-                                // Aquí puedes manejar la redirección o mostrar el formulario de registro
-                                console.log('Redirigir a la página de registro o mostrar el formulario de registro');
-                            }}
+                            onClick={handleClick}
                         >
                             Registrarse
-                        </Button>
+                        </Button>}
+
+
                     </Stack>
                 </form>
             </Card>
