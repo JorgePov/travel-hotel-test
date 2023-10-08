@@ -9,7 +9,6 @@ export default function DashboardAdmin() {
             <Flex justifyContent={'center'} alignItems={'center'} paddingBottom={'30px'}>
                 <Button colorScheme='teal' variant='outline' maxWidth={'350px'} width={'100%'}>
                     <IconPlus width={20} height={20} fill='#2C7A7B' />
-                    {'  '}
                     Agregar Hotel
                 </Button>
             </Flex>
