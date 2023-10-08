@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { User, loginData } from '../../interfaces/User';
 import {
     Box,
@@ -16,7 +16,7 @@ import { useGlobalStorage } from '../../store/global';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-    const { setUserInfo, setShowAlert, isAdmin } = useGlobalStorage()
+    const { setUserInfo, setShowAlert, getIsAdmin } = useGlobalStorage()
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -39,13 +39,14 @@ export default function Login() {
             password
         }
         setIsLoading(true)
+
         await loginUser(credential).then((response) => {
             setIsLoading(false)
             setUserInfo(response, true)
-            if (isAdmin) {
-                navigate('/admin')
+            if (getIsAdmin()) {
+                navigate("/admin");
             } else {
-                navigate('/dashboard')
+                navigate("/dashboard");
             }
         }).catch(error => {
             setIsLoading(false)
@@ -58,6 +59,7 @@ export default function Login() {
         })
 
     };
+
 
     return (
         <Box
@@ -75,7 +77,7 @@ export default function Login() {
                     <Stack spacing="4">
                         <FormControl id="email" isRequired>
                             <FormLabel>Correo electrónico</FormLabel>
-                            <Input name="email" type="email" placeholder="travel01@example.com" />
+                            <Input name="email" type="email" placeholder="travel01@gmail.com" />
                         </FormControl>
                         <FormControl id="password" isRequired>
                             <FormLabel>Contraseña</FormLabel>
@@ -115,8 +117,6 @@ export default function Login() {
                         >
                             Registrarse
                         </Button>}
-
-
                     </Stack>
                 </form>
             </Card>

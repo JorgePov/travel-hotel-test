@@ -1,8 +1,8 @@
 interface SVGProps extends React.SVGAttributes<SVGElement> {
-  style: React.CSSProperties | undefined;
-  height: number | undefined
-  width: number | undefined
-  fill: string | undefined
+  style?: React.CSSProperties | undefined;
+  height?: number | undefined
+  width?: number | undefined
+  fill?: string | undefined
 }
 
 export function BedIcon({ style, height, width, fill }: SVGProps) {
@@ -35,7 +35,13 @@ export function Person({ style, height, width, fill }: SVGProps) {
       <path d="M16.5 6a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0zM18 6A6 6 0 1 0 6 6a6 6 0 0 0 12 0zM3 23.25a9 9 0 1 1 18 0 .75.75 0 0 0 1.5 0c0-5.799-4.701-10.5-10.5-10.5S1.5 17.451 1.5 23.25a.75.75 0 0 0 1.5 0z"></path>
     </svg>
   )
+}
 
-
+export function Details({ style, height, width, fill }: SVGProps) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style={style} height={height} width={width} fill={fill}>
+      <path d="M10.5 6A1.5 1.5 0 1 1 12 7.5 1.5 1.5 0 0 1 10.5 6zm1.5 4.5a1.5 1.5 0 1 0 1.5 1.5 1.5 1.5 0 0 0-1.5-1.5zM10.5 18a1.5 1.5 0 1 1 1.5 1.5 1.5 1.5 0 0 1-1.5-1.5z"></path>
+    </svg>
+  )
 }
 

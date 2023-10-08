@@ -34,7 +34,6 @@ export function App() {
           <Route path="/register" element={<Register />} />
           <Route element={<Layout />}>
             <Route element={<ProtectedRoute redirectTo="/login" canActived={isAuth} />} >
-              <Route path="/hotel" element={<Hotel />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<DashboardAdmin />} />
             </Route>

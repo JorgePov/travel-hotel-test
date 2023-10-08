@@ -1,5 +1,6 @@
-import { Button, Card, CardBody, CardFooter, Container, Heading, Image, Stack, Text, Box, Center } from '@chakra-ui/react';
+import { Button, Card, CardBody, CardFooter, Container, Heading, Image, Stack, Text, Box, Center, Flex } from '@chakra-ui/react';
 import React from 'react'
+import { Details } from '../shared/icons/CustomIcons';
 
 export default function BookingClient() {
 
@@ -31,14 +32,23 @@ export default function BookingClient() {
                     <CardBody p={0} ml={'1.5rem'}>
                         <Heading size={'1rem'}>The perfect latte</Heading>
                         <Text mt={'2'} fontSize={'sm'} fontWeight={'normal'} lineHeight={'3'}>
-                            Caffè latte is a coffee beverage of Italian origin made with espresso
-                            and steamed milk.
+                            4 Jul – 6 Jul, Girardot
                         </Text>
                         <Text mt={'2'} fontSize={'sm'} fontWeight={'normal'} lineHeight={'3'}>
-                            Caffè latte is a coffee beverage of Italian origin made with espresso
-                            and steamed milk.
+                            Completada
                         </Text>
                     </CardBody>
+                </Stack>
+                <Flex mr={'2'} alignItems={'start'}>
+                    <Text mt={'2'} fontSize={'sm'} fontWeight={'normal'} lineHeight={'3'}>
+                        COP 211.340
+                    </Text>
+                </Flex>
+                <Stack direction='row' spacing={4}>
+                    <Button colorScheme='blue' variant='ghost' p={0} color={'balck'}>
+                        <Details width={28} height={28} fill='#1a1a1a' />
+                        Details
+                    </Button>
                 </Stack>
             </Card>
         </Container>
