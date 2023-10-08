@@ -39,6 +39,10 @@ export const updatedBooking = async (newBooking: Booking) => {
   }
 };
 
+export const deletedBooking = async (idBooking: String) => {
+  return idBooking;
+};
+
 export const createBooking = async (newBooking: Booking) => {
   try {
     const isExist = await bookingExist(newBooking);

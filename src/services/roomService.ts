@@ -21,6 +21,10 @@ export const getRooms = async () => {
   });
 };
 
+export const deletedRoom = async (idRoom: String) => {
+  return idRoom;
+};
+
 export const getRoomsById = async (idRoom: string, idromm: string) => {
   const q = doc(roomCollection(idRoom), idromm);
   const data = await getDoc(q);
