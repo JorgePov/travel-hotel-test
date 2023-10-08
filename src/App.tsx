@@ -14,6 +14,8 @@ import { ProtectedRoute } from "./utils/ProtectedRoute";
 import NotFound from "./components/NotFound/NotFound";
 import { Layout } from "./components/Layout/Layout";
 import { useGlobalStorage } from "./store/global";
+import AlertComponent from "./components/Alert/AlertComponent";
+import Register from "./components/Register/Register";
 
 export function App() {
   const isAuth = useGlobalStorage(state => state.isAuth)
@@ -25,6 +27,7 @@ export function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route element={<Layout />}>
             <Route element={<ProtectedRoute redirectTo="/login" canActived={isAuth} />} >
               <Route path="/hotel" element={<Hotel />} />
@@ -34,6 +37,7 @@ export function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      <AlertComponent />
     </ChakraProvider >
 
   )

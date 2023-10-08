@@ -1,12 +1,12 @@
 export interface User extends PersonalInfo {
   id?: string;
-  password: string;
+  password?: string;
   type: "travel" | "admin";
 }
 
 interface PersonalInfo {
   document: string;
-  documentType: "CC" | "DE" | "PA";
+  documentType: "CC" | "DE" | "PA" | string;
   email: string;
   genre: string;
   lastName: string;
