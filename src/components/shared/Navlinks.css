@@ -1,0 +1,30 @@
+.link__container{
+  display: flex ;
+  padding: 8px;
+  border-radius: 100px;
+}
+
+.link__container:hover{
+  background-color: #1A4FA0;
+}
+
+.active{
+  display: flex;
+  padding: 8px;
+  border: 1px solid;
+  border-color: currentcolor;
+  border-radius: 100px;
+  position: relative;
+}
+
+.active:before{
+  background-color: currentcolor;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  content: "";
+  left: 0;
+  top: 0;
+  opacity: .1;
+  position: absolute;
+}
