@@ -1,39 +1,53 @@
-import { addDoc } from "firebase/firestore";
-import { Hotel, Room } from "../interfaces/Hotel";
-import { roomColletion } from "./db";
+import {
+  addDoc,
+  collectionGroup,
+  query,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { Room } from "../interfaces/Hotel";
+import { roomCollection, db } from "./db";
 
-/* 
-export const getHoteles = async () => {
-  await getDocs(roomCollection).then((data) => {
+export const getRooms = async () => {
+  const dataDb = query(collectionGroup(db, "rooms"));
+  return await getDocs(dataDb).then((data) => {
     return data.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
     }));
   });
-}; 
-*/
-/* 
+};
 
-export const getHotelsById = async (idhotel: string) => {
-  const q = doc(roomCollection, idhotel);
+export const getRoomsById = async (idRoom: string, idromm: string) => {
+  const q = doc(roomCollection(idRoom), idromm);
   const data = await getDoc(q);
   return data.data();
 };
 
-export const updatedHotel = async (newhotel: Hotel) => {
+//actualizar Room
+export const updatedRoom = async (newRoom: Room) => {
   try {
-    const docRef = await addDoc(roomCollection, {
-      ...newhotel,
+    const RoomRef = doc(roomCollection(newRoom.idHotel), newRoom.id);
+    await updateDoc(RoomRef, {
+      ...newRoom,
     });
-    console.log("Document written with ID: ", docRef.id);
+    return "Cambio exitoso";
   } catch (e) {
     console.error("Error adding document: ", e);
   }
-}; */
+};
 
+//creacion
 export const createRoom = async (newRoom: Room) => {
   try {
-    const docRef = await addDoc(roomColletion(newRoom.idHotel), {
+    const isExist = await roomExist(newRoom);
+    if (isExist) {
+      return " existe";
+    }
+    const docRef = await addDoc(roomCollection(newRoom.idHotel), {
       ...newRoom,
     });
     console.log("Document written with ID: ", docRef.id);
@@ -42,15 +56,15 @@ export const createRoom = async (newRoom: Room) => {
   }
 };
 
-/* const hotelExist = async (hotel: Hotel) => {
+const roomExist = async (room: Room) => {
   const q = query(
-    roomCollection,
-    where("name", "==", hotel.name),
-    where("city", "==", hotel.city)
+    roomCollection(room.idHotel),
+    where("number", "==", room.number),
+    where("roomType", "==", room.roomType)
   );
   const data = await getDocs(q);
   if (data.docs.length) {
     return true;
   }
   return false;
-}; */
+};

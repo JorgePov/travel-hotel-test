@@ -8,9 +8,11 @@ import {
   doc,
   or,
   and,
+  updateDoc,
 } from "firebase/firestore";
 import { userCollection } from "./db";
 
+//traer a todos
 export const getUsers = async () => {
   return await getDocs(userCollection).then((data) => {
     return data.docs.map((doc) => ({
@@ -20,12 +22,27 @@ export const getUsers = async () => {
   });
 };
 
+//traer por id
 export const getUsersById = async (idUser: string) => {
   const q = doc(userCollection, idUser);
   const data = await getDoc(q);
   return data.data();
 };
 
+//actualizar User
+export const updatedUser = async (newUser: User) => {
+  try {
+    const hotelRef = doc(userCollection, newUser.id);
+    await updateDoc(hotelRef, {
+      ...newUser,
+    });
+    return "Cambio exitoso";
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+
+//crear usuario
 export const createdUser = async (newUser: User) => {
   try {
     const isExist = await userExist(newUser);
@@ -57,7 +74,7 @@ type loginData = {
   email: string;
   password: string;
 };
-
+//login
 export const loginUser = async (credencial: loginData) => {
   const q = query(
     userCollection,
@@ -73,5 +90,5 @@ export const loginUser = async (credencial: loginData) => {
       id: doc.id,
     }));
   }
-  throw new Error("ãlo põl˜ia");
+  throw new Error("no auth");
 };

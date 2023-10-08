@@ -5,7 +5,6 @@ import {
   where,
   getDoc,
   doc,
-  collectionGroup,
   updateDoc,
 } from "firebase/firestore";
 import { hotelCollection, db } from "./db";
@@ -47,7 +46,7 @@ export const createdHotel = async (newhotel: Hotel) => {
   try {
     const isExist = await hotelExist(newhotel);
     if (isExist) {
-      return " existee";
+      return " existe";
     }
     const docRef = await addDoc(hotelCollection, {
       ...newhotel,

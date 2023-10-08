@@ -1,10 +1,10 @@
-export interface User extends personalInfo {
+export interface User extends PersonalInfo {
   id?: string;
   password: string;
   type: "travel" | "admin";
 }
 
-interface personalInfo {
+interface PersonalInfo {
   document: string;
   documentType: "CC" | "DE" | "PA";
   email: string;
@@ -14,6 +14,6 @@ interface personalInfo {
   phoneNumber: string;
 }
 
-export interface Travels extends personalInfo {
+export interface Travels extends PersonalInfo {
   id?: string;
 }

@@ -1,13 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { CollectionReference, doc, getFirestore } from "firebase/firestore";
+import { doc, getFirestore } from "firebase/firestore";
 import { collection } from "firebase/firestore";
-import { booking } from "../interfaces/Booking";
-
-interface newSubcollection {
-  collectionFather: CollectionReference;
-  collectionFatherID: string;
-  nameSubCollection: string;
-}
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVLB1gG9Yhl6qDCIE8fKtEXtja1LK5_Wc",
@@ -24,9 +17,9 @@ export const db = getFirestore(app);
 export const userCollection = collection(db, "users");
 export const hotelCollection = collection(db, "hotels");
 
-export const roomColletion = (collectionHotelID: string) => {
+export const roomCollection = (collectionHotelID: string) => {
   const collectionHotel = doc(hotelCollection, collectionHotelID);
   return collection(collectionHotel, "rooms");
 };
 
-export const bookingColletion = collection(db, "booking");
+export const bookingCollection = collection(db, "booking");

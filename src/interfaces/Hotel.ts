@@ -11,7 +11,7 @@ export interface Hotel {
 export interface Room {
   id?: string;
   idHotel: string;
-  name: string;
+  number: string;
   price: Number;
   state: "inactive" | "active";
   tax: Number;

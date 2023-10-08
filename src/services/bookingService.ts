@@ -1,10 +1,19 @@
-import { addDoc } from "firebase/firestore";
-import { Hotel } from "../interfaces/Hotel";
-import { bookingColletion } from "./db";
-import { booking } from "../interfaces/Booking";
+import {
+  addDoc,
+  collectionGroup,
+  query,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+  where,
+  and,
+} from "firebase/firestore";
+import { bookingCollection } from "./db";
+import { Booking } from "../interfaces/Booking";
 
-/* export const getHoteles = async () => {
-  await getDocs(roomCollection).then((data) => {
+export const getBookings = async () => {
+  return await getDocs(bookingCollection).then((data) => {
     return data.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
@@ -12,27 +21,31 @@ import { booking } from "../interfaces/Booking";
   });
 };
 
-export const getHotelsById = async (idhotel: string) => {
-  
-  const q = doc(roomCollection, idhotel);
+export const getMyTravel = async (idBooking: string) => {
+  const q = doc(bookingCollection, idBooking);
   const data = await getDoc(q);
   return data.data();
 };
 
-export const updatedHotel = async (newhotel: Hotel) => {
+export const updatedBooking = async (newBooking: Booking) => {
   try {
-    const docRef = await addDoc(roomCollection, {
-      ...newhotel,
+    const bookingRef = doc(bookingCollection, newBooking.id);
+    await updateDoc(bookingRef, {
+      ...newBooking,
     });
-    console.log("Document written with ID: ", docRef.id);
+    return "Cambio exitoso";
   } catch (e) {
     console.error("Error adding document: ", e);
   }
-}; */
+};
 
-export const createBooking = async (newBooking: booking) => {
+export const createBooking = async (newBooking: Booking) => {
   try {
-    const docRef = await addDoc(bookingColletion, {
+    const isExist = await bookingExist(newBooking);
+    if (isExist) {
+      return " existe";
+    }
+    const docRef = await addDoc(bookingCollection, {
       ...newBooking,
     });
     console.log("Document written with ID: ", docRef.id);
@@ -41,14 +54,19 @@ export const createBooking = async (newBooking: booking) => {
   }
 };
 
-/* export const filterTravelTime = async (
-  startTravel: Date,
-  finishTravel: Date
-) => {
-  await getDocs(roomCollection).then((data) => {
-    return data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-  });
-}; */
+const bookingExist = async (booking: Booking) => {
+  const q = query(
+    bookingCollection,
+    and(
+      where("idHotel", "==", booking.idHotel),
+      where("idRoom", "==", booking.idRoom),
+      where("startTravel", ">=", booking.startTravel),
+      where("finishTravel", "<=", booking.finishTravel)
+    )
+  );
+  const data = await getDocs(q);
+  if (data.docs.length) {
+    return true;
+  }
+  return false;
+};
