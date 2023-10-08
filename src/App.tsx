@@ -36,9 +36,9 @@ export function App() {
             <Route element={<ProtectedRoute redirectTo="/login" canActived={isAuth} />} >
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<DashboardAdmin />} />
+              <Route path="/dashboard/myreservations" element={<BookingClient />} />
             </Route>
           </Route>
-          <Route path="/dashboard/myreservations" element={<BookingClient />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
