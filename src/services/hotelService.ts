@@ -7,7 +7,7 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { hotelCollection, db } from "./db";
+import { hotelCollection } from "./db";
 import { Hotel } from "../interfaces/Hotel";
 
 //traer todos
