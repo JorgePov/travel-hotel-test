@@ -11,7 +11,7 @@ import { hotelCollection } from "./db";
 import { Hotel } from "../interfaces/Hotel";
 
 //traer todos
-export const getHoteles = async () => {
+export const getHotels = async () => {
   const isActive = query(hotelCollection, where("state", "==", "active"));
   return await getDocs(isActive).then((data) => {
     return data.docs.map((doc) => ({
@@ -19,6 +19,10 @@ export const getHoteles = async () => {
       id: doc.id,
     }));
   });
+};
+
+export const deletedHotel = async (idHotel: String) => {
+  return idHotel;
 };
 
 //traer por id
