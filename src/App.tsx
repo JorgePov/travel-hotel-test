@@ -13,10 +13,9 @@ import Hotel from "./components/Hotels/Hotel";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
 import NotFound from "./components/NotFound/NotFound";
 import { Layout } from "./components/Layout/Layout";
+import 'react-datepicker/dist/react-datepicker.css'
 
 export const App = () => (
-
-
   <ChakraProvider theme={theme} >
     <CSSReset />
     <BrowserRouter>

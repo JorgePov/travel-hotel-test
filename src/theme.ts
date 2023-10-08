@@ -11,6 +11,13 @@ const theme = extendTheme({
       150: "#0084d1",
       200: "#013b93", // Color principal
     },
+    fontColor: {
+      white: "#fff",
+      black: '#000'
+    },
+    secundary: {
+      0: '#ffb700'
+    }
   },
 });
 
