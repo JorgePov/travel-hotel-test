@@ -17,3 +17,8 @@ interface PersonalInfo {
 export interface Travels extends PersonalInfo {
   id?: string;
 }
+
+export type loginData = {
+  email: string;
+  password: string;
+};

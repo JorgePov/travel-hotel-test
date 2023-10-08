@@ -1,34 +1,45 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
+import { loginData } from '../../interfaces/User';
 import {
     Box,
     Button,
     Card,
     FormControl,
-    FormErrorMessage,
     FormLabel,
     Heading,
     Input,
     Stack,
 } from '@chakra-ui/react';
-
-interface LoginProps {
-    onSubmit: (email: string, password: string) => void;
-}
+import { loginUser } from '../../services/userService';
+import { useGlobalStorage } from '../../store/global';
 
 export default function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const setUser = useGlobalStorage(state => state.setUserInfo)
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const form = event.target as HTMLFormElement
+        const formData = new FormData(form)
+        const email = formData.get('email') as string;
+        const password = formData.get('password') as string;
 
-        // Simular una solicitud de inicio de sesión (aquí puedes usar Axios, fetch, etc.)
-        setTimeout(() => {
-            //onSubmit(email, password);
-            setIsLoading(false);
-        }, 1000);
+
+
+
+        const credential: loginData = {
+            email,
+            password
+        }
+        setIsLoading(true)
+        console.log(credential)
+        await loginUser(credential).then(response => {
+            setUser(response, true)
+        }).catch(error => {
+            alert(error)
+        })
+        setIsLoading(false)
+        form.reset()
     };
 
     return (
@@ -39,19 +50,19 @@ export default function Login() {
             height="100vh"
             backgroundColor="gray"
         >
-            <Card padding="4" boxShadow="md" borderRadius="md" bg="primary.150">
+            <Card padding="4" boxShadow="md" borderRadius="md" bg="primary.200">
                 <Heading as="h2" size="lg" textAlign="center" mb="4">
                     Iniciar sesión
                 </Heading>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <Stack spacing="4">
                         <FormControl id="email" isRequired>
                             <FormLabel>Email</FormLabel>
-                            <Input type="email" placeholder="travel01@example.com" />
+                            <Input name="email" type="email" placeholder="travel01@example.com" />
                         </FormControl>
                         <FormControl id="password" isRequired>
                             <FormLabel>Contraseña</FormLabel>
-                            <Input type="password" placeholder="********" />
+                            <Input name="password" type="password" placeholder="121212" />
                         </FormControl>
                         <Button type="submit" colorScheme="blue" size="lg" width="100%">
                             Iniciar sesión

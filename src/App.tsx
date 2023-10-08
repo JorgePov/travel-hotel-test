@@ -13,23 +13,28 @@ import Hotel from "./components/Hotels/Hotel";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
 import NotFound from "./components/NotFound/NotFound";
 import { Layout } from "./components/Layout/Layout";
+import { useGlobalStorage } from "./store/global";
 
-export const App = () => (
+export function App() {
+  const isAuth = useGlobalStorage(state => state.isAuth)
 
 
-  <ChakraProvider theme={theme} >
-    <CSSReset />
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route element={<Layout />}>
-          <Route element={<ProtectedRoute redirectTo="/login" canActived={true} />} >
-            <Route path="/hotel" element={<Hotel />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+  return (
+    <ChakraProvider theme={theme} >
+      <CSSReset />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route element={<Layout />}>
+            <Route element={<ProtectedRoute redirectTo="/login" canActived={isAuth} />} >
+              <Route path="/hotel" element={<Hotel />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
           </Route>
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  </ChakraProvider >
-)
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </ChakraProvider >
+
+  )
+}

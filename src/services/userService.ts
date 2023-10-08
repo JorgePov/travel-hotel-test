@@ -1,4 +1,4 @@
-import { User } from "../interfaces/User";
+import { User, loginData } from "../interfaces/User";
 import {
   getDocs,
   addDoc,
@@ -70,10 +70,6 @@ const userExist = async (user: User) => {
   return false;
 };
 
-type loginData = {
-  email: string;
-  password: string;
-};
 //login
 export const loginUser = async (credencial: loginData) => {
   const q = query(
@@ -85,10 +81,14 @@ export const loginUser = async (credencial: loginData) => {
   );
   const data = await getDocs(q);
   if (data.docs.length) {
-    return data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
+    return data.docs.map((doc) => {
+      const data = doc.data();
+      delete data.password;
+      return {
+        ...data,
+        id: doc.id,
+      };
+    });
   }
   throw new Error("no auth");
 };
