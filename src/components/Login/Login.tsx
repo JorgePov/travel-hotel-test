@@ -43,9 +43,9 @@ export default function Login() {
             setIsLoading(false)
             setUserInfo(response, true)
             if (isAdmin) {
-                navigate('/dashboard')
+                navigate('/admin')
             } else {
-                navigate('/my-travel')
+                navigate('/dashboard')
             }
         }).catch(error => {
             setIsLoading(false)
@@ -65,10 +65,10 @@ export default function Login() {
             justifyContent="center"
             alignItems="center"
             height="100vh"
-            backgroundColor="whiteAlpha.500"
+            bg={"grey"}
         >
-            <Card padding="4" boxShadow="md" borderRadius="md" bg="primary.200">
-                <Heading as="h2" size="lg" textAlign="center" mb="4">
+            <Card padding="4" boxShadow="md" borderRadius="md" bg="primary.200" color={'fontColor.white'}>
+                <Heading as="h2" size="lg" textAlign="center" mb="4" >
                     Iniciar sesión
                 </Heading>
                 <form onSubmit={handleSubmit}>

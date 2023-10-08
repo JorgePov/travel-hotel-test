@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ChakraProvider, CSSReset, } from '@chakra-ui/react';
+import { ChakraProvider, CSSReset, useColorMode, } from '@chakra-ui/react';
 import theme from "./theme";
 
 import {
@@ -17,9 +17,12 @@ import { useGlobalStorage } from "./store/global";
 import AlertComponent from "./components/Alert/AlertComponent";
 import Register from "./components/Register/Register";
 import 'react-datepicker/dist/react-datepicker.css'
+import DashboardAdmin from "./components/Admin/DashboardAdmin";
+import BookingClient from "./components/BookingClient/BookingClient";
 
 export function App() {
   const isAuth = useGlobalStorage(state => state.isAuth)
+  const { colorMode } = useColorMode();
 
 
   return (
@@ -33,8 +36,10 @@ export function App() {
             <Route element={<ProtectedRoute redirectTo="/login" canActived={isAuth} />} >
               <Route path="/hotel" element={<Hotel />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/admin" element={<DashboardAdmin />} />
             </Route>
           </Route>
+          <Route path="/dashboard/myreservations" element={<BookingClient />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -84,9 +84,7 @@ export default function Register() {
         }
 
         if (isFormValid) {
-
             await createdUser(newUserData).then((response) => {
-                console.log(response)
                 setUserInfo(response, true)
                 setShowAlert({
                     isShow: true,
@@ -94,7 +92,7 @@ export default function Register() {
                     status: 'success'
                 })
                 setIsLoading(false)
-                navigate('/hotel')
+                navigate('/dashboard')
             }).catch(error => {
                 setShowAlert({
                     status: 'error',
@@ -103,8 +101,6 @@ export default function Register() {
                 })
                 setIsLoading(false)
             })
-
-
         }
         setIsLoading(false)
     };

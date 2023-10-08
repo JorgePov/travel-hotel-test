@@ -1,4 +1,4 @@
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, Highlight, Text } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -9,11 +9,12 @@ export default function NotFound() {
     }
 
     return (
-        <Flex align="center" justify="center" flexDirection={"column"} h="100vh">
-            <h1>404 - Página no encontrada</h1>
+        <Flex align="center" justify="center" flexDirection={"column"} h="100vh" lineHeight='tall'>
+            <Text fontSize='4xl' mb={4}>404 - Página no encontrada</Text>
             <Button
                 type="button"
-                colorScheme="teal"
+                bg="primary.200"
+                color='white'
                 size="lg"
                 alignContent="center"
                 width="50%"

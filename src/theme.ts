@@ -13,11 +13,11 @@ const theme = extendTheme({
     },
     fontColor: {
       white: "#fff",
-      black: '#000'
+      black: "#000",
     },
     secundary: {
-      0: '#ffb700'
-    }
+      0: "#ffb700",
+    },
   },
 });
 
