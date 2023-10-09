@@ -28,6 +28,8 @@ interface State {
   fetchSearchHotels: () => Promise<void>;
   booking: any[];
   bookingSelect?: any;
+  isLoading: boolean;
+  setLoading: (state: boolean) => void;
 }
 
 const userInit: User = {
@@ -46,6 +48,15 @@ const initialState = {
   isAuth: false,
   isAdmin: false,
   userInfo: userInit,
+  isLoading: false,
+  municipalities: [],
+  hotels: [],
+  searchedHotels: [],
+  rooms: [],
+  booking: [],
+  alert: {
+    isShow: false,
+  },
 };
 
 export const useGlobalStorage = create<State>()(
@@ -53,14 +64,7 @@ export const useGlobalStorage = create<State>()(
     (set, get) => {
       return {
         ...initialState,
-        municipalities: [],
-        hotels: [],
-        searchedHotels: [],
-        rooms: [],
-        booking: [],
-        alert: {
-          isShow: false,
-        },
+        setLoading: (status: boolean) => set({ isLoading: status }),
         setUserInfo: (userInfo: User, isAuth: boolean) =>
           set({
             userInfo,
@@ -77,18 +81,26 @@ export const useGlobalStorage = create<State>()(
             ...initialState,
           }),
         fetchHotels: async () => {
+          set({
+            isLoading: true,
+          });
           const res = await getHotels();
           if (res) {
             set({
               hotels: [...res],
+              isLoading: false,
             });
           }
         },
         fetchRooms: async (idHotel: string) => {
+          set({
+            isLoading: true,
+          });
           const res = await getRoomsByHotel(idHotel);
           if (res) {
             set({
               rooms: [...res],
+              isLoading: false,
             });
           }
         },
@@ -123,31 +135,43 @@ export const useGlobalStorage = create<State>()(
           }
         },
         fetchBookingAdmin: async () => {
+          set({
+            isLoading: true,
+          });
           const res = await getBookings();
           if (res) {
             set({
               booking: [...res],
+              isLoading: false,
             });
           }
         },
         fetchBooking: async () => {
+          set({
+            isLoading: true,
+          });
           const { userInfo } = get();
           const id = userInfo?.id || "";
           const res = await getBookingById(id);
           if (res) {
             set({
               booking: [...res],
+              isLoading: false,
             });
           }
         },
         fetchSearchHotels: async () => {
+          set({
+            isLoading: true,
+          });
           const res = await getHotels();
           if (res) {
             set({
               searchedHotels: [...res],
+              isLoading: false,
             });
           }
-        }
+        },
       };
     },
     {

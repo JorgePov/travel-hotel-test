@@ -7,38 +7,20 @@ import { timestampToString } from '../../utils/utils';
 import { changedStateBooking } from '../../services/bookingService';
 import { useState } from 'react';
 
-
-
-
 export default function CardBooking() {
     const booking = useGlobalStorage(state => state.booking)
     const isAdmin = useGlobalStorage(state => state.isAdmin)
-    const fetchBookingAdmin = useGlobalStorage(state => state.fetchBookingAdmin)
-
-    const [isLoading, setLoading] = useState(false)
-
     const fetchBookingById = useGlobalStorage(state => state.fetchBookingById)
     const navegate = useNavigate();
 
     const handlerClick = async (id: string) => {
-        setLoading(true)
         await fetchBookingById(id)
-        setLoading(false)
         if (isAdmin) {
             navegate(`/admin/reservations/${id}`)
         } else {
 
             navegate(`/dashboard/myreservations/${id}`)
         }
-    }
-
-    const handlerClickCompleted = async (idElement: string) => {
-        setLoading(true)
-        if (isAdmin) {
-            await changedStateBooking(idElement, 'Completada')
-            await fetchBookingAdmin()
-        }
-        setLoading(false)
     }
 
     return (
@@ -99,26 +81,8 @@ export default function CardBooking() {
                         {
                             data.state === 'Reservada' ? <>
                                 <Stack direction='column' spacing={4} alignSelf={'start'} ml={4}>
-                                    {
-                                        isAdmin ?
-                                            <>
-                                                {isLoading ? (
-                                                    <Button
-                                                        colorScheme='green'
-                                                        disabled={true}
-                                                    >
-                                                        <Spinner />
-                                                    </Button>
-                                                ) : <Button colorScheme='green' onClick={() => { handlerClickCompleted(data.id) }}>
-                                                    Completar
-                                                </Button>}
-
-                                            </> : null
-                                    }
+                                    <ButtomComplited idBooking={data.id} />
                                     <DeleteAlert idElement={data.id} type='booking' />
-
-
-
                                 </Stack>
                             </> : null
                         }
@@ -126,6 +90,50 @@ export default function CardBooking() {
                     </Card>
                 </ Box>
             ))}
+        </>
+
+    )
+}
+
+
+
+
+
+export const ButtomComplited = ({ idBooking }: any) => {
+    const isAdmin = useGlobalStorage(state => state.isAdmin)
+    const { fetchBookingAdmin } = useGlobalStorage()
+
+    const [isLoading, setLoading] = useState(false)
+
+
+    const handlerClickCompleted = async () => {
+        setLoading(true)
+        if (isAdmin) {
+            console.log(idBooking)
+            await changedStateBooking(idBooking, 'Completada')
+            await fetchBookingAdmin()
+        }
+        setLoading(false)
+    }
+
+    return (
+        <>
+            {
+                isAdmin ?
+                    <>
+                        {isLoading ? (
+                            <Button
+                                colorScheme='green'
+                                disabled={true}
+                            >
+                                <Spinner />
+                            </Button>
+                        ) : <Button colorScheme='green' onClick={handlerClickCompleted}>
+                            Completar
+                        </Button>}
+
+                    </> : null
+            }
         </>
 
     )
