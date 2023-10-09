@@ -3,7 +3,6 @@ import { persist } from "zustand/middleware";
 import { AlertProps } from "../components/Alert/AlertComponent";
 import { getHotels } from "../services/hotelService";
 import { Hotel } from "../interfaces/Hotel";
-import { useNavigate } from "react-router-dom";
 import { User } from "../interfaces/User";
 import { getBookingById } from "../services/bookingService";
 interface State {

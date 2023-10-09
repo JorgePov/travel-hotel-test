@@ -1,27 +1,13 @@
-import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom';
 import { useGlobalStorage } from '../../store/global';
-import { Box, Container, Divider, Flex, Image, Stack, Text } from '@chakra-ui/react';
+import { Avatar, AvatarGroup, Container, Divider, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { timestampToString } from '../../utils/utils';
 
 export const DetailsBooking = () => {
     const bookingSelect = useGlobalStorage(state => state.bookingSelect)
     const { data, reference } = bookingSelect;
     console.log(bookingSelect);
-    /*  
-     const { id } = useParams();
-     console.log(id);
- 
- 
-     useEffect(() => {
-         fetchBookingById(id || '')
-         console.log(bookingSelect);
- 
-     }, [fetchBookingById])
- 
-  */
     return (
-        <Container maxW='container.xl' mt={4} border={'1px'}>
+        <Container maxW='container.xl' my={4} border={'1px'}>
             <Flex>
                 <Stack direction='row' spacing={2} alignSelf={'center'}>
                     <Image
@@ -35,8 +21,8 @@ export const DetailsBooking = () => {
                 </Stack>
                 <Stack w='80%' p={4} >
                     <Text fontSize='xl' fontWeight='bold' >{reference.hotels.name}</Text>
-                    <Text fontSize='xs' ><strong>Dirección:</strong> lalalala</Text>
-                    <Text fontSize='xs' ><strong>Teléfono:</strong>  lalalala</Text>
+                    <Text fontSize='xs' ><strong>Dirección:</strong> {reference.hotels.address}</Text>
+                    <Text fontSize='xs' ><strong>Teléfono:</strong>  {reference.hotels.phoneNumber}</Text>
 
                 </Stack>
                 <Stack w='20%' textAlign={'center'}>
@@ -80,62 +66,47 @@ export const DetailsBooking = () => {
                 </Stack>
             </Flex>
             {
-                !reference.travels ?
+                data.travels ?
                     <>
                         <Divider />
-                        <Text fontSize='4xl' fontWeight='bold' >Tus Acompañantes</Text>
+                        <Text fontSize='2xl' fontWeight='bold' >Tus Acompañantes</Text>
                         <Flex>
-                            <Stack alignSelf={'center'} flex={'1 1 auto'} >
-                                <Stack direction='row' justifyContent={'space-between'}>
+                            <AvatarGroup>
+                                <Flex direction={'column'}>
+                                    {
+                                        data.travels.map(({ email, name, phoneNumber }: any) => (
 
-                                    <Text fontSize='md' >Precio</Text>
-
-                                    <Text fontSize='xs' >COP {reference.rooms.price}</Text>
-                                </Stack>
-                                <Stack direction='row' justifyContent={'space-between'}>
-                                    <Stack direction='row' >
-                                        <Text fontSize='md' >Impuesto </Text>
-                                        <Text fontSize='xs' alignSelf={'center'} >%{reference.rooms.tax * 100}</Text>
-
-                                    </Stack>
-                                    <Text fontSize='xs' >COP {reference.rooms.price * reference.rooms.tax}</Text>
-                                </Stack>
-                                <Stack direction='row' justifyContent={'space-between'}>
-
-                                    <Text fontSize='md' >Precio Total</Text>
-
-                                    <Text fontSize='xs' >COP {reference.rooms.price + (reference.rooms.price * reference.rooms.tax)}</Text>
-                                </Stack>
-                            </Stack>
+                                            <Stack direction={'row'} my={4} key={email}>
+                                                <Avatar bg='red.500' />
+                                                <Stack direction={'column'}>
+                                                    <Text fontSize='md' >Nombre: {name}</Text>
+                                                    <Text fontSize='md' >Email: {email}</Text>
+                                                    <Text fontSize='md' >Telefono: {phoneNumber}</Text>
+                                                </Stack>
+                                            </Stack>
+                                        ))
+                                    }
+                                </Flex>
+                            </AvatarGroup>
                         </Flex>
                     </> : null
             }
             {
-                !reference.travels ?
+                data.emergencyContact ?
                     <>
                         <Divider />
-                        <Text fontSize='4xl' fontWeight='bold' >Tus Acompañantes</Text>
-                        <Flex>
-                            <Stack alignSelf={'center'} flex={'1 1 auto'} >
-                                <Stack direction='row' justifyContent={'space-between'}>
-
-                                    <Text fontSize='md' >Precio</Text>
-
-                                    <Text fontSize='xs' >COP {reference.rooms.price}</Text>
+                        <Text fontSize='2xl' fontWeight='bold' textAlign={'center'}>Contacto de Emergencia</Text>
+                        <Flex mb={4} justifyContent={'center'}>
+                            <Stack alignSelf={'center'}  >
+                                <Stack direction='row' justifyContent={'center'}>
+                                    <Text fontSize='md' >Nombre:</Text>
+                                    <Text fontSize='md' >{data.emergencyContact.name}</Text>
                                 </Stack>
-                                <Stack direction='row' justifyContent={'space-between'}>
-                                    <Stack direction='row' >
-                                        <Text fontSize='md' >Impuesto </Text>
-                                        <Text fontSize='xs' alignSelf={'center'} >%{reference.rooms.tax * 100}</Text>
-
+                                <Stack alignSelf={'center'} >
+                                    <Stack direction='row' justifyContent={'center'}>
+                                        <Text fontSize='md' >Telefono: </Text>
+                                        <Text fontSize='md' >{data.emergencyContact.phoneNumber}</Text>
                                     </Stack>
-                                    <Text fontSize='xs' >COP {reference.rooms.price * reference.rooms.tax}</Text>
-                                </Stack>
-                                <Stack direction='row' justifyContent={'space-between'}>
-
-                                    <Text fontSize='md' >Precio Total</Text>
-
-                                    <Text fontSize='xs' >COP {reference.rooms.price + (reference.rooms.price * reference.rooms.tax)}</Text>
                                 </Stack>
                             </Stack>
                         </Flex>

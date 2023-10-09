@@ -1,6 +1,5 @@
 import {
   addDoc,
-  collectionGroup,
   query,
   getDocs,
   doc,
@@ -8,17 +7,9 @@ import {
   updateDoc,
   where,
   and,
-  Timestamp,
 } from "firebase/firestore";
-import {
-  bookingCollection,
-  db,
-  hotelCollection,
-  roomCollection,
-  userCollection,
-} from "./db";
+import { bookingCollection, db, hotelCollection, roomCollection } from "./db";
 import { Booking } from "../interfaces/Booking";
-import { User } from "../interfaces/User";
 
 export const getBookings = async () => {
   return await getDocs(bookingCollection).then((data) => {

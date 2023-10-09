@@ -1,5 +1,5 @@
-import React, { FormEvent, useEffect, useState } from 'react';
-import { User, loginData } from '../../interfaces/User';
+import { FormEvent, useState } from 'react';
+import { loginData } from '../../interfaces/User';
 import {
     Box,
     Button,

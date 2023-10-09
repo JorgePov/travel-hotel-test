@@ -6,7 +6,6 @@ import {
   where,
   getDoc,
   doc,
-  or,
   and,
   updateDoc,
 } from "firebase/firestore";
