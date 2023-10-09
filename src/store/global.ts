@@ -4,7 +4,7 @@ import { AlertProps } from "../components/Alert/AlertComponent";
 import { getHotels } from "../services/hotelService";
 import { Hotel } from "../interfaces/Hotel";
 import { User } from "../interfaces/User";
-import { getBookingById } from "../services/bookingService";
+import { getBookingById, getBookings } from "../services/bookingService";
 interface State {
   isAuth: boolean;
   isAdmin: boolean;
@@ -19,6 +19,7 @@ interface State {
   fetchMunicipalities: () => Promise<void>;
   municipalities: any[];
   fetchBooking: () => Promise<void>;
+  fetchBookingAdmin: () => Promise<void>;
   fetchBookingById: (id: string) => Promise<void>;
   booking: any[];
   bookingSelect?: any;
@@ -95,6 +96,14 @@ export const useGlobalStorage = create<State>()(
 
             set({
               bookingSelect: bookingFilter,
+            });
+          }
+        },
+        fetchBookingAdmin: async () => {
+          const res = await getBookings();
+          if (res) {
+            set({
+              booking: [...res],
             });
           }
         },

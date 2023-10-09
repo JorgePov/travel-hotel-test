@@ -14,12 +14,12 @@ export const Navlinks = () => {
               <NavLink to={'/admin'}
                 className={({ isActive }) => isActive ? "active" : "link__container"}  >
                 <BedIcon width={24} height={24} fill='#fff' style={{ marginInlineEnd: '8px' }} />
-                Hoteles
+                Lista de Hoteles
               </NavLink>
-              <NavLink to={'/dashboard'}
+              <NavLink to={'/admin/reservations'}
                 className={({ isActive }) => isActive ? "active" : "link__container"}>
                 <FlyIcon width={24} height={24} fill='#fff' style={{ marginInlineEnd: '8px' }} />
-                Reservas
+                Lista de Reservas
               </NavLink>
             </>
             :

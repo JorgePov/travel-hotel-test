@@ -12,12 +12,26 @@ import { bookingCollection, db, hotelCollection, roomCollection } from "./db";
 import { Booking } from "../interfaces/Booking";
 
 export const getBookings = async () => {
-  return await getDocs(bookingCollection).then((data) => {
-    return data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-  });
+  const querySnapshot = await getDocs(bookingCollection);
+  const dataFilter = [];
+  for (const doc of querySnapshot.docs) {
+    const dataDoc = doc.data();
+    let arrayRef = {
+      hotels: {},
+      rooms: {},
+    };
+    for (const ref of dataDoc.referencias) {
+      const docRef = await getDoc(ref);
+      if (docRef.exists()) {
+        arrayRef = { ...arrayRef, [ref.parent.id]: docRef.data() };
+      }
+    }
+    dataFilter.push({
+      data: { id: doc.id, ...dataDoc },
+      reference: arrayRef,
+    });
+  }
+  return dataFilter;
 };
 
 export const getBookingById = async (idUser: string) => {
