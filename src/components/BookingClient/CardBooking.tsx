@@ -1,9 +1,11 @@
-import { Card, CardBody, Heading, Image, Stack, Text, Box, Button, Flex } from '@chakra-ui/react';
+import { Card, CardBody, Heading, Image, Stack, Text, Box, Button, Flex, Spinner } from '@chakra-ui/react';
 import "./BookingClient.css";
 import DeleteAlert from '../AlertDialog/DeleteAlert';
 import { useGlobalStorage } from '../../store/global';
 import { useNavigate } from 'react-router-dom';
 import { timestampToString } from '../../utils/utils';
+import { changedStateBooking } from '../../services/bookingService';
+import { useState } from 'react';
 
 
 
@@ -11,12 +13,17 @@ import { timestampToString } from '../../utils/utils';
 export default function CardBooking() {
     const booking = useGlobalStorage(state => state.booking)
     const isAdmin = useGlobalStorage(state => state.isAdmin)
+    const fetchBookingAdmin = useGlobalStorage(state => state.fetchBookingAdmin)
+
+    const [isLoading, setLoading] = useState(false)
 
     const fetchBookingById = useGlobalStorage(state => state.fetchBookingById)
     const navegate = useNavigate();
 
     const handlerClick = async (id: string) => {
+        setLoading(true)
         await fetchBookingById(id)
+        setLoading(false)
         if (isAdmin) {
             navegate(`/admin/reservations/${id}`)
         } else {
@@ -25,8 +32,13 @@ export default function CardBooking() {
         }
     }
 
-    const handlerClickCompleted = async () => {
-        alert('asd')
+    const handlerClickCompleted = async (idElement: string) => {
+        setLoading(true)
+        if (isAdmin) {
+            await changedStateBooking(idElement, 'Completada')
+            await fetchBookingAdmin()
+        }
+        setLoading(false)
     }
 
     return (
@@ -83,19 +95,38 @@ export default function CardBooking() {
                                 </Text>
                             </Stack>
                         </Flex>
+
                         {
                             data.state === 'Reservada' ? <>
                                 <Stack direction='column' spacing={4} alignSelf={'start'} ml={4}>
                                     {
                                         isAdmin ?
                                             <>
-                                                <Button colorScheme='green' onClick={handlerClickCompleted}>
+                                                {isLoading ? (
+                                                    <Button
+                                                        colorScheme='green'
+                                                        disabled={true}
+                                                    >
+                                                        <Spinner />
+                                                    </Button>
+                                                ) : <Button colorScheme='green' onClick={() => { handlerClickCompleted(data.id) }}>
                                                     Completar
-                                                </Button>
+                                                </Button>}
+
                                             </> : null
                                     }
+                                    {isLoading ? (
+                                        <Button
+                                            colorScheme='red'
+                                            disabled={true}
+                                        >
+                                            <Spinner />
+                                        </Button>
+                                    ) : <DeleteAlert idElement={data.id} type='booking' />
+                                    }
 
-                                    <DeleteAlert idElement={data.id} type='booking' />
+
+
                                 </Stack>
                             </> : null
                         }
