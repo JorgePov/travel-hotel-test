@@ -1,3 +1,4 @@
+import { Hotel, Room } from "./Hotel";
 import { Travels } from "./User";
 
 export interface Booking {
@@ -10,6 +11,16 @@ export interface Booking {
   startTravel?: Date;
   finishTravel?: Date;
   state?: "inactive" | "active";
+}
+
+interface Reference {
+  hotels: Hotel;
+  rooms: Room;
+}
+
+export interface BookingApi {
+  data: Booking;
+  reference: Reference;
 }
 
 interface EmergencyContact {

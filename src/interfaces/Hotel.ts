@@ -6,6 +6,8 @@ export interface Hotel {
   name: string;
   state: "inactive" | "active";
   city: string;
+  address: string;
+  phoneNumber: string;
 }
 
 export interface Room {
