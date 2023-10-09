@@ -3,7 +3,6 @@ import { persist } from "zustand/middleware";
 import { AlertProps } from "../components/Alert/AlertComponent";
 import { getHotels } from "../services/hotelService";
 import { Hotel } from "../interfaces/Hotel";
-import { useNavigate } from "react-router-dom";
 import { User } from "../interfaces/User";
 interface State {
   isAuth: boolean;
@@ -16,6 +15,8 @@ interface State {
   reset: () => void;
   fetchHotels: () => Promise<void>;
   hotels: Hotel[];
+  fetchMunicipalities: () => Promise<void>;
+  municipalities: any[];
 }
 
 const userInit: User = {
@@ -41,6 +42,7 @@ export const useGlobalStorage = create<State>()(
     (set, get) => {
       return {
         ...initialState,
+        municipalities: [],
         hotels: [],
         alert: {
           isShow: false,
@@ -68,6 +70,16 @@ export const useGlobalStorage = create<State>()(
             });
           }
         },
+        fetchMunicipalities: async () => {
+          fetch('https://www.datos.gov.co/resource/xdk5-pm3f.json').then(res =>
+            res.json().then(data => {
+              const datasort = data.map((val: any) => ({ value: val.municipio, label: val.municipio }))
+                .sort((a: any, b: any) => (a.municipio > b.municipio) ? 1 : -1)
+              set({
+                municipalities: datasort
+              })
+            }))
+        }
       };
     },
     {

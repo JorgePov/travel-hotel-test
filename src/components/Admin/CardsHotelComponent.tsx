@@ -1,6 +1,7 @@
 import { Badge, Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Flex, Grid, GridItem, Heading, Image, Stack, Text, Tooltip } from '@chakra-ui/react'
 import { useGlobalStorage } from '../../store/global'
-import { IconDelete, IconEdit, IconRooms } from '../shared/icons/CustomIcons'
+import { IconEdit, IconRooms } from '../shared/icons/CustomIcons'
+import DeleteAlert from '../AlertDialog/DeleteAlert'
 
 export const CardsHotelComponent = () => {
   const hotels = useGlobalStorage(state => state.hotels)
@@ -50,11 +51,7 @@ export const CardsHotelComponent = () => {
                         <IconRooms width={20} height={20} fill='#fff' />
                       </Button>
                     </Tooltip>
-                    <Tooltip hasArrow placement='top' label='Eliminar' fontSize='md'>
-                      <Button variant='solid' colorScheme='red'>
-                        <IconDelete width={20} height={20} fill='#fff' />
-                      </Button>
-                    </Tooltip>
+                    <DeleteAlert idElement={id!} type='hotel' key={id} />
                   </ButtonGroup>
                 </CardFooter>
               </Card>
@@ -62,7 +59,7 @@ export const CardsHotelComponent = () => {
           ))
         }
       </Grid >
-
     </>
+
   )
 }

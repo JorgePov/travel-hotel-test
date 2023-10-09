@@ -8,15 +8,15 @@ import { CardsHotelComponent } from './CardsHotelComponent';
 export default function DashboardAdmin() {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const fetchHotels = useGlobalStorage(state => state.fetchHotels)
+    const fetchMunicipalities = useGlobalStorage(state => state.fetchMunicipalities)
 
     useEffect(() => {
         fetchHotels()
-    }, [fetchHotels])
+        fetchMunicipalities()
+    }, [fetchHotels, fetchMunicipalities])
 
     //Save hotel Method
-    const handleSaveHotel = async () => {
-        onClose();
-    }
+
     return (
         <section style={{ paddingTop: '48px' }}>
             {/* crear horel */}
@@ -28,7 +28,7 @@ export default function DashboardAdmin() {
             </Flex>
             {/* Hoteles creados */}
             <CardsHotelComponent />
-            <CreateHotelModal isOpen={isOpen} onClose={onClose} handleSaveHotel={handleSaveHotel} />
+            <CreateHotelModal isOpen={isOpen} onClose={onClose} />
         </section>
     )
 }
