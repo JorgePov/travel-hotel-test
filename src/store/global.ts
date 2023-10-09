@@ -2,21 +2,34 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { AlertProps } from "../components/Alert/AlertComponent";
 import { useNavigate } from "react-router-dom";
+import { User } from "../interfaces/User";
 interface State {
   isAuth: boolean;
   isAdmin: boolean;
-  userInfo?: any;
-  setUserInfo: (userInfo: any, isAuth: boolean) => void;
+  userInfo?: User;
+  setUserInfo: (userInfo: User, isAuth: boolean) => void;
   alert: AlertProps;
   setShowAlert: (showAlert: AlertProps) => void;
   getIsAdmin: () => boolean;
   reset: () => void;
 }
 
+const userInit: User = {
+  id: "",
+  document: "",
+  documentType: "",
+  email: "",
+  genre: "",
+  lastName: "",
+  name: "",
+  phoneNumber: "",
+  type: "travel",
+};
+
 const initialState = {
-  userInfo: [],
   isAuth: false,
   isAdmin: false,
+  userInfo: userInit,
 };
 
 export const useGlobalStorage = create<State>()(
@@ -27,7 +40,7 @@ export const useGlobalStorage = create<State>()(
         alert: {
           isShow: false,
         },
-        setUserInfo: (userInfo: any, isAuth: boolean) =>
+        setUserInfo: (userInfo: User, isAuth: boolean) =>
           set({
             userInfo,
             isAuth,

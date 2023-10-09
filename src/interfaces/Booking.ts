@@ -1,7 +1,7 @@
 import { Travels } from "./User";
 
 export interface Booking {
-  id: string;
+  id?: string;
   emergencyContact?: EmergencyContact;
   idRoom: string;
   idHotel: string;
@@ -9,7 +9,7 @@ export interface Booking {
   travels?: Array<Travels>;
   startTravel?: Date;
   finishTravel?: Date;
-  state: "inactive" | "active";
+  state?: "inactive" | "active";
 }
 
 interface EmergencyContact {
