@@ -2,7 +2,7 @@
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Spinner, useDisclosure } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 import { changedStateBooking } from '../../services/bookingService';
-import { changedStateRoom, getRooms } from '../../services/roomService';
+import { changedStateRoom, getRoomsByHotel } from '../../services/roomService';
 import { changedStateHotel } from '../../services/hotelService';
 import { useGlobalStorage } from '../../store/global';
 
@@ -35,7 +35,7 @@ export default function DeleteAlert({ idElement, idPather = '', type, state }: D
     }
     const deleteRoom = async () => {
         await changedStateRoom(idElement, idPather, stateInvert[state!])
-        await getRooms()
+        await getRoomsByHotel(idPather)
         onClose()
     }
     const deleteHotel = async () => {
@@ -68,11 +68,11 @@ export default function DeleteAlert({ idElement, idPather = '', type, state }: D
 
             {isLoading ? (
                 <Button
-                    colorScheme={state === "active" ? 'red' : 'green'}
+                    colorScheme={state === "inactive" ? 'green' : 'red'}
                     disabled={true}
                 >
                     <Spinner />
-                </Button>
+                </Button >
             ) : <>
                 {state === 'inactive' && type !== 'booking' ? <>
                     <Button colorScheme='green' onClick={onOpen}>
@@ -106,12 +106,12 @@ export default function DeleteAlert({ idElement, idPather = '', type, state }: D
                         <AlertDialogFooter>
                             {isLoading ? (
                                 <Button
-                                    colorScheme={state === "active" ? 'red' : 'green'}
+                                    colorScheme={state === "inactive" ? 'green' : 'red'}
                                     disabled={true}
                                 >
                                     <Spinner />
                                 </Button>
-                            ) : <Button colorScheme={state === "active" ? 'red' : 'green'} onClick={handlerClick} ml={3}>
+                            ) : <Button colorScheme={state === "inactive" ? 'green' : 'red'} onClick={handlerClick} ml={3}>
                                 {type === 'booking' ? 'Cancelar' : `${state === "active" ? 'Inactivar' : 'Activar'} `}
                             </Button>}
                             <Button ref={cancelRef} onClick={onClose} >

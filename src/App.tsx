@@ -17,9 +17,9 @@ import Register from "./components/Register/Register";
 import 'react-datepicker/dist/react-datepicker.css'
 import DashboardAdmin from "./components/Admin/DashboardAdmin";
 import BookingClient from "./components/BookingClient/BookingClient";
-import Room from "./components/Rooms/Room";
 import { DetailsBooking } from "./components/DetailsBooking/DetailsBooking";
 import BookingAdmin from "./components/BookingAdmin/BookingAdmin";
+import DashboardRoom from './components/Rooms/DashboardRoom';
 
 export function App() {
   const isAuth = useGlobalStorage(state => state.isAuth)
@@ -37,7 +37,7 @@ export function App() {
           <Route element={<Layout />}>
             <Route element={<ProtectedRoute redirectTo="/login" canActived={isAuth} />} >
               <Route path="/admin" element={<DashboardAdmin />} />
-              <Route path="/admin/:id" element={<Room />} />
+              <Route path="/admin/:id" element={<DashboardRoom />} />
               <Route path="/admin/reservations" element={<BookingAdmin />} />
               <Route path="/admin/reservations/:id" element={<DetailsBooking />} />
               <Route path="/dashboard" element={<Dashboard />} />

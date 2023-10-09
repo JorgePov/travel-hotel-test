@@ -1,6 +1,5 @@
 import {
   addDoc,
-  collectionGroup,
   query,
   getDocs,
   doc,
@@ -9,16 +8,20 @@ import {
   where,
 } from "firebase/firestore";
 import { Room } from "../interfaces/Hotel";
-import { roomCollection, db, hotelCollection } from "./db";
+import { roomCollection, hotelCollection } from "./db";
 
-export const getRooms = async () => {
-  const dataDb = query(collectionGroup(db, "rooms"));
-  return await getDocs(dataDb).then((data) => {
-    return data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-  });
+export const getRoomsByHotel = async (
+  idHotel: string
+): Promise<Room[] | undefined> => {
+  const data = await getDocs(roomCollection(idHotel));
+  if (data.docs.length) {
+    let rooms: Room[] = [];
+    data.forEach((doc) => {
+      const room = doc.data() as Room;
+      rooms.push({ id: doc.id, ...room });
+    });
+    return rooms;
+  }
 };
 
 export const changedStateRoom = async (
@@ -56,7 +59,7 @@ export const updatedRoom = async (newRoom: Room) => {
 };
 
 //creacion
-export const createRoom = async (newRoom: Room) => {
+export const createdRoom = async (newRoom: Room) => {
   try {
     const isExist = await roomExist(newRoom);
     if (isExist) {
@@ -77,7 +80,7 @@ export const createRoom = async (newRoom: Room) => {
 const roomExist = async (room: Room) => {
   const q = query(
     roomCollection(room.idHotel),
-    where("number", "==", room.number),
+    where("number", "==", room.numberRoom),
     where("roomType", "==", room.roomType)
   );
   const data = await getDocs(q);

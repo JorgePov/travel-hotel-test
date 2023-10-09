@@ -1,4 +1,4 @@
-import { Badge, Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Flex, Grid, GridItem, Heading, Image, Stack, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
+import { Badge, Box, Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Flex, Grid, GridItem, Heading, Image, Stack, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
 import { useGlobalStorage } from '../../store/global'
 import { IconEdit, IconRooms } from '../shared/icons/CustomIcons'
 import DeleteAlert from '../AlertDialog/DeleteAlert'
@@ -31,30 +31,51 @@ export const CardsHotelComponent = () => {
             <GridItem w='100%' key={hotel.id} >
               <Card maxW='sm'>
                 <CardBody>
-                  <Image
-                    src={HotelImages[hotel.idImage]}
-                    objectFit={'cover'}
-                    alt='Green double couch with wooden legs'
-                    borderRadius='lg'
-                  />
-                  <Stack mt='6' spacing='3'>
-                    <Stack mt='0' spacing='0'>
-                      <Heading size='md'>{hotel.name}</Heading>
-                      <Heading as='h6' size='xs'>{hotel.city}</Heading>
-                    </Stack>
-                    <Text>
-                      Check In: {hotel.checkInTime}
-                    </Text>
-                    <Text>
-                      Check Out: {hotel.checkOutTime}
-                    </Text>
+                  <Flex justifyContent={'center'}>
+                    <Image
+                      src={HotelImages[hotel.idImage]}
+                      objectFit={'cover'}
+                      alt='Green double couch with wooden legs'
+                      borderRadius='lg'
+                      maxH={'170px'}
+                    />
+                  </Flex>
+                  <Stack mt='2' spacing='0'>
+                    <Heading size='md'>{hotel.name}</Heading>
+                    <Text fontSize='xs' >{hotel.city}</Text>
                   </Stack>
-                  {hotel.state === 'active' && <Badge colorScheme='green'>Activo</Badge>}
-                  {hotel.state === 'inactive' && <Badge colorScheme='red'>Inactivo</Badge>}
-                  <Flex justifyContent={'end'}>
-                    <strong>
-                      Comision: {(Number(hotel.comision) * 100)}%
-                    </strong>
+                  <Flex>
+                    <Box flex={'1 1 auto'}>
+                      <Flex>
+                        <Text fontSize='sm' fontWeight={'semibold'}>
+                          Check In:
+                        </Text>
+                        <Text fontSize='xs' alignSelf={'end'} ml={1}>
+                          {hotel.checkInTime}
+                        </Text>
+                      </Flex>
+                      <Flex>
+                        <Text fontSize='sm' fontWeight={'semibold'}>
+                          Check Out:
+                        </Text>
+                        <Text fontSize='xs' alignSelf={'end'} ml={1}>
+                          {hotel.checkOutTime}
+                        </Text>
+                      </Flex>
+                      {hotel.state === 'active' && <Badge colorScheme='green'>Activo</Badge>}
+                      {hotel.state === 'inactive' && <Badge colorScheme='red'>Inactivo</Badge>}
+                    </Box>
+                    <Box alignSelf={'end'}>
+                      <Flex justifyContent={'space-between'}>
+                        <Text fontSize='xs' fontWeight={'semibold'} alignSelf={'end'} mr={1}>
+                          Comision:
+                        </Text>
+                        <Text fontSize='xs' alignSelf={'end'}>
+                          {(Number(hotel.comision) * 100)}%
+                        </Text>
+
+                      </Flex>
+                    </Box>
                   </Flex>
                 </CardBody>
                 <Divider />

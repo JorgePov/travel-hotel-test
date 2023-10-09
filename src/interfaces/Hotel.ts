@@ -14,10 +14,11 @@ export interface Hotel {
 export interface Room {
   id?: string;
   idHotel: string;
-  number: string;
+  numberRoom: string;
   price: number;
   state: "inactive" | "active";
   tax: number;
-  roomType: "compartida" | "sencilla" | "double" | "familiar" | "suit";
+  roomType: "shared" | "simple" | "double" | "family" | "suit";
   ubication: string;
+  description: string;
 }
