@@ -1,7 +1,7 @@
 import { Button, FormControl, FormLabel, Grid, GridItem, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Select as List, Spinner } from '@chakra-ui/react'
 import { FormEvent, useState } from 'react'
 import { useGlobalStorage } from '../../store/global'
-import { Room } from '../../interfaces/Hotel'
+import { Room, roomsType } from '../../interfaces/Hotel'
 import { createdRoom } from '../../services/roomService'
 import { useParams } from 'react-router'
 
@@ -11,7 +11,7 @@ type modalProps = {
   isOpen: boolean
 }
 
-type roomType = "shared" | "simple" | "double" | "family" | "suit";
+
 
 export const CreateRoomModal = ({ onClose, isOpen }: modalProps) => {
   const [tax, setTax] = useState<number>(0)
@@ -23,15 +23,15 @@ export const CreateRoomModal = ({ onClose, isOpen }: modalProps) => {
     event.preventDefault()
     setLoading(true)
     const form = event.target as HTMLFormElement
-    const { description, numberRoom, roomType, price, tax, ubication } = Object.fromEntries(new FormData(form))
+    const { description, numberRoom, roomType, price, ubication } = Object.fromEntries(new FormData(form))
     const newRoom: Room = {
       description: description as string,
       idHotel: id as string,
       numberRoom: numberRoom as string,
       price: Number(price),
-      roomType: roomType as roomType,
+      roomType: roomType as roomsType,
       state: 'active',
-      tax: Number(tax),
+      tax: Number(tax) / 100,
       ubication: ubication as string,
     }
     try {
@@ -82,13 +82,6 @@ export const CreateRoomModal = ({ onClose, isOpen }: modalProps) => {
                     <FormLabel>Precio</FormLabel>
                     <Input name='price' type="text" />
                   </FormControl>
-
-                  <FormControl id="tax" isRequired>
-                    <FormLabel>Impuesto</FormLabel>
-                    <Input name='tax' type="text" />
-                  </FormControl>
-
-
                   <FormControl id="tax" isRequired>
                     <FormLabel>Impuesto</FormLabel>
                     <Input name='tax' type="number" min={0} max={100} value={tax} onChange={handleTax} />

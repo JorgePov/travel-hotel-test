@@ -10,6 +10,11 @@ import { useParams } from 'react-router'
 
 
 const roomTypeInvert = {
+  shared: 'Compartida',
+  simple: 'Simple',
+  double: 'Doble',
+  family: 'Familiar',
+  suit: 'Suit'
 
 }
 
@@ -39,11 +44,13 @@ export const CardsRoomsComponent = () => {
                       objectFit={'cover'}
                       alt='Green double couch with wooden legs'
                       borderRadius='lg'
+
+                      minH={'170px'}
                       maxH={'170px'}
                     />
                   </Flex>
                   <Stack mt='2' spacing='0'>
-                    <Heading size='md'>Habitacion {room.numberRoom} - {room.roomType} </Heading>
+                    <Heading size='md'>Habitacion {room.numberRoom} - {roomTypeInvert[room.roomType]} </Heading>
                     <Text fontSize='xs' >{room.ubication}</Text>
                   </Stack>
                   <Flex>

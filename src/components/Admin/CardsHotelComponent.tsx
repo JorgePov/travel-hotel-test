@@ -37,6 +37,7 @@ export const CardsHotelComponent = () => {
                       objectFit={'cover'}
                       alt='Green double couch with wooden legs'
                       borderRadius='lg'
+                      minH={'170px'}
                       maxH={'170px'}
                     />
                   </Flex>

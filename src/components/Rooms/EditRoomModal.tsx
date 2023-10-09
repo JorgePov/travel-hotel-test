@@ -1,8 +1,9 @@
-import { FormControl, FormLabel, Grid, GridItem, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Stack, Select, ModalFooter, Button, Spinner } from "@chakra-ui/react"
-import { Room } from "../../interfaces/Hotel"
-import { hours } from "../../utils/utils"
+import { FormControl, FormLabel, Grid, GridItem, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Stack, Select as List, ModalFooter, Button, Spinner } from "@chakra-ui/react"
+import { Room, roomsType } from "../../interfaces/Hotel"
 import { FormEvent, useState, useEffect } from 'react';
 import { useGlobalStorage } from "../../store/global";
+import { useParams } from "react-router";
+import { updatedRoom } from "../../services/roomService";
 
 
 
@@ -13,104 +14,104 @@ type modalProps = {
 }
 
 export const EditRoomModal = ({ onClose, isOpen, roomInfo }: modalProps) => {
-  const fetchHotels = useGlobalStorage(state => state.fetchHotels)
-  const [comission, setComission] = useState<number>(0)
-  const [name, setName] = useState<string>('')
-  const [checkIn, setCheckIn] = useState<number>(0)
-  const [checkOut, setCheckOut] = useState<number>(0)
-  const [phone, setPhone] = useState<number>(0)
+  const { id } = useParams()
+  const fetchRooms = useGlobalStorage(state => state.fetchRooms)
+  const [tax, setTax] = useState<number>(0)
+  const [nameRoom, setNameRoom] = useState<string>('')
+  const [roomType, setRoomType] = useState<string>('')
+  const [price, setPrice] = useState<number>(0)
+  const [ubication, setUbication] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
   const [isLoading, setLoading] = useState(false)
-
 
   useEffect(() => {
     if (roomInfo) {
-      setName(roomInfo.numberRoom)
+      setNameRoom(roomInfo.numberRoom)
+      setPrice(roomInfo.price)
+      setUbication(roomInfo.ubication)
+      setDescription(roomInfo.description)
+      setRoomType(roomInfo.roomType)
+      setTax(Number(roomInfo.tax) * 100)
     }
 
   }, [roomInfo])
 
 
-  const handleComission = (event: React.ChangeEvent<HTMLInputElement>) => {
-
+  const handleTax = (event: React.ChangeEvent<HTMLInputElement>) => {
     let { value, min, max } = event.target;
     const newValue = Math.max(Number(min), Math.min(Number(max), Number(value)))
-    setComission(newValue);
+    setTax(newValue);
   }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setLoading(true)
     const form = event.target as HTMLFormElement
-    const { checkInTime, checkOutTime, comision, phoneNumber } = Object.fromEntries(new FormData(form))
-    /* const newHotel: Hotel = {
+    const { description, roomType, price, ubication } = Object.fromEntries(new FormData(form))
+    const newRoom: Room = {
+      description: description as string,
+      idHotel: id as string,
+      numberRoom: roomInfo.numberRoom as string,
+      price: Number(price),
+      roomType: roomType as roomsType,
+      state: 'active',
+      tax: Number(tax) / 100,
+      ubication: ubication as string,
       id: roomInfo.id,
-      address: roomInfo.address,
-      checkInTime: `${checkInTime}:00PM` as string,
-      checkOutTime: `${checkOutTime}:00AM` as string,
-      city: roomInfo.city,
-      comision: Number(comision) / 100,
-      name: roomInfo.name,
-      phoneNumber: phoneNumber as string,
-      state: roomInfo.state,
-      idImage: roomInfo.idImage
-    } */
-    /* try {
-      await updatedHotel(newHotel)
-      fetchHotels()
+    }
+    try {
+      await updatedRoom(newRoom)
+      fetchRooms(id as string)
       setLoading(false)
       onClose()
     } catch (error) {
       console.log(error);
       setLoading(false)
-    } */
+    }
   }
 
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Crear Nuevo Hotel</ModalHeader>
+        <ModalHeader>Crear Nuevo Habitación</ModalHeader>
         <ModalCloseButton />
         <form onSubmit={handleSubmit}>
           <ModalBody>
             <Grid >
               <GridItem colSpan={1}>
                 <Stack spacing={4}>
-                  <FormControl id="name" isRequired>
-                    <FormLabel>Nombre Hotel</FormLabel>
-                    <Input name='name' type="text" disabled value={name} onChange={e => setName(e.target.value)} />
+                  <FormControl id="numberRoom" isRequired>
+                    <FormLabel>Numero de habitación</FormLabel>
+                    <Input name='numberRoom' type="text" value={nameRoom} onChange={e => setNameRoom(e.target.value)} disabled />
                   </FormControl>
 
-                  <FormControl id="checkInTime" isRequired>
-                    <FormLabel>Check In</FormLabel>
-                    <Select name='checkInTime' placeholder="Seleccionar CheckIn" value={checkIn}
-                      onChange={e => setCheckIn(Number(e.target.value))} >
-                      {hours.map(val => (
-                        <option key={val} value={val}>{val} PM</option>
-                      ))
-                      }
-                    </Select>
+                  <FormControl id="roomType" isRequired>
+                    <FormLabel>Tipo de habitación</FormLabel>
+                    <List name='roomType' placeholder="Seleccionar Tipo de habitacion" value={roomType} onChange={e => setRoomType(e.target.value)}>
+                      <option value='shared'>Compartida</option>
+                      <option value='simple'>Sencilla</option>
+                      <option value='double'>Doble</option>
+                      <option value='family'>Familiar</option>
+                      <option value='suit'>Suit</option>
+                    </List>
                   </FormControl>
 
-                  <FormControl id="checkOutTime" isRequired>
-                    <FormLabel>Check Out</FormLabel>
-                    <Select name='checkOutTime' placeholder="Seleccionar CheckOut" value={checkOut}
-                      onChange={e => setCheckOut(Number(e.target.value))}>
-                      {hours.map(val => (
-                        <option key={val} value={val}>{val} AM</option>
-                      ))
-                      }
-                    </Select>
+                  <FormControl id="price" isRequired>
+                    <FormLabel>Precio</FormLabel>
+                    <Input name='price' type="text" value={price} onChange={e => setPrice(Number(e.target.value))} />
                   </FormControl>
-
-                  <FormControl id="phoneNumber" isRequired>
-                    <FormLabel>Telefono</FormLabel>
-                    <Input name='phoneNumber' type="number" value={phone} onChange={e => setPhone(Number(e.target.value))} />
+                  <FormControl id="tax" isRequired>
+                    <FormLabel>Impuesto</FormLabel>
+                    <Input name='tax' type="number" min={0} max={100} value={tax} onChange={handleTax} />
                   </FormControl>
-
-                  <FormControl id="comision" isRequired>
-                    <FormLabel>Comision</FormLabel>
-                    <Input name='comision' type="number" min={0} max={100} value={comission} onChange={handleComission} />
+                  <FormControl id="ubication" isRequired>
+                    <FormLabel>Ubicacion</FormLabel>
+                    <Input name='ubication' type="text" value={ubication} onChange={e => setUbication(e.target.value)} />
+                  </FormControl>
+                  <FormControl id="description" isRequired>
+                    <FormLabel>Descripcion</FormLabel>
+                    <Input name='description' type="text" value={description} onChange={e => setDescription(e.target.value)} />
                   </FormControl>
                 </Stack>
               </GridItem>

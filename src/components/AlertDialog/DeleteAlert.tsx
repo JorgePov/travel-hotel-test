@@ -2,7 +2,7 @@
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Spinner, useDisclosure } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 import { changedStateBooking } from '../../services/bookingService';
-import { changedStateRoom, getRoomsByHotel } from '../../services/roomService';
+import { changedStateRoom } from '../../services/roomService';
 import { changedStateHotel } from '../../services/hotelService';
 import { useGlobalStorage } from '../../store/global';
 
@@ -22,7 +22,7 @@ export default function DeleteAlert({ idElement, idPather = '', type, state }: D
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef<HTMLButtonElement | null>(null)
     const [isLoading, setIsLoading] = useState(false);
-    const { fetchBooking, fetchBookingAdmin, fetchHotels, isAdmin } = useGlobalStorage()
+    const { fetchBooking, fetchBookingAdmin, fetchHotels, isAdmin, fetchRooms } = useGlobalStorage()
 
     const deleteBooking = async () => {
         await changedStateBooking(idElement, 'Cancelada')
@@ -34,8 +34,9 @@ export default function DeleteAlert({ idElement, idPather = '', type, state }: D
         onClose()
     }
     const deleteRoom = async () => {
+        console.log(idElement, idPather, stateInvert[state!])
         await changedStateRoom(idElement, idPather, stateInvert[state!])
-        await getRoomsByHotel(idPather)
+        await fetchRooms(idPather)
         onClose()
     }
     const deleteHotel = async () => {

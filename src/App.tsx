@@ -23,8 +23,6 @@ import DashboardRoom from './components/Rooms/DashboardRoom';
 
 export function App() {
   const isAuth = useGlobalStorage(state => state.isAuth)
-  console.log();
-
 
   return (
     <ChakraProvider theme={theme} >

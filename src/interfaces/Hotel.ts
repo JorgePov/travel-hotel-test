@@ -18,7 +18,9 @@ export interface Room {
   price: number;
   state: "inactive" | "active";
   tax: number;
-  roomType: "shared" | "simple" | "double" | "family" | "suit";
+  roomType: roomsType;
   ubication: string;
   description: string;
 }
+
+export type roomsType = "shared" | "simple" | "double" | "family" | "suit";

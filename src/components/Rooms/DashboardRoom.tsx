@@ -15,7 +15,7 @@ export default function DashboardRoom() {
         if (id) {
             fetchRooms(id)
         }
-    }, [fetchRooms])
+    }, [fetchRooms, id])
 
     return (
         <section style={{ paddingTop: '48px' }}>
