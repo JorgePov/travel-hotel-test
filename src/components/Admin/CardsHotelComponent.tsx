@@ -5,6 +5,7 @@ import DeleteAlert from '../AlertDialog/DeleteAlert'
 import { EditHotelModal } from './EditHotelModal'
 import { useState } from 'react'
 import { Hotel } from '../../interfaces/Hotel'
+import { HotelImages } from '../../utils/utils'
 
 export const CardsHotelComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -24,7 +25,7 @@ export const CardsHotelComponent = () => {
               <Card maxW='sm'>
                 <CardBody>
                   <Image
-                    src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
+                    src={HotelImages[Math.floor(Math.random()*HotelImages.length)]}
                     alt='Green double couch with wooden legs'
                     borderRadius='lg'
                   />
