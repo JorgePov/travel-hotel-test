@@ -17,6 +17,7 @@ interface State {
   reset: () => void;
   fetchHotels: () => Promise<void>;
   hotels: Hotel[];
+  searchedHotels: Hotel[];
   rooms: Room[];
   fetchRooms: (idHotel: string) => Promise<void>;
   fetchMunicipalities: () => Promise<void>;
@@ -24,6 +25,7 @@ interface State {
   fetchBooking: () => Promise<void>;
   fetchBookingAdmin: () => Promise<void>;
   fetchBookingById: (id: string) => Promise<void>;
+  fetchSearchHotels: () => Promise<void>;
   booking: any[];
   bookingSelect?: any;
 }
@@ -53,6 +55,7 @@ export const useGlobalStorage = create<State>()(
         ...initialState,
         municipalities: [],
         hotels: [],
+        searchedHotels: [],
         rooms: [],
         booking: [],
         alert: {
@@ -137,6 +140,14 @@ export const useGlobalStorage = create<State>()(
             });
           }
         },
+        fetchSearchHotels: async () => {
+          const res = await getHotels();
+          if (res) {
+            set({
+              searchedHotels: [...res],
+            });
+          }
+        }
       };
     },
     {

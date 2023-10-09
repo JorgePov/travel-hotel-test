@@ -4,11 +4,18 @@ import { BedIcon, Person, Shcedule } from './icons/CustomIcons';
 import ReactDatePicker from 'react-datepicker';
 import './Filters.css'
 import { useLocation } from 'react-router-dom';
+import { useGlobalStorage } from '../../store/global';
 
 export const Filters = () => {
+  const fetchSearchHotels = useGlobalStorage(state => state.fetchSearchHotels)
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const location = useLocation();
+
+  const handleSearch = () => {
+    fetchSearchHotels()
+  }
+
 
   return (
     <>
@@ -26,7 +33,7 @@ export const Filters = () => {
             zIndex={'100'}
             maxWidth={'1100px'}
             width={'calc(100% - 10px)'}
-            transform={'translate(-50%,-25px)'}
+            transform={'translate(-50%,-10px)'}
           >
             <form style={{ margin: 0, padding: 0 }}>
               <Flex
@@ -74,7 +81,7 @@ export const Filters = () => {
                     <Input placeholder='Cuantas personas' width={'100%'} size='md' color={'black'} />
                   </Flex>
                 </Box>
-                <Button height={''}>Buscar</Button>
+                <Button onClick={handleSearch} height={''}>Buscar</Button>
               </Flex>
             </form>
           </Box>
