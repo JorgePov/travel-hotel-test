@@ -3,23 +3,37 @@ import { persist } from "zustand/middleware";
 import { AlertProps } from "../components/Alert/AlertComponent";
 import { getHotels } from "../services/hotelService";
 import { Hotel } from "../interfaces/Hotel";
+import { useNavigate } from "react-router-dom";
+import { User } from "../interfaces/User";
 interface State {
   isAuth: boolean;
   isAdmin: boolean;
-  userInfo?: any;
-  setUserInfo: (userInfo: any, isAuth: boolean) => void;
+  userInfo?: User;
+  setUserInfo: (userInfo: User, isAuth: boolean) => void;
   alert: AlertProps;
   setShowAlert: (showAlert: AlertProps) => void;
   getIsAdmin: () => boolean;
   reset: () => void;
-  fetchHotels: () => Promise<void>
-  hotels: Hotel[]
+  fetchHotels: () => Promise<void>;
+  hotels: Hotel[];
 }
 
+const userInit: User = {
+  id: "",
+  document: "",
+  documentType: "",
+  email: "",
+  genre: "",
+  lastName: "",
+  name: "",
+  phoneNumber: "",
+  type: "travel",
+};
+
 const initialState = {
-  userInfo: [],
   isAuth: false,
   isAdmin: false,
+  userInfo: userInit,
 };
 
 export const useGlobalStorage = create<State>()(
@@ -31,7 +45,7 @@ export const useGlobalStorage = create<State>()(
         alert: {
           isShow: false,
         },
-        setUserInfo: (userInfo: any, isAuth: boolean) =>
+        setUserInfo: (userInfo: User, isAuth: boolean) =>
           set({
             userInfo,
             isAuth,
@@ -47,13 +61,13 @@ export const useGlobalStorage = create<State>()(
             ...initialState,
           }),
         fetchHotels: async () => {
-          const res = await getHotels()
+          const res = await getHotels();
           if (res) {
             set({
-              hotels: [...res]
-            })
+              hotels: [...res],
+            });
           }
-        }
+        },
       };
     },
     {

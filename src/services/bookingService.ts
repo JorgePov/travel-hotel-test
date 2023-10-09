@@ -9,8 +9,15 @@ import {
   where,
   and,
 } from "firebase/firestore";
-import { bookingCollection } from "./db";
+import {
+  bookingCollection,
+  db,
+  hotelCollection,
+  roomCollection,
+  userCollection,
+} from "./db";
 import { Booking } from "../interfaces/Booking";
+import { User } from "../interfaces/User";
 
 export const getBookings = async () => {
   return await getDocs(bookingCollection).then((data) => {
@@ -21,10 +28,51 @@ export const getBookings = async () => {
   });
 };
 
-export const getMyTravel = async (idBooking: string) => {
-  const q = doc(bookingCollection, idBooking);
-  const data = await getDoc(q);
-  return data.data();
+export const getBookingById = async (idUser: string) => {
+  const q = query(bookingCollection, where("idUser", "==", idUser));
+  const querySnapshot = await getDocs(q);
+  const dataFilter = [];
+  for (const doc of querySnapshot.docs) {
+    const dataDoc = doc.data();
+    let arrayRef = {
+      hotels: {},
+      rooms: {},
+    };
+    for (const ref of dataDoc.referencias) {
+      console.log(ref.parent.id);
+      const docRef = await getDoc(ref);
+      if (docRef.exists()) {
+        arrayRef = { ...arrayRef, [ref.parent.id]: docRef.data() };
+      }
+    }
+    dataFilter.push({
+      data: dataDoc,
+      reference: arrayRef,
+    });
+  }
+  return dataFilter;
+};
+
+const exampleReference = async (idUser: string) => {
+  const usuarioRef = doc(bookingCollection, "HdQKGsD2pgQvR8iPcgR3");
+  const usuarioDoc = await getDoc(usuarioRef);
+  const fullData = [];
+  if (usuarioDoc.exists()) {
+    const referencias = usuarioDoc.data().referencias;
+    const documentosAsociados = [];
+    for (const referencia of referencias) {
+      const documentoRef = doc(db, referencia.path);
+      const documentoSnap = await getDoc(documentoRef);
+
+      if (documentoSnap.exists()) {
+        documentosAsociados.push(documentoSnap.data());
+      }
+    }
+
+    fullData.push({ data: usuarioDoc.data(), reference: documentosAsociados });
+
+    console.log("Documentos asociados:", fullData);
+  }
 };
 
 export const updatedBooking = async (newBooking: Booking) => {
@@ -52,6 +100,11 @@ export const createBooking = async (newBooking: Booking) => {
     const docRef = await addDoc(bookingCollection, {
       ...newBooking,
     });
+    const referencias = [
+      doc(hotelCollection, newBooking.idHotel),
+      doc(roomCollection(newBooking.idHotel), newBooking.idRoom),
+    ];
+    await updateDoc(docRef, { referencias });
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
