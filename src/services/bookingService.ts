@@ -8,7 +8,7 @@ import {
   where,
   and,
 } from "firebase/firestore";
-import { bookingCollection, db, hotelCollection, roomCollection } from "./db";
+import { bookingCollection, hotelCollection, roomCollection } from "./db";
 import { Booking } from "../interfaces/Booking";
 
 export const getBookings = async () => {
