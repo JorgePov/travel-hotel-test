@@ -16,7 +16,6 @@ export default function DeleteAlert({ idElement, type }: DeleteAlerts) {
     const [isLoading, setIsLoading] = useState(false);
 
     const deleteBooking = async () => {
-        console.log(idElement)
         await deletedBooking(idElement)
         await getBookings()
         onClose()

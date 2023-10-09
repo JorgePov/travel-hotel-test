@@ -18,11 +18,11 @@ export const getHotels = async (): Promise<Hotel[] | undefined> => {
     let hotels: Hotel[] = [];
     data.forEach((doc) => {
       const hotel = doc.data() as Hotel;
-      hotels.push({ id: doc.id, ...hotel })
+      hotels.push({ id: doc.id, ...hotel });
     });
-    return hotels
-  };
-}
+    return hotels;
+  }
+};
 
 export const deletedHotel = async (idHotel: String) => {
   return idHotel;
@@ -58,7 +58,6 @@ export const createdHotel = async (newhotel: Hotel) => {
     const docRef = await addDoc(hotelCollection, {
       ...newhotel,
     });
-    console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }

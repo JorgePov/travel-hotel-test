@@ -5,7 +5,6 @@ import { timestampToString } from '../../utils/utils';
 export const DetailsBooking = () => {
     const bookingSelect = useGlobalStorage(state => state.bookingSelect)
     const { data, reference } = bookingSelect;
-    console.log(bookingSelect);
     return (
         <Container maxW='container.xl' my={4} border={'1px'}>
             <Flex>

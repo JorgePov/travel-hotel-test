@@ -54,7 +54,6 @@ export const createRoom = async (newRoom: Room) => {
     const docRef = await addDoc(roomCollection(newRoom.idHotel), {
       ...newRoom,
     });
-    console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }

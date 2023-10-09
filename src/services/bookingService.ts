@@ -41,7 +41,6 @@ export const getBookingById = async (idUser: string) => {
       reference: arrayRef,
     });
   }
-  console.log(dataFilter);
   return dataFilter;
 };
 
@@ -62,8 +61,6 @@ const exampleReference = async (idUser: string) => {
     }
 
     fullData.push({ data: usuarioDoc.data(), reference: documentosAsociados });
-
-    console.log("Documentos asociados:", fullData);
   }
 };
 
@@ -97,7 +94,6 @@ export const createBooking = async (newBooking: Booking) => {
       doc(roomCollection(newBooking.idHotel), newBooking.idRoom),
     ];
     await updateDoc(docRef, { referencias });
-    console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
