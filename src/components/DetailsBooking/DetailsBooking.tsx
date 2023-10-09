@@ -69,25 +69,21 @@ export const DetailsBooking = () => {
                     <>
                         <Divider />
                         <Text fontSize='2xl' fontWeight='bold' >Tus Acompañantes</Text>
-                        <Flex>
-                            <AvatarGroup>
-                                <Flex direction={'column'}>
-                                    {
-                                        data.travels.map(({ email, name, phoneNumber }: any) => (
+                        <Stack direction={'column'}>
+                            {
+                                data.travels.map(({ email, name, phoneNumber }: any) => (
 
-                                            <Stack direction={'row'} my={4} key={email}>
-                                                <Avatar bg='red.500' />
-                                                <Stack direction={'column'}>
-                                                    <Text fontSize='md' >Nombre: {name}</Text>
-                                                    <Text fontSize='md' >Email: {email}</Text>
-                                                    <Text fontSize='md' >Telefono: {phoneNumber}</Text>
-                                                </Stack>
-                                            </Stack>
-                                        ))
-                                    }
-                                </Flex>
-                            </AvatarGroup>
-                        </Flex>
+                                    <Stack direction={'row'} my={4} key={email}>
+                                        <Avatar bg='red.500' />
+                                        <Stack direction={'column'}>
+                                            <Text fontSize='md' >Nombre: {name}</Text>
+                                            <Text fontSize='md' >Email: {email}</Text>
+                                            <Text fontSize='md' >Telefono: {phoneNumber}</Text>
+                                        </Stack>
+                                    </Stack>
+                                ))
+                            }
+                        </Stack>
                     </> : null
             }
             {
