@@ -4,6 +4,7 @@ import { timestampToString } from '../../utils/utils';
 
 export const DetailsBooking = () => {
     const bookingSelect = useGlobalStorage(state => state.bookingSelect)
+    const isAdmin = useGlobalStorage(state => state.isAdmin)
     const { data, reference } = bookingSelect;
     return (
         <Container maxW='container.xl' my={4} border={'1px'}>
@@ -64,6 +65,22 @@ export const DetailsBooking = () => {
                     </Stack>
                 </Stack>
             </Flex>
+            {
+                isAdmin ? <>
+                    <Flex>
+                        <Stack alignSelf={'center'} flex={'1 1 auto'} >
+                            <Stack direction='row' justifyContent={'space-between'}>
+                                <Stack direction='row' >
+                                    <Text fontSize='md' color={'green.500'}>Ganancia </Text>
+                                    <Text fontSize='xs' alignSelf={'center'} color={'green.500'}>%{reference.hotels.comision * 100}</Text>
+                                </Stack>
+                                <Text fontSize='xs' color={'green.500'}>COP {reference.rooms.price * reference.hotels.comision}</Text>
+                            </Stack>
+                        </Stack>
+                    </Flex>
+                </> : null
+            }
+
             {
                 data.travels ?
                     <>
