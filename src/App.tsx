@@ -20,6 +20,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import DashboardAdmin from "./components/Admin/DashboardAdmin";
 import BookingClient from "./components/BookingClient/BookingClient";
 import Room from "./components/Rooms/Room";
+import { DetailsBooking } from "./components/DetailsBooking/DetailsBooking";
 
 export function App() {
   const isAuth = useGlobalStorage(state => state.isAuth)
@@ -39,6 +40,7 @@ export function App() {
               <Route path="/admin" element={<DashboardAdmin />} />
               <Route path="/admin/:id" element={<Room />} />
               <Route path="/dashboard/myreservations" element={<BookingClient />} />
+              <Route path="/dashboard/myreservations/:id" element={<DetailsBooking />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

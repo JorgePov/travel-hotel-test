@@ -8,6 +8,7 @@ import {
   updateDoc,
   where,
   and,
+  Timestamp,
 } from "firebase/firestore";
 import {
   bookingCollection,
@@ -39,17 +40,17 @@ export const getBookingById = async (idUser: string) => {
       rooms: {},
     };
     for (const ref of dataDoc.referencias) {
-      console.log(ref.parent.id);
       const docRef = await getDoc(ref);
       if (docRef.exists()) {
         arrayRef = { ...arrayRef, [ref.parent.id]: docRef.data() };
       }
     }
     dataFilter.push({
-      data: dataDoc,
+      data: { id: doc.id, ...dataDoc },
       reference: arrayRef,
     });
   }
+  console.log(dataFilter);
   return dataFilter;
 };
 

@@ -16,6 +16,7 @@ export default function DeleteAlert({ idElement, type }: DeleteAlerts) {
     const [isLoading, setIsLoading] = useState(false);
 
     const deleteBooking = async () => {
+        console.log(idElement)
         await deletedBooking(idElement)
         await getBookings()
         onClose()
@@ -65,30 +66,24 @@ export default function DeleteAlert({ idElement, type }: DeleteAlerts) {
                         </AlertDialogBody>
 
                         <AlertDialogFooter>
-                            <Button ref={cancelRef} onClick={onClose} >
-                                Salir
-                            </Button>
-                            <Button colorScheme='red' onClick={handlerClick} ml={3}>
-                                {type === 'booking' ? 'Cancelar' : 'Eliminar'}
-                            </Button>
                             {isLoading ? (
                                 <Button
-                                    colorScheme="teal"
-                                    size="lg"
-                                    fontSize="md"
-                                    mt={4}
+                                    colorScheme='red'
                                     disabled={true}
                                 >
                                     <Spinner />
                                 </Button>
-                            ) : <Button
-                                type="button"
-                                colorScheme="teal"
-                                size="lg"
-                                width="100%"
-                                onClick={handlerClick}
-                            >
-                                Registrarse
+                            ) : <Button colorScheme='red' onClick={handlerClick} ml={3}>
+                                {type === 'booking' ? 'Cancelar' : 'Eliminar'}
+                            </Button>}
+                            {isLoading ? (
+                                <Button
+                                    disabled={true}
+                                >
+                                    <Spinner />
+                                </Button>
+                            ) : <Button ref={cancelRef} onClick={onClose} >
+                                Salir
                             </Button>}
                         </AlertDialogFooter>
                     </AlertDialogContent>
