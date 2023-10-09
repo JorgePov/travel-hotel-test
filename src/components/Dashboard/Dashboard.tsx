@@ -1,7 +1,11 @@
-import React from 'react'
+import { Box } from '@chakra-ui/react'
+import { CardHotelsSearched } from './CardHotelsSearched'
 
 export default function Dashboard() {
+
     return (
-        <div>Dashboard</div>
+        <Box paddingTop={'48px'}>
+            <CardHotelsSearched />
+        </Box>
     )
 }
