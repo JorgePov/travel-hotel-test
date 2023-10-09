@@ -64,6 +64,7 @@ export const createdHotel = async (newhotel: Hotel) => {
     const docRef = await addDoc(hotelCollection, {
       ...newhotel,
     });
+    console.log("id documnete created: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }

@@ -1,5 +1,5 @@
 import { useGlobalStorage } from '../../store/global';
-import { Avatar, AvatarGroup, Container, Divider, Flex, Image, Stack, Text } from '@chakra-ui/react';
+import { Avatar, Container, Divider, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { timestampToString } from '../../utils/utils';
 
 export const DetailsBooking = () => {

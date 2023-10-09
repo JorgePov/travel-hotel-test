@@ -58,7 +58,7 @@ export const getBookingById = async (idUser: string) => {
   return dataFilter;
 };
 
-const exampleReference = async (idUser: string) => {
+/* const exampleReference = async (idUser: string) => {
   const usuarioRef = doc(bookingCollection, "HdQKGsD2pgQvR8iPcgR3");
   const usuarioDoc = await getDoc(usuarioRef);
   const fullData = [];
@@ -77,6 +77,7 @@ const exampleReference = async (idUser: string) => {
     fullData.push({ data: usuarioDoc.data(), reference: documentosAsociados });
   }
 };
+ */
 
 export const updatedBooking = async (newBooking: Booking) => {
   try {

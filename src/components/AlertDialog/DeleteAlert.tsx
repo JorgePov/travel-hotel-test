@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Spinner, useDisclosure } from '@chakra-ui/react'
-import React, { useRef, useState } from 'react'
-import { changedStateBooking, getBookings } from '../../services/bookingService';
+import { useRef, useState } from 'react'
+import { changedStateBooking } from '../../services/bookingService';
 import { changedStateRoom, getRooms } from '../../services/roomService';
-import { changedStateHotel, getHotels } from '../../services/hotelService';
+import { changedStateHotel } from '../../services/hotelService';
 import { useGlobalStorage } from '../../store/global';
 
 interface DeleteAlerts {
