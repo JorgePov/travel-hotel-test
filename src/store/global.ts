@@ -4,6 +4,7 @@ import { AlertProps } from "../components/Alert/AlertComponent";
 import { getHotels } from "../services/hotelService";
 import { Hotel } from "../interfaces/Hotel";
 import { User } from "../interfaces/User";
+import { getBookingById } from "../services/bookingService";
 interface State {
   isAuth: boolean;
   isAdmin: boolean;
@@ -17,6 +18,10 @@ interface State {
   hotels: Hotel[];
   fetchMunicipalities: () => Promise<void>;
   municipalities: any[];
+  fetchBooking: () => Promise<void>;
+  fetchBookingById: (id: string) => Promise<void>;
+  booking: any[];
+  bookingSelect?: any;
 }
 
 const userInit: User = {
@@ -44,6 +49,7 @@ export const useGlobalStorage = create<State>()(
         ...initialState,
         municipalities: [],
         hotels: [],
+        booking: [],
         alert: {
           isShow: false,
         },
@@ -79,7 +85,29 @@ export const useGlobalStorage = create<State>()(
                 municipalities: datasort
               })
             }))
-        }
+        },
+        fetchBookingById: async (id: string) => {
+          const { booking } = get();
+          if (booking) {
+            const bookingFilter = booking.find(({ data }) => {
+              return data.id === id;
+            });
+
+            set({
+              bookingSelect: bookingFilter,
+            });
+          }
+        },
+        fetchBooking: async () => {
+          const { userInfo } = get();
+          const id = userInfo?.id || "";
+          const res = await getBookingById(id);
+          if (res) {
+            set({
+              booking: [...res],
+            });
+          }
+        },
       };
     },
     {
