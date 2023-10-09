@@ -65,16 +65,28 @@ export default function DeleteAlert({ idElement, idPather = '', type, state }: D
 
     return (
         <>
-            {state === 'inactive' && type !== 'booking' ? <>
-                <Button colorScheme='green' onClick={onOpen}>
-                    Activar
-                </Button>
 
-            </> : <>
-                <Button colorScheme='red' onClick={onOpen}>
-                    {type === 'booking' ? 'Cancelar' : 'Inactivar'}
+            {isLoading ? (
+                <Button
+                    colorScheme={state === "active" ? 'red' : 'green'}
+                    disabled={true}
+                >
+                    <Spinner />
                 </Button>
-            </>}
+            ) : <>
+                {state === 'inactive' && type !== 'booking' ? <>
+                    <Button colorScheme='green' onClick={onOpen}>
+                        Activar
+                    </Button>
+
+                </> : <>
+                    <Button colorScheme='red' onClick={onOpen}>
+                        {type === 'booking' ? 'Cancelar' : 'Inactivar'}
+                    </Button>
+                </>}
+            </>
+            }
+
 
             <AlertDialog
                 isOpen={isOpen}
@@ -102,15 +114,9 @@ export default function DeleteAlert({ idElement, idPather = '', type, state }: D
                             ) : <Button colorScheme={state === "active" ? 'red' : 'green'} onClick={handlerClick} ml={3}>
                                 {type === 'booking' ? 'Cancelar' : `${state === "active" ? 'Inactivar' : 'Activar'} `}
                             </Button>}
-                            {isLoading ? (
-                                <Button
-                                    disabled={true}
-                                >
-                                    <Spinner />
-                                </Button>
-                            ) : <Button ref={cancelRef} onClick={onClose} >
+                            <Button ref={cancelRef} onClick={onClose} >
                                 Salir
-                            </Button>}
+                            </Button>
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialogOverlay>

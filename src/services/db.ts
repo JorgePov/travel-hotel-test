@@ -3,12 +3,12 @@ import { doc, getFirestore } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCVLB1gG9Yhl6qDCIE8fKtEXtja1LK5_Wc",
+  apiKey: process.env.REACT_APP_API_KEY_FIREBASE,
   authDomain: "backend-travel-hotel-test.firebaseapp.com",
   projectId: "backend-travel-hotel-test",
   storageBucket: "backend-travel-hotel-test.appspot.com",
-  messagingSenderId: "803949590441",
-  appId: "1:803949590441:web:90e3cdf3732d9da52f76b8",
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);

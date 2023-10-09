@@ -115,15 +115,7 @@ export default function CardBooking() {
 
                                             </> : null
                                     }
-                                    {isLoading ? (
-                                        <Button
-                                            colorScheme='red'
-                                            disabled={true}
-                                        >
-                                            <Spinner />
-                                        </Button>
-                                    ) : <DeleteAlert idElement={data.id} type='booking' />
-                                    }
+                                    <DeleteAlert idElement={data.id} type='booking' />
 
 
 

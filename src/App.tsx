@@ -23,6 +23,7 @@ import BookingAdmin from "./components/BookingAdmin/BookingAdmin";
 
 export function App() {
   const isAuth = useGlobalStorage(state => state.isAuth)
+  console.log();
 
 
   return (
