@@ -90,8 +90,18 @@ export const updatedBooking = async (newBooking: Booking) => {
   }
 };
 
-export const deletedBooking = async (idBooking: String) => {
-  return idBooking;
+export const changedStateBooking = async (
+  idBooking: string,
+  newState: string
+) => {
+  try {
+    const bookingRef = doc(bookingCollection, idBooking);
+    await updateDoc(bookingRef, {
+      state: newState,
+    });
+  } catch (error) {
+    console.error("Error al actualizar:", error);
+  }
 };
 
 export const createBooking = async (newBooking: Booking) => {

@@ -1,46 +1,60 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Spinner, useDisclosure } from '@chakra-ui/react'
 import React, { useRef, useState } from 'react'
-import { deletedBooking, getBookings } from '../../services/bookingService';
-import { deletedRoom, getRooms } from '../../services/roomService';
-import { deletedHotel, getHotels } from '../../services/hotelService';
+import { changedStateBooking, getBookings } from '../../services/bookingService';
+import { changedStateRoom, getRooms } from '../../services/roomService';
+import { changedStateHotel, getHotels } from '../../services/hotelService';
+import { useGlobalStorage } from '../../store/global';
 
 interface DeleteAlerts {
-    idElement: String;
+    idElement: string;
+    idPather?: string;
     type: "booking" | "room" | "hotel"
 }
 
-export default function DeleteAlert({ idElement, type }: DeleteAlerts) {
+export default function DeleteAlert({ idElement, idPather = '', type }: DeleteAlerts) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef<HTMLButtonElement | null>(null)
     const [isLoading, setIsLoading] = useState(false);
+    const { fetchBooking, fetchBookingAdmin, fetchHotels, isAdmin } = useGlobalStorage()
 
     const deleteBooking = async () => {
-        await deletedBooking(idElement)
-        await getBookings()
+        await changedStateBooking(idElement, 'Cancelada')
+        if (isAdmin) {
+            await fetchBookingAdmin()
+        } else {
+            await fetchBooking()
+        }
         onClose()
     }
     const deleteRoom = async () => {
-        await deletedRoom(idElement)
+        await changedStateRoom(idElement, idPather, 'inactive')
         await getRooms()
         onClose()
     }
     const deleteHotel = async () => {
-        await deletedHotel(idElement)
-        await getHotels()
+        await changedStateHotel(idElement, 'inactive')
+        await fetchHotels()
         onClose()
-    }
-
-    const handlerRequest = {
-        booking: deleteBooking,
-        room: deleteRoom,
-        hotel: deleteHotel
     }
 
     const handlerClick = async () => {
         setIsLoading(true)
-        handlerRequest[type]
-        setIsLoading(false)
+        switch (type) {
+            case 'booking':
+                await deleteBooking();
+                setIsLoading(false)
+                break;
+            case 'hotel':
+                await deleteHotel()
+                setIsLoading(false)
+                break;
+            default:
+                await deleteRoom()
+                setIsLoading(false)
+                break;
+        }
+
     }
 
     return (

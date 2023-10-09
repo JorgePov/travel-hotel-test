@@ -21,8 +21,19 @@ export const getRooms = async () => {
   });
 };
 
-export const deletedRoom = async (idRoom: String) => {
-  return idRoom;
+export const changedStateRoom = async (
+  idRoom: string,
+  idHotel: string,
+  newState: string
+) => {
+  try {
+    const roomRef = doc(roomCollection(idHotel), idRoom);
+    await updateDoc(roomRef, {
+      state: newState,
+    });
+  } catch (error) {
+    console.error("Error al actualizar:", error);
+  }
 };
 
 export const getRoomsById = async (idRoom: string, idromm: string) => {

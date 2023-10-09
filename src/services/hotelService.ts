@@ -23,8 +23,15 @@ export const getHotels = async (): Promise<Hotel[] | undefined> => {
   }
 };
 
-export const deletedHotel = async (idHotel: String) => {
-  return idHotel;
+export const changedStateHotel = async (idHotel: string, newState: string) => {
+  try {
+    const bookingRef = doc(hotelCollection, idHotel);
+    await updateDoc(bookingRef, {
+      state: newState,
+    });
+  } catch (error) {
+    console.error("Error al actualizar:", error);
+  }
 };
 
 //traer por id
