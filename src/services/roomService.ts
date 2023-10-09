@@ -9,7 +9,7 @@ import {
   where,
 } from "firebase/firestore";
 import { Room } from "../interfaces/Hotel";
-import { roomCollection, db } from "./db";
+import { roomCollection, db, hotelCollection } from "./db";
 
 export const getRooms = async () => {
   const dataDb = query(collectionGroup(db, "rooms"));
@@ -54,6 +54,10 @@ export const createRoom = async (newRoom: Room) => {
     const docRef = await addDoc(roomCollection(newRoom.idHotel), {
       ...newRoom,
     });
+    const hotelRef = doc(hotelCollection, newRoom.idHotel);
+
+    const referencias = [doc(roomCollection(newRoom.idHotel), docRef.id)];
+    await updateDoc(hotelRef, { referencias });
   } catch (e) {
     console.error("Error adding document: ", e);
   }

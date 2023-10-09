@@ -10,7 +10,7 @@ export interface Booking {
   travels?: Array<Travels>;
   startTravel?: Date;
   finishTravel?: Date;
-  state?: "inactive" | "active";
+  state?: "Cancelada" | "Cancelada" | "Reservada";
 }
 
 interface Reference {

@@ -10,13 +10,19 @@ import { timestampToString } from '../../utils/utils';
 
 export default function CardBooking() {
     const booking = useGlobalStorage(state => state.booking)
+    const isAdmin = useGlobalStorage(state => state.isAdmin)
 
     const fetchBookingById = useGlobalStorage(state => state.fetchBookingById)
     const navegate = useNavigate();
 
     const handlerClick = async (id: string) => {
         await fetchBookingById(id)
-        navegate(`/dashboard/myreservations/${id}`)
+        if (isAdmin) {
+            navegate(`/admin/reservations/${id}`)
+        } else {
+
+            navegate(`/dashboard/myreservations/${id}`)
+        }
     }
 
 
@@ -61,7 +67,7 @@ export default function CardBooking() {
                                     {timestampToString(data.startTravel)} - {timestampToString(data.finishTravel)}, {reference.hotels.city}
                                 </Text>
                                 <Text mt={'2'} fontSize={'sm'} fontWeight={'normal'} lineHeight={'3'}>
-                                    Completada
+                                    {data.state}
                                 </Text>
                             </CardBody>
                         </Stack>
@@ -71,6 +77,7 @@ export default function CardBooking() {
                             </Text>
                         </Stack>
                         <Stack direction='row' spacing={4} alignSelf={'start'} ml={4}>
+
                             <DeleteAlert idElement={data.id} type='booking' />
                         </Stack>
                     </Card>

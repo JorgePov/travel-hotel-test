@@ -21,6 +21,7 @@ import DashboardAdmin from "./components/Admin/DashboardAdmin";
 import BookingClient from "./components/BookingClient/BookingClient";
 import Room from "./components/Rooms/Room";
 import { DetailsBooking } from "./components/DetailsBooking/DetailsBooking";
+import BookingAdmin from "./components/BookingAdmin/BookingAdmin";
 
 export function App() {
   const isAuth = useGlobalStorage(state => state.isAuth)
@@ -36,9 +37,11 @@ export function App() {
           <Route path="/register" element={<Register />} />
           <Route element={<Layout />}>
             <Route element={<ProtectedRoute redirectTo="/login" canActived={isAuth} />} >
-              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<DashboardAdmin />} />
               <Route path="/admin/:id" element={<Room />} />
+              <Route path="/admin/reservations" element={<BookingAdmin />} />
+              <Route path="/admin/reservations/:id" element={<DetailsBooking />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/myreservations" element={<BookingClient />} />
               <Route path="/dashboard/myreservations/:id" element={<DetailsBooking />} />
             </Route>
