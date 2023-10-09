@@ -16,6 +16,8 @@ interface State {
   reset: () => void;
   fetchHotels: () => Promise<void>;
   hotels: Hotel[];
+  fetchMunicipalities: () => Promise<void>;
+  municipalities: any[];
   fetchBooking: () => Promise<void>;
   fetchBookingById: (id: string) => Promise<void>;
   booking: any[];
@@ -45,6 +47,7 @@ export const useGlobalStorage = create<State>()(
     (set, get) => {
       return {
         ...initialState,
+        municipalities: [],
         hotels: [],
         booking: [],
         alert: {
@@ -72,6 +75,16 @@ export const useGlobalStorage = create<State>()(
               hotels: [...res],
             });
           }
+        },
+        fetchMunicipalities: async () => {
+          fetch('https://www.datos.gov.co/resource/xdk5-pm3f.json').then(res =>
+            res.json().then(data => {
+              const datasort = data.map((val: any) => ({ value: val.municipio, label: val.municipio }))
+                .sort((a: any, b: any) => (a.municipio > b.municipio) ? 1 : -1)
+              set({
+                municipalities: datasort
+              })
+            }))
         },
         fetchBookingById: async (id: string) => {
           const { booking } = get();
