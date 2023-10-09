@@ -1,16 +1,26 @@
-import { Badge, Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Flex, Grid, GridItem, Heading, Image, Stack, Text, Tooltip } from '@chakra-ui/react'
+import { Badge, Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Flex, Grid, GridItem, Heading, Image, Stack, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
 import { useGlobalStorage } from '../../store/global'
 import { IconEdit, IconRooms } from '../shared/icons/CustomIcons'
 import DeleteAlert from '../AlertDialog/DeleteAlert'
+import { EditHotelModal } from './EditHotelModal'
+import { useState } from 'react'
+import { Hotel } from '../../interfaces/Hotel'
 
 export const CardsHotelComponent = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [hotelInfo, setHotelInfo] = useState<Hotel>()
   const hotels = useGlobalStorage(state => state.hotels)
+
+  const handleEditHotel = (hotel: Hotel) => {
+    setHotelInfo(hotel)
+    onOpen()
+  }
   return (
     <>
       <Grid templateColumns='repeat(auto-fill,minmax(300px,1fr))' gap={6} >
         {
-          hotels.map(({ name, city, checkInTime, checkOutTime, id, state, comision }) => (
-            <GridItem w='100%' key={id} >
+          hotels.map((hotel) => (
+            <GridItem w='100%' key={hotel.id} >
               <Card maxW='sm'>
                 <CardBody>
                   <Image
@@ -20,21 +30,21 @@ export const CardsHotelComponent = () => {
                   />
                   <Stack mt='6' spacing='3'>
                     <Stack mt='0' spacing='0'>
-                      <Heading size='md'>{name}</Heading>
-                      <Heading as='h6' size='xs'>{city}</Heading>
+                      <Heading size='md'>{hotel.name}</Heading>
+                      <Heading as='h6' size='xs'>{hotel.city}</Heading>
                     </Stack>
                     <Text>
-                      Check In: {checkInTime}
+                      Check In: {hotel.checkInTime}
                     </Text>
                     <Text>
-                      Check Out: {checkOutTime}
+                      Check Out: {hotel.checkOutTime}
                     </Text>
                   </Stack>
-                  {state === 'active' && <Badge colorScheme='green'>Activo</Badge>}
-                  {state === 'inactive' && <Badge colorScheme='red'>Inactivo</Badge>}
+                  {hotel.state === 'active' && <Badge colorScheme='green'>Activo</Badge>}
+                  {hotel.state === 'inactive' && <Badge colorScheme='red'>Inactivo</Badge>}
                   <Flex justifyContent={'end'}>
                     <strong>
-                      Comision: {(Number(comision) * 100)}%
+                      Comision: {(Number(hotel.comision) * 100)}%
                     </strong>
                   </Flex>
                 </CardBody>
@@ -42,7 +52,7 @@ export const CardsHotelComponent = () => {
                 <CardFooter justifyContent={'end'}>
                   <ButtonGroup spacing='2' >
                     <Tooltip hasArrow placement='top' label='Modificar' fontSize='md'>
-                      <Button variant='solid' colorScheme='blue'>
+                      <Button variant='solid' colorScheme='blue' onClick={() => handleEditHotel(hotel)}>
                         <IconEdit width={20} height={20} fill='#fff' />
                       </Button>
                     </Tooltip>
@@ -51,7 +61,7 @@ export const CardsHotelComponent = () => {
                         <IconRooms width={20} height={20} fill='#fff' />
                       </Button>
                     </Tooltip>
-                    <DeleteAlert idElement={id!} type='hotel' key={id} />
+                    <DeleteAlert idElement={hotel.id!} type='hotel' key={hotel.id} />
                   </ButtonGroup>
                 </CardFooter>
               </Card>
@@ -59,6 +69,7 @@ export const CardsHotelComponent = () => {
           ))
         }
       </Grid >
+      <EditHotelModal onClose={onClose} isOpen={isOpen} hotelInfo={hotelInfo!} />
     </>
 
   )
