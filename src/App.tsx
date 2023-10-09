@@ -1,4 +1,4 @@
-import { ChakraProvider, CSSReset} from '@chakra-ui/react';
+import { ChakraProvider, CSSReset } from '@chakra-ui/react';
 import theme from "./theme";
 
 import {
@@ -30,6 +30,7 @@ export function App() {
       <CSSReset />
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route element={<Layout />}>
