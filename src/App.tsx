@@ -1,5 +1,4 @@
-import * as React from "react"
-import { ChakraProvider, CSSReset, useColorMode, } from '@chakra-ui/react';
+import { ChakraProvider, CSSReset} from '@chakra-ui/react';
 import theme from "./theme";
 
 import {
@@ -9,7 +8,6 @@ import {
 } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Dashboard from "./components/Dashboard/Dashboard";
-import Hotel from "./components/Hotels/Hotel";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
 import NotFound from "./components/NotFound/NotFound";
 import { Layout } from "./components/Layout/Layout";
@@ -24,7 +22,6 @@ import { DetailsBooking } from "./components/DetailsBooking/DetailsBooking";
 
 export function App() {
   const isAuth = useGlobalStorage(state => state.isAuth)
-  const { colorMode } = useColorMode();
 
 
   return (

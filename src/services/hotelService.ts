@@ -12,8 +12,7 @@ import { Hotel } from "../interfaces/Hotel";
 
 //traer todos
 export const getHotels = async (): Promise<Hotel[] | undefined> => {
-  const isActive = query(hotelCollection, where("state", "==", "active"));
-  const data = await getDocs(isActive);
+  const data = await getDocs(hotelCollection);
   if (data.docs.length) {
     let hotels: Hotel[] = [];
     data.forEach((doc) => {
