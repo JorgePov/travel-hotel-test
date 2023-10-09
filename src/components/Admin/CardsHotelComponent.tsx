@@ -6,15 +6,22 @@ import { EditHotelModal } from './EditHotelModal'
 import { useState } from 'react'
 import { Hotel } from '../../interfaces/Hotel'
 import { HotelImages } from '../../utils/utils'
+import { useNavigate } from 'react-router-dom'
 
 export const CardsHotelComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [hotelInfo, setHotelInfo] = useState<Hotel>()
+  const navigate = useNavigate();
   const hotels = useGlobalStorage(state => state.hotels)
 
   const handleEditHotel = (hotel: Hotel) => {
     setHotelInfo(hotel)
     onOpen()
+  }
+
+  const handleGoRooms = ({ id }: Hotel) => {
+    navigate(`/admin/${id}`)
+
   }
   return (
     <>
@@ -25,7 +32,8 @@ export const CardsHotelComponent = () => {
               <Card maxW='sm'>
                 <CardBody>
                   <Image
-                    src={HotelImages[Math.floor(Math.random()*HotelImages.length)]}
+                    src={HotelImages[hotel.idImage]}
+                    objectFit={'cover'}
                     alt='Green double couch with wooden legs'
                     borderRadius='lg'
                   />
@@ -58,11 +66,11 @@ export const CardsHotelComponent = () => {
                       </Button>
                     </Tooltip>
                     <Tooltip hasArrow placement='top' label='Habitaciones' fontSize='md'>
-                      <Button variant='solid' colorScheme='green'>
+                      <Button variant='solid' colorScheme='green' onClick={() => { handleGoRooms(hotel) }}>
                         <IconRooms width={20} height={20} fill='#fff' />
                       </Button>
                     </Tooltip>
-                    <DeleteAlert idElement={hotel.id!} type='hotel' key={hotel.id} />
+                    <DeleteAlert idElement={hotel.id!} type='hotel' key={hotel.id} state={hotel.state} />
                   </ButtonGroup>
                 </CardFooter>
               </Card>

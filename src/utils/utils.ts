@@ -8,8 +8,12 @@ export function timestampToString(timestamp: {
   return `${dia} ${mes}`;
 }
 
+export const hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-export const hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-
-export const HotelImages = ['https://res.cloudinary.com/simpleview/image/upload/v1654733490/clients/orlandofl/5900_pool_b92df465-0c67-4161-b8bb-67f9fc301094.jpg', 'https://amenitiz.com/wp-content/uploads/2022/10/dbnsfzkttcktgyk78guu.jpg', 'https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2022/06/15/16552986712590.jpg', 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/a7/df/d7/melia-cartagena-karmairi.jpg?w=1200&h=-1&s=1', 'https://content.r9cdn.net/himg/70/f9/2b/leonardo-1127329-Swimming_Pool_Night1_O-818158.jpg']
-
+export const HotelImages = [
+  "https://amenitiz.com/wp-content/uploads/2022/10/dbnsfzkttcktgyk78guu.jpg",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmguiXZ0HrCNMjz0eLCvg1YSJjzodwBlOgmQ&usqp=CAU",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ufHUNXdoiM4fV1rEsd-mQh5hFjuk4_0_-w&usqp=CAU",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPgNCg4C6nxruDxO4-MgDPe7e-EeMmir0OVA&usqp=CAU",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmguiXZ0HrCNMjz0eLCvg1YSJjzodwBlOgmQ&usqp=CAU",
+];

@@ -10,9 +10,15 @@ interface DeleteAlerts {
     idElement: string;
     idPather?: string;
     type: "booking" | "room" | "hotel"
+    state?: "active" | "inactive"
 }
 
-export default function DeleteAlert({ idElement, idPather = '', type }: DeleteAlerts) {
+const stateInvert = {
+    active: 'inactive',
+    inactive: 'active'
+}
+
+export default function DeleteAlert({ idElement, idPather = '', type, state }: DeleteAlerts) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef<HTMLButtonElement | null>(null)
     const [isLoading, setIsLoading] = useState(false);
@@ -28,12 +34,12 @@ export default function DeleteAlert({ idElement, idPather = '', type }: DeleteAl
         onClose()
     }
     const deleteRoom = async () => {
-        await changedStateRoom(idElement, idPather, 'inactive')
+        await changedStateRoom(idElement, idPather, stateInvert[state!])
         await getRooms()
         onClose()
     }
     const deleteHotel = async () => {
-        await changedStateHotel(idElement, 'inactive')
+        await changedStateHotel(idElement, stateInvert[state!])
         await fetchHotels()
         onClose()
     }
@@ -59,9 +65,16 @@ export default function DeleteAlert({ idElement, idPather = '', type }: DeleteAl
 
     return (
         <>
-            <Button colorScheme='red' onClick={onOpen}>
-                {type === 'booking' ? 'Cancelar' : 'Eliminar'}
-            </Button>
+            {state === 'inactive' && type !== 'booking' ? <>
+                <Button colorScheme='green' onClick={onOpen}>
+                    Activar
+                </Button>
+
+            </> : <>
+                <Button colorScheme='red' onClick={onOpen}>
+                    {type === 'booking' ? 'Cancelar' : 'Inactivar'}
+                </Button>
+            </>}
 
             <AlertDialog
                 isOpen={isOpen}
@@ -71,7 +84,7 @@ export default function DeleteAlert({ idElement, idPather = '', type }: DeleteAl
                 <AlertDialogOverlay>
                     <AlertDialogContent>
                         <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                            {type === 'booking' ? 'Cancelar reserva' : `Eliminar ${type === 'room' ? 'habitacion' : 'hotel'}`}
+                            {type === 'booking' ? 'Cancelar reserva' : `${state === "active" ? 'Inactivar' : 'Activar'} ${type === 'room' ? 'habitacion' : 'hotel'}`}
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
@@ -81,13 +94,13 @@ export default function DeleteAlert({ idElement, idPather = '', type }: DeleteAl
                         <AlertDialogFooter>
                             {isLoading ? (
                                 <Button
-                                    colorScheme='red'
+                                    colorScheme={state === "active" ? 'red' : 'green'}
                                     disabled={true}
                                 >
                                     <Spinner />
                                 </Button>
-                            ) : <Button colorScheme='red' onClick={handlerClick} ml={3}>
-                                {type === 'booking' ? 'Cancelar' : 'Eliminar'}
+                            ) : <Button colorScheme={state === "active" ? 'red' : 'green'} onClick={handlerClick} ml={3}>
+                                {type === 'booking' ? 'Cancelar' : `${state === "active" ? 'Inactivar' : 'Activar'} `}
                             </Button>}
                             {isLoading ? (
                                 <Button

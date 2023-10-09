@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Grid, GridItem, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Stack, Select, ModalFooter, Button } from "@chakra-ui/react"
+import { FormControl, FormLabel, Grid, GridItem, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Stack, Select, ModalFooter, Button, Spinner } from "@chakra-ui/react"
 import { Hotel } from "../../interfaces/Hotel"
 import { hours } from "../../utils/utils"
 import { FormEvent, useState, useEffect } from 'react';
@@ -20,6 +20,7 @@ export const EditHotelModal = ({ onClose, isOpen, hotelInfo }: modalProps) => {
   const [checkIn, setCheckIn] = useState<number>(0)
   const [checkOut, setCheckOut] = useState<number>(0)
   const [phone, setPhone] = useState<number>(0)
+  const [isLoading, setLoading] = useState(false)
 
 
   useEffect(() => {
@@ -43,8 +44,9 @@ export const EditHotelModal = ({ onClose, isOpen, hotelInfo }: modalProps) => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setLoading(true)
     const form = event.target as HTMLFormElement
-    const { checkInTime, checkOutTime, comision, state, phoneNumber } = Object.fromEntries(new FormData(form))
+    const { checkInTime, checkOutTime, comision, phoneNumber } = Object.fromEntries(new FormData(form))
     const newHotel: Hotel = {
       id: hotelInfo.id,
       address: hotelInfo.address,
@@ -54,14 +56,17 @@ export const EditHotelModal = ({ onClose, isOpen, hotelInfo }: modalProps) => {
       comision: Number(comision) / 100,
       name: hotelInfo.name,
       phoneNumber: phoneNumber as string,
-      state: state as string === 'active' ? 'active' : 'inactive'
+      state: hotelInfo.state,
+      idImage: hotelInfo.idImage
     }
     try {
       await updatedHotel(newHotel)
       fetchHotels()
+      setLoading(false)
       onClose()
     } catch (error) {
       console.log(error);
+      setLoading(false)
     }
   }
 
@@ -112,20 +117,20 @@ export const EditHotelModal = ({ onClose, isOpen, hotelInfo }: modalProps) => {
                     <FormLabel>Comision</FormLabel>
                     <Input name='comision' type="number" min={0} max={100} value={comission} onChange={handleComission} />
                   </FormControl>
-
-                  <FormControl id="state" isRequired>
-                    <FormLabel>Estado</FormLabel>
-                    <Select name='state' placeholder="Seleccionar estado">
-                      <option value='active'>Activar</option>
-                      <option value='inactive'>Desactivar</option>
-                    </Select>
-                  </FormControl>
                 </Stack>
               </GridItem>
             </Grid>
           </ModalBody>
           <ModalFooter>
-            <Button type='submit'> Editar</Button>
+            {isLoading ? (
+              <Button
+                colorScheme='orange'
+                disabled={true}
+              >
+                <Spinner />
+              </Button>
+            ) : <Button colorScheme='orange' type='submit'> Editar</Button>}
+
             <Button onClick={onClose}>Close</Button>
           </ModalFooter>
         </form>

@@ -1,9 +1,9 @@
-import { Button, FormControl, FormLabel, Grid, GridItem, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Select as List } from '@chakra-ui/react'
+import { Button, FormControl, FormLabel, Grid, GridItem, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Select as List, Spinner } from '@chakra-ui/react'
 import { FormEvent, useState } from 'react'
 import Select from 'react-select'
 import { CustomMenuList } from '../shared/CustomMenuList'
 import { useGlobalStorage } from '../../store/global'
-import { hours } from '../../utils/utils';
+import { HotelImages, hours } from '../../utils/utils';
 import { Hotel } from '../../interfaces/Hotel'
 import { createdHotel } from '../../services/hotelService'
 
@@ -17,9 +17,11 @@ export const CreateHotelModal = ({ onClose, isOpen }: modalProps) => {
   const [comission, setComission] = useState<number>(0)
   const fetchHotels = useGlobalStorage(state => state.fetchHotels)
   const municipalities = useGlobalStorage(state => state.municipalities)
+  const [isLoading, setLoading] = useState(false)
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setLoading(true)
     const form = event.target as HTMLFormElement
     const { address, checkInTime, checkOutTime, city, comision, name, phoneNumber } = Object.fromEntries(new FormData(form))
     const newHotel: Hotel = {
@@ -27,6 +29,7 @@ export const CreateHotelModal = ({ onClose, isOpen }: modalProps) => {
       checkInTime: `${checkInTime}:00PM` as string,
       checkOutTime: `${checkOutTime}:00AM` as string,
       city: city as string,
+      idImage: Math.floor(Math.random() * HotelImages.length),
       comision: Number(comision) / 100,
       name: name as string,
       phoneNumber: phoneNumber as string
@@ -35,9 +38,11 @@ export const CreateHotelModal = ({ onClose, isOpen }: modalProps) => {
     try {
       await createdHotel(newHotel)
       fetchHotels()
+      setLoading(false)
       onClose()
     } catch (error) {
       console.log(error);
+      setLoading(false)
     }
   }
 
@@ -109,7 +114,14 @@ export const CreateHotelModal = ({ onClose, isOpen }: modalProps) => {
             </Grid>
           </ModalBody>
           <ModalFooter>
-            <Button type='submit'> Guardar</Button>
+            {isLoading ? (
+              <Button
+                colorScheme='green'
+                disabled={true}
+              >
+                <Spinner />
+              </Button>
+            ) : <Button colorScheme='green' type='submit'> Guardar</Button>}
             <Button onClick={onClose}>Close</Button>
           </ModalFooter>
         </form>
