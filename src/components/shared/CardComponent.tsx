@@ -1,6 +1,7 @@
 import { Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Grid, GridItem, Heading, Image, Stack, Text } from '@chakra-ui/react'
 
 export const CardComponent = () => {
+  
   return (
     <>
       <Grid templateColumns='repeat(auto-fill,minmax(300px,1fr))' gap={6}>

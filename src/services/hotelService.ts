@@ -11,15 +11,18 @@ import { hotelCollection } from "./db";
 import { Hotel } from "../interfaces/Hotel";
 
 //traer todos
-export const getHotels = async () => {
+export const getHotels = async (): Promise<Hotel[] | undefined> => {
   const isActive = query(hotelCollection, where("state", "==", "active"));
-  return await getDocs(isActive).then((data) => {
-    return data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-  });
-};
+  const data = await getDocs(isActive);
+  if (data.docs.length) {
+    let hotels: Hotel[] = [];
+    data.forEach((doc) => {
+      const hotel = doc.data() as Hotel;
+      hotels.push({ id: doc.id, ...hotel })
+    });
+    return hotels
+  };
+}
 
 export const deletedHotel = async (idHotel: String) => {
   return idHotel;

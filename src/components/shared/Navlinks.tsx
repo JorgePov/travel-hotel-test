@@ -1,4 +1,3 @@
-import React from 'react'
 import { useGlobalStorage } from '../../store/global'
 import { NavLink } from 'react-router-dom'
 import { BedIcon, FlyIcon } from './icons/CustomIcons'
@@ -15,12 +14,12 @@ export const Navlinks = () => {
               <NavLink to={'/admin'}
                 className={({ isActive }) => isActive ? "active" : "link__container"}  >
                 <BedIcon width={24} height={24} fill='#fff' style={{ marginInlineEnd: '8px' }} />
-                Mis Hoteles
+                Hoteles
               </NavLink>
               <NavLink to={'/dashboard'}
                 className={({ isActive }) => isActive ? "active" : "link__container"}>
                 <FlyIcon width={24} height={24} fill='#fff' style={{ marginInlineEnd: '8px' }} />
-                Mis reservas
+                Reservas
               </NavLink>
             </>
             :

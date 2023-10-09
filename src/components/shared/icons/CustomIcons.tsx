@@ -60,3 +60,37 @@ export function IconPlus({ style, height, width, fill }: SVGProps) {
     </svg>
   );
 }
+
+
+export function IconEdit({ style, height, width, fill }: SVGProps) {
+  return (
+    <svg
+      viewBox="0 0 1024 1024"
+      style={style} height={height} width={width} fill={fill}
+    >
+      <path d="M880 836H144c-17.7 0-32 14.3-32 32v36c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-36c0-17.7-14.3-32-32-32zm-622.3-84c2 0 4-.2 6-.5L431.9 722c2-.4 3.9-1.3 5.3-2.8l423.9-423.9a9.96 9.96 0 000-14.1L694.9 114.9c-1.9-1.9-4.4-2.9-7.1-2.9s-5.2 1-7.1 2.9L256.8 538.8c-1.5 1.5-2.4 3.3-2.8 5.3l-29.5 168.2a33.5 33.5 0 009.4 29.8c6.6 6.4 14.9 9.9 23.8 9.9z" />
+    </svg>
+  )
+}
+
+export function IconRooms({ style, height, width, fill }: SVGProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      style={style} height={height} width={width} fill={fill}
+    >
+      <path d="M12 11h-2V9h2v2m2 0h2V9h-2v2m-.6 10H12v-3.5h-2V21H4V3h14v10.1c.3-.1.7-.1 1-.1.3 0 .7 0 1 .1V1H2v22h12.5c-.5-.6-.9-1.3-1.1-2M14 7h2V5h-2v2m2 6.8V13h-2v2h.5c.5-.5 1-.9 1.5-1.2M8 5H6v2h2V5m0 4H6v2h2V9M6 19h2v-2H6v2m6-14h-2v2h2V5m-2 10h2v-2h-2v2m-2-2H6v2h2v-2m10 2v3h-3v2h3v3h2v-3h3v-2h-3v-3h-2z" />
+    </svg>
+  )
+}
+
+export function IconDelete({ style, height, width, fill }: SVGProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      style={style} height={height} width={width} fill={fill}
+    >
+      <path d="M12 11h-2V9h2v2m2 0h2V9h-2v2m-.6 10H12v-3.5h-2V21H4V3h14v10.1c.3-.1.7-.1 1-.1.3 0 .7 0 1 .1V1H2v22h12.5c-.5-.6-.9-1.3-1.1-2M14 7h2V5h-2v2m2 6.8V13h-2v2h.5c.5-.5 1-.9 1.5-1.2M8 5H6v2h2V5m0 4H6v2h2V9M6 19h2v-2H6v2m6-14h-2v2h2V5m-2 10h2v-2h-2v2m-2-2H6v2h2v-2m13.1 2.5L19 17.6l-2.1-2.1-1.4 1.4 2.1 2.1-2.1 2.1 1.4 1.4 2.1-2.1 2.1 2.1 1.4-1.4-2.1-2.1 2.1-2.1-1.4-1.4z" />
+    </svg>
+  )
+}
