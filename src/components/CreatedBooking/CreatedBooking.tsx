@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { useGlobalStorage } from '../../store/global'
 
@@ -8,15 +8,6 @@ export default function CreatedBooking() {
     const [travels, setTravels] = useState<String>()
     setContactEmergency('test')
     setTravels('test')
-    const testDeploy = () => {
-
-        console.log(roomSelected, hotelSelected, travelDate, numberTravels, focusCity, isLoading, contactEmergency, travels);
-    }
-
-    useEffect(() => {
-        testDeploy()
-
-    }, [testDeploy, travelDate])
 
 
 
