@@ -1,11 +1,8 @@
-import { Badge, Box, Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Flex, Grid, GridItem, Heading, Image, Stack, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Flex, Grid, GridItem, Heading, Image, Stack, Text, } from '@chakra-ui/react'
 import { useGlobalStorage } from '../../store/global'
-import { IconEdit } from '../shared/icons/CustomIcons'
-import DeleteAlert from '../AlertDialog/DeleteAlert'
-import { useState } from 'react'
 import { Room } from '../../interfaces/Hotel'
 import { HotelImages, RoomImages } from '../../utils/utils'
-import { useParams } from 'react-router'
+import { useNavigate } from 'react-router'
 
 
 const roomTypeInvert = {
@@ -19,10 +16,13 @@ const roomTypeInvert = {
 
 
 export const CardsRoomsClientComponent = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [roomInfo, setHotelInfo] = useState<Room>()
-  const { rooms, hotelSelected } = useGlobalStorage()
-  const { id } = useParams()
+  const navigate = useNavigate()
+  const { rooms, hotelSelected, setRoomSelected } = useGlobalStorage()
+
+  const handleClick = (room: Room) => {
+    setRoomSelected(room)
+    navigate(`/booking/${room.id}`)
+  }
 
 
   return (
@@ -140,7 +140,7 @@ export const CardsRoomsClientComponent = () => {
                   <Divider />
                   <CardFooter justifyContent={'end'}>
                     <ButtonGroup spacing='2' >
-                      <Button variant='solid' colorScheme='blue' >
+                      <Button variant='solid' colorScheme='blue' onClick={() => { handleClick(room) }} >
                         Reservar
                       </Button>
                     </ButtonGroup>

@@ -39,12 +39,15 @@ interface State {
   setLoading: (state: boolean) => void;
   hotelSelected?: Hotel;
   setHotelSelected: (hotel: Hotel) => void;
-  //Lista de idRooms
+  roomSelected?: Room;
+  setRoomSelected: (room: Room) => void;
   listIdRooms: string[];
-  //Ciudad filtrada
   focusCity: string;
-  //Cantidad de compañantes  > 1/ agrega viajeros extra al reservar
   numberTravels: number;
+  travelDate?: {
+    startDate: Timestamp;
+    finishDate: Timestamp;
+  };
 }
 
 const userInit: User = {
@@ -72,6 +75,18 @@ const hotelInit: Hotel = {
   state: "active",
 };
 
+const roomInit: Room = {
+  description: "",
+  idHotel: "",
+  id: "",
+  numberRoom: "",
+  price: 0,
+  roomType: "double",
+  state: "active",
+  tax: 0,
+  ubication: "",
+};
+
 const initialState = {
   isAuth: false,
   isAdmin: false,
@@ -80,6 +95,7 @@ const initialState = {
   numberTravels: 1,
   userInfo: userInit,
   hotelSelected: hotelInit,
+  roomSelected: roomInit,
   isLoading: false,
   municipalities: [],
   hotels: [],
@@ -98,6 +114,7 @@ export const useGlobalStorage = create<State>()(
         ...initialState,
         setLoading: (status: boolean) => set({ isLoading: status }),
         setHotelSelected: (hotel: Hotel) => set({ hotelSelected: hotel }),
+        setRoomSelected: (room: Room) => set({ roomSelected: room }),
         setUserInfo: (userInfo: User, isAuth: boolean) =>
           set({
             userInfo,
@@ -227,6 +244,7 @@ export const useGlobalStorage = create<State>()(
               listIdRooms: [...res.listIdRooms],
               focusCity: res.focusCity,
               numberTravels: res.numberTravels,
+              travelDate: res.travelDate,
               isLoading: false,
             });
           }

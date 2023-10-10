@@ -1,5 +1,4 @@
-import { Box, Button, Flex, Spinner, useDisclosure } from '@chakra-ui/react'
-import { IconPlus } from '../shared/icons/CustomIcons';
+import { Box, Flex, Spinner } from '@chakra-ui/react'
 import { useEffect } from 'react';
 import { useGlobalStorage } from '../../store/global';
 import { useParams } from 'react-router';

@@ -7,12 +7,9 @@ import {
   doc,
   updateDoc,
   Timestamp,
-  orderBy,
 } from "firebase/firestore";
 import { bookingCollection, hotelCollection } from "./db";
 import { Hotel } from "../interfaces/Hotel";
-import { useGlobalStorage } from "../store/global";
-import { async } from "q";
 
 //traer todos
 export const getHotels = async (): Promise<Hotel[] | undefined> => {
@@ -89,6 +86,10 @@ const getHotelsByCity = async (city: string) => {
 };
 
 interface dataFilter {
+  travelDate: {
+    startDate: Timestamp;
+    finishDate: Timestamp;
+  };
   listIdRooms: string[];
   focusCity: string;
   hotels: Hotel[];
@@ -106,6 +107,10 @@ export const getHotelByFilter = async (
     const { hotels } = await getHotelsByCity(city);
 
     const response = {
+      travelDate: {
+        startDate,
+        finishDate,
+      },
       listIdRooms,
       focusCity: city,
       hotels: hotels,

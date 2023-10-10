@@ -7,19 +7,20 @@ import { useLocation } from 'react-router-dom';
 import { useGlobalStorage } from '../../store/global';
 import { Timestamp } from '@firebase/firestore';
 import Select from 'react-select';
-import { CustomMenuList } from '../shared/CustomMenuList'
 
 export const Filters = () => {
   const { fetchSearchHotels, numberTravels, municipalities } = useGlobalStorage()
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [travels, setTravels] = useState<number>(numberTravels);
+  const [city, setCity] = useState<string>('');
   const location = useLocation();
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement
     const { city } = Object.fromEntries(new FormData(form))
+    setCity(city as string);
     const newEndDate = new Date(endDate!)
     newEndDate.setHours(newEndDate.getHours() + 8);
     const newStartDate = new Date(startDate!)
@@ -58,10 +59,10 @@ export const Filters = () => {
                 boxShadow={'0 2px 8px 0 rgba(26,26,26,0.16)'}
                 gap={'3px'}
               >
-                <Box bg='fontColor.white' flex={'1 1 auto'} borderRadius={'8px'}>
-                  <Flex padding={'8px'} alignItems={'center'}>
+                <Box bg='fontColor.white' flex={'1 1 auto'} borderRadius={'8px'} w={'27%'}>
+                  <Flex padding={'8px'} alignItems={'center'} >
                     <BedIcon width={24} height={24} fill='#000' style={{ marginInlineEnd: '8px' }} />
-                    <Select placeholder='¿A donde vas?' name='city' options={municipalities} />
+                    <Select placeholder='¿A donde vas?' name='city' options={municipalities} defaultValue={{ label: city, value: city }} className='datePicker' />
                   </Flex>
                 </Box>
                 <Box bg='fontColor.white' flex={'1 1 auto'} borderRadius={'8px'}>
