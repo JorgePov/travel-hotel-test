@@ -5,7 +5,7 @@ import {
   doc,
   getDoc,
   updateDoc,
-  where,
+  where
 } from "firebase/firestore";
 import { Room } from "../interfaces/Hotel";
 import { roomCollection, hotelCollection } from "./db";
@@ -28,17 +28,16 @@ export const getRoomsByFilter = async (
   idHotel: string,
   listIDRooms: string[]
 ): Promise<Room[] | undefined> => {
-  console.log(listIDRooms);
-
-  const q = query(roomCollection(idHotel), where("id", "not-in", listIDRooms));
-  const data = await getDocs(q);
+  //filter documents by id document firebase
+  const data = await getDocs(roomCollection(idHotel));
   if (data.docs.length) {
     let rooms: Room[] = [];
     data.forEach((doc) => {
       const room = doc.data() as Room;
-      rooms.push({ id: doc.id, ...room });
+      if (!listIDRooms.some(val => val === doc.id)) {
+        rooms.push({ id: doc.id, ...room });
+      }
     });
-    console.log(rooms);
     return rooms;
   }
 };
