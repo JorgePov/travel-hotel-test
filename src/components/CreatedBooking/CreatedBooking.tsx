@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { useGlobalStorage } from '../../store/global'
 
@@ -15,7 +16,7 @@ export default function CreatedBooking() {
     useEffect(() => {
         testDeploy()
 
-    }, [])
+    }, [testDeploy, travelDate])
 
 
 
