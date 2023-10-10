@@ -4,10 +4,15 @@ import { AlertProps } from "../components/Alert/AlertComponent";
 import { getHotelByFilter, getHotels } from "../services/hotelService";
 import { Hotel, Room } from "../interfaces/Hotel";
 import { User } from "../interfaces/User";
-import { getBookingById, getBookings } from "../services/bookingService";
+import {
+  getBookingById,
+  getBookingByIdUser,
+  getBookings,
+} from "../services/bookingService";
 import { getRoomsByFilter, getRoomsByHotel } from "../services/roomService";
 import { Timestamp } from "@firebase/firestore";
 import { Booking } from "../interfaces/Booking";
+import { calculateDaysBetweenTimestamps } from "../utils/utils";
 interface State {
   isAuth: boolean;
   isAdmin: boolean;
@@ -21,6 +26,7 @@ interface State {
   hotels: Hotel[];
   searchedHotels: Hotel[];
   rooms: Room[];
+  totalDays: number;
   fetchRooms: (idHotel: string) => Promise<void>;
   fetchRoomsClient: (idHotel: string) => Promise<void>;
   fetchMunicipalities: () => Promise<void>;
@@ -42,9 +48,10 @@ interface State {
   setHotelSelected: (hotel: Hotel) => void;
   roomSelected?: Room;
   setRoomSelected: (room: Room) => void;
+  fetchBoockingById: (idBooking: string) => Promise<void>;
   listIdRooms: string[];
   focusCity: string;
-  numberTravels: number;
+  numberTravels?: number;
   travelDate?: {
     startDate: Timestamp;
     finishDate: Timestamp;
@@ -98,6 +105,7 @@ const initialState = {
   numberTravels: 1,
   userInfo: userInit,
   hotelSelected: hotelInit,
+  totalDays: 1,
   roomSelected: roomInit,
   isLoading: false,
   createDataBooking: {},
@@ -222,10 +230,26 @@ export const useGlobalStorage = create<State>()(
           });
           const { userInfo } = get();
           const id = userInfo?.id || "";
-          const res = await getBookingById(id);
+          const res = await getBookingByIdUser(id);
           if (res) {
             set({
               booking: [...res],
+              isLoading: false,
+            });
+          }
+        },
+        fetchBoockingById: async (idBooking: string) => {
+          set({
+            isLoading: true,
+          });
+          const res = await getBookingById(idBooking);
+          if (res) {
+            set({
+              roomSelected: res.reference?.rooms,
+              hotelSelected: res.reference?.hotels,
+              bookingSelect: res.data,
+              numberTravels: res.data?.numberTravels,
+              totalDays: res.data?.totalDays,
               isLoading: false,
             });
           }
@@ -252,6 +276,10 @@ export const useGlobalStorage = create<State>()(
               focusCity: res.focusCity,
               numberTravels: res.numberTravels,
               travelDate: res.travelDate,
+              totalDays: calculateDaysBetweenTimestamps(
+                res.travelDate.startDate,
+                res.travelDate.finishDate
+              ),
               isLoading: false,
             });
           }

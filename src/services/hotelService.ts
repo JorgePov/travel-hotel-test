@@ -24,30 +24,6 @@ export const getHotels = async (): Promise<Hotel[] | undefined> => {
   }
 };
 
-/* export const getBookingById = async (idUser: string) => {
-  const q = query(bookingCollection, where("idUser", "==", idUser));
-  const querySnapshot = await getDocs(q);
-  const dataFilter = [];
-  for (const doc of querySnapshot.docs) {
-    const dataDoc = doc.data();
-    let arrayRef = {
-      hotels: {},
-      rooms: {},
-    };
-    for (const ref of dataDoc.referencias) {
-      const docRef = await getDoc(ref);
-      if (docRef.exists()) {
-        arrayRef = { ...arrayRef, [ref.parent.id]: docRef.data() };
-      }
-    }
-    dataFilter.push({
-      data: { id: doc.id, ...dataDoc },
-      reference: arrayRef,
-    });
-  }
-  return dataFilter;
-};*/
-
 const getListIdRooms = async (startDate: Timestamp, finishDate: Timestamp) => {
   const startTravelQuery = query(
     bookingCollection,

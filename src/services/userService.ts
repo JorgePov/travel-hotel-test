@@ -76,16 +76,6 @@ const userExist = async (user: User) => {
   return false;
 };
 
-/* const data = await getDocs(q);
-  if (data.docs.length) {
-    let usuarios!: User;
-    data.forEach((doc) => {
-      const usuario = doc.data() as User;
-      usuarios = { id: doc.id, ...usuario };
-    });
-    return usuarios; */
-
-//login
 export const loginUser = async (credencial: loginData): Promise<User> => {
   const q = query(
     userCollection,

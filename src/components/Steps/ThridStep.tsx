@@ -8,10 +8,10 @@ export default function ThridStep({ goToNext, goToPrevious }: contactProps) {
     const { setCreateDataBooking, createDataBooking } = useGlobalStorage()
 
     const handleGoToNext = () => {
-        console.log(createDataBooking);
         setCreateDataBooking({
             ...createDataBooking
         })
+        console.log(createDataBooking);
         goToNext()
 
     }

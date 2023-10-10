@@ -12,16 +12,25 @@ export interface Booking {
   startTravel?: Timestamp;
   finishTravel?: Timestamp;
   state?: "Completada" | "Cancelada" | "Reservada";
+  numberTravels?: number;
+  totalDays?: number;
+  billing?: Billing;
+}
+
+export interface Billing {
+  price: number;
+  tax: number;
+  total: number;
 }
 
 interface Reference {
-  hotels: Hotel;
-  rooms: Room;
+  hotels?: Hotel;
+  rooms?: Room;
 }
 
 export interface BookingApi {
-  data: Booking;
-  reference: Reference;
+  data?: Booking;
+  reference?: Reference;
 }
 
 export interface EmergencyContact {

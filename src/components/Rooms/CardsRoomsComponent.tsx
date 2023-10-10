@@ -4,20 +4,9 @@ import { IconEdit } from '../shared/icons/CustomIcons'
 import DeleteAlert from '../AlertDialog/DeleteAlert'
 import { useState } from 'react'
 import { Room } from '../../interfaces/Hotel'
-import { RoomImages } from '../../utils/utils'
+import { RoomImages, roomTypeInvert } from '../../utils/utils'
 import { EditRoomModal } from './EditRoomModal'
 import { useParams } from 'react-router'
-
-
-const roomTypeInvert = {
-  shared: 'Compartida',
-  simple: 'Sencilla',
-  double: 'Doble',
-  family: 'Familiar',
-  suit: 'Suit'
-
-}
-
 
 export const CardsRoomsComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()

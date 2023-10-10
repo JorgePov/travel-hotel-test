@@ -9,7 +9,7 @@ import {
   and,
 } from "firebase/firestore";
 import { bookingCollection, hotelCollection, roomCollection } from "./db";
-import { Booking } from "../interfaces/Booking";
+import { Booking, BookingApi } from "../interfaces/Booking";
 
 export const getBookings = async () => {
   const querySnapshot = await getDocs(bookingCollection);
@@ -34,7 +34,29 @@ export const getBookings = async () => {
   return dataFilter;
 };
 
-export const getBookingById = async (idUser: string) => {
+export const getBookingById = async (
+  idBooking: string
+): Promise<BookingApi | undefined> => {
+  const queryId = doc(bookingCollection, idBooking);
+  const querySnapshot = await getDoc(queryId);
+  let bookingData: BookingApi = {
+    data: querySnapshot.data(),
+  };
+  if (querySnapshot.exists()) {
+    for (const ref of querySnapshot.data().referencias) {
+      const docRef = await getDoc(ref);
+      if (docRef.exists()) {
+        bookingData.reference = {
+          ...bookingData.reference,
+          [ref.parent.id]: docRef.data(),
+        };
+      }
+    }
+  }
+  return bookingData;
+};
+
+export const getBookingByIdUser = async (idUser: string) => {
   const q = query(bookingCollection, where("idUser", "==", idUser));
   const querySnapshot = await getDocs(q);
   const dataFilter = [];
@@ -57,27 +79,6 @@ export const getBookingById = async (idUser: string) => {
   }
   return dataFilter;
 };
-
-/* const exampleReference = async (idUser: string) => {
-  const usuarioRef = doc(bookingCollection, "HdQKGsD2pgQvR8iPcgR3");
-  const usuarioDoc = await getDoc(usuarioRef);
-  const fullData = [];
-  if (usuarioDoc.exists()) {
-    const referencias = usuarioDoc.data().referencias;
-    const documentosAsociados = [];
-    for (const referencia of referencias) {
-      const documentoRef = doc(db, referencia.path);
-      const documentoSnap = await getDoc(documentoRef);
-
-      if (documentoSnap.exists()) {
-        documentosAsociados.push(documentoSnap.data());
-      }
-    }
-
-    fullData.push({ data: usuarioDoc.data(), reference: documentosAsociados });
-  }
-};
- */
 
 export const updatedBooking = async (newBooking: Booking) => {
   try {

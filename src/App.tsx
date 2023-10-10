@@ -44,8 +44,8 @@ export function App() {
               <Route path="/dashboard/:id" element={<RoomClient />} />
               <Route path="/dashboard/myreservations" element={<BookingClient />} />
               <Route path="/dashboard/myreservations/:id" element={<DetailsBooking />} />
+              <Route path="/booking" element={<CreatedBooking />} />
               <Route path="/booking/:id" element={<CreatedBooking />} />
-
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

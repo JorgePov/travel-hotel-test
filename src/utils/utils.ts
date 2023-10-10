@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export function timestampToString(timestamp: {
   seconds: number;
   nanoseconds: number;
@@ -7,6 +9,51 @@ export function timestampToString(timestamp: {
   const dia = fecha.getDate().toString();
   return `${dia} ${mes}`;
 }
+
+export function timestampToStringFullDate(timestamp: Timestamp): string {
+  const fecha = new Date(timestamp.seconds * 1000);
+
+  const diasSemana = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
+  const diaSemana = diasSemana[fecha.getDay()];
+
+  const dia = fecha.getDate();
+  const mes = fecha.toLocaleString("default", { month: "short" });
+  const año = fecha.getFullYear();
+
+  return `${diaSemana}, ${dia} de ${mes} de ${año}`;
+}
+
+export function formatCurrency(amount: number): string {
+  const formatter = new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+
+  return formatter.format(amount).replace("$", "COP").replace(".", ",");
+}
+
+export function calculateDaysBetweenTimestamps(
+  timestampStart: Timestamp,
+  timestampEnd: Timestamp
+): number {
+  const dayToSeconds = 24 * 60 * 60;
+  const secondsStart = timestampStart.seconds;
+  const secondsEnd = timestampEnd.seconds;
+  const diferenciaEnSegundos = Math.abs(secondsEnd - secondsStart);
+  const countDays = Math.floor(diferenciaEnSegundos / dayToSeconds);
+  console.log(countDays);
+  return countDays;
+}
+
+export const roomTypeInvert = {
+  shared: "Compartida",
+  simple: "Sencilla",
+  double: "Doble",
+  family: "Familiar",
+  suit: "Suit",
+};
 
 export const hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 

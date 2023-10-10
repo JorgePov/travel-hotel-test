@@ -12,7 +12,7 @@ export const Filters = () => {
   const { fetchSearchHotels, numberTravels, municipalities } = useGlobalStorage()
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
-  const [travels, setTravels] = useState<number>(numberTravels);
+  const [travels, setTravels] = useState<number>(numberTravels!);
   const [city, setCity] = useState<string>('');
   const location = useLocation();
 
@@ -94,7 +94,7 @@ export const Filters = () => {
                 <Box bg='fontColor.white' flex={'1 1 auto'} borderRadius={'8px'}>
                   <Flex padding={'8px'} alignItems={'center'} >
                     <Person width={24} height={24} fill='#000' style={{ marginInlineEnd: '8px' }} />
-                    <Input placeholder='Cuantas personas' type='number' width={'100%'} size='md' color={'black'} value={travels} onChange={(event) => { setTravels(Number(event.target.value)) }} />
+                    <Input placeholder='Cuantas personas' type='number' min={1} width={'100%'} size='md' color={'black'} value={travels} onChange={(event) => { setTravels(Number(event.target.value)) }} />
                   </Flex>
                 </Box>
                 <Button type='submit' height={''}>Buscar</Button>

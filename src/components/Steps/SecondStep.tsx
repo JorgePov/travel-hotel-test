@@ -1,4 +1,4 @@
-import { Card, Text, Box, GridItem, Stack, FormControl, FormLabel, Input, Select, Button, Spinner, Flex, InputLeftAddon, InputGroup } from '@chakra-ui/react';
+import { Card, Text, Box, Stack, FormControl, FormLabel, Input, Button, Flex, InputLeftAddon, InputGroup } from '@chakra-ui/react';
 import React, { useState } from 'react'
 import { ArrowLeft, ArrowRight } from '../shared/icons/CustomIcons';
 import { useGlobalStorage } from '../../store/global';
@@ -10,16 +10,15 @@ const SecondStep = ({ goToNext, goToPrevious }: contactProps) => {
     const [phoneNumber, setPhoneNumber] = useState<string>('')
 
     const handleGoToNext = () => {
-        console.log(createDataBooking);
         setCreateDataBooking({
             ...createDataBooking, emergencyContact: {
                 name, phoneNumber
             }
         })
+        console.log(createDataBooking);
         goToNext()
 
     }
-
 
     return (
         <>
@@ -48,10 +47,10 @@ const SecondStep = ({ goToNext, goToPrevious }: contactProps) => {
             <Flex justifyContent={'space-around'}>
                 <Button colorScheme='blue' onClick={goToPrevious}>
                     <ArrowLeft width={24} height={24} fill='white' />
-                    Anterior
+                    Regresar
                 </Button>
-                <Button colorScheme='blue' onClick={handleGoToNext}>
-                    Siguiente
+                <Button colorScheme='blue' onClick={handleGoToNext} isDisabled={name === '' || phoneNumber === ''}>
+                    Continuar
                     <ArrowRight width={24} height={24} fill='white' />
                 </Button>
             </Flex>

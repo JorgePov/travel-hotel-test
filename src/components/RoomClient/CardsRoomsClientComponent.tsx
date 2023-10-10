@@ -1,18 +1,9 @@
 import { Box, Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Flex, Grid, GridItem, Heading, Image, Stack, Text, } from '@chakra-ui/react'
 import { useGlobalStorage } from '../../store/global'
 import { Room } from '../../interfaces/Hotel'
-import { HotelImages, RoomImages } from '../../utils/utils'
+import { HotelImages, RoomImages, roomTypeInvert } from '../../utils/utils'
 import { useNavigate } from 'react-router'
 
-
-const roomTypeInvert = {
-  shared: 'Compartida',
-  simple: 'Sencilla',
-  double: 'Doble',
-  family: 'Familiar',
-  suit: 'Suit'
-
-}
 
 export const CardsRoomsClientComponent = () => {
   const navigate = useNavigate()
@@ -20,7 +11,7 @@ export const CardsRoomsClientComponent = () => {
 
   const handleClick = (room: Room) => {
     setRoomSelected(room)
-    navigate(`/booking/${room.id}`)
+    navigate(`/booking`)
   }
 
 
