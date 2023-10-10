@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useGlobalStorage } from '../../store/global'
 
 export default function CreatedBooking() {
@@ -7,7 +7,16 @@ export default function CreatedBooking() {
     const [travels, setTravels] = useState<String>()
     setContactEmergency('test')
     setTravels('test')
-    console.log(roomSelected, hotelSelected, travelDate, numberTravels, focusCity, isLoading, contactEmergency, travels);
+    const testDeploy = () => {
+
+        console.log(roomSelected, hotelSelected, travelDate, numberTravels, focusCity, isLoading, contactEmergency, travels);
+    }
+
+    useEffect(() => {
+        testDeploy()
+
+    }, [])
+
 
 
     return (
