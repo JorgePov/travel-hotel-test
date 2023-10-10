@@ -55,7 +55,7 @@ export const CreateRoomModal = ({ onClose, isOpen }: modalProps) => {
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Crear Nuevo Habitación</ModalHeader>
+        <ModalHeader>Crear Nueva Habitación</ModalHeader>
         <ModalCloseButton />
         <form onSubmit={handleSubmit}>
           <ModalBody>

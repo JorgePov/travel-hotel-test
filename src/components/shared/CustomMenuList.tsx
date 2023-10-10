@@ -10,7 +10,7 @@ export const CustomMenuList = (props: any) => {
       <List
         height={150 || 100}
         itemCount={children.length}
-        itemSize={itemHeight}
+        itemSize={itemHeight || 35}
         initialScrollOffset={initialOffset}
         width={'100%'}
       >

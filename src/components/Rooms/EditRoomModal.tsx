@@ -74,7 +74,7 @@ export const EditRoomModal = ({ onClose, isOpen, roomInfo }: modalProps) => {
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Crear Nuevo Habitación</ModalHeader>
+        <ModalHeader>Modificar Habitación</ModalHeader>
         <ModalCloseButton />
         <form onSubmit={handleSubmit}>
           <ModalBody>

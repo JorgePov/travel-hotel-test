@@ -1,4 +1,4 @@
-import { Button, Flex, Spinner, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Flex, Spinner, useDisclosure } from '@chakra-ui/react'
 import { IconPlus } from '../shared/icons/CustomIcons';
 import { useEffect } from 'react';
 import { useGlobalStorage } from '../../store/global';
@@ -30,16 +30,16 @@ export default function DashboardRoom() {
                             size='xl'
                         />
                     </Flex> :
-                    <section style={{ paddingTop: '48px' }}>
+                    <Box pt={10}>
                         <Flex justifyContent={'center'} alignItems={'center'} paddingBottom={'30px'}>
                             <Button colorScheme='teal' variant='outline' maxWidth={'350px'} width={'100%'} onClick={onOpen}>
                                 <IconPlus width={20} height={20} fill='#2C7A7B' />
-                                Agregar Habitacion
+                                Agregar Habitación
                             </Button>
                         </Flex>
                         <CardsRoomsComponent />
                         <CreateRoomModal isOpen={isOpen} onClose={onClose} />
-                    </section>
+                    </Box>
             }
         </>
     )

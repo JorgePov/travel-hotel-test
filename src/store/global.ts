@@ -1,11 +1,12 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { AlertProps } from "../components/Alert/AlertComponent";
-import { getHotels } from "../services/hotelService";
+import { getHotelByFilter, getHotels } from "../services/hotelService";
 import { Hotel, Room } from "../interfaces/Hotel";
 import { User } from "../interfaces/User";
 import { getBookingById, getBookings } from "../services/bookingService";
-import { getRoomsByHotel } from "../services/roomService";
+import { getRoomsByFilter, getRoomsByHotel } from "../services/roomService";
+import { Timestamp } from "@firebase/firestore";
 interface State {
   isAuth: boolean;
   isAdmin: boolean;
@@ -20,16 +21,30 @@ interface State {
   searchedHotels: Hotel[];
   rooms: Room[];
   fetchRooms: (idHotel: string) => Promise<void>;
+  fetchRoomsClient: (idHotel: string) => Promise<void>;
   fetchMunicipalities: () => Promise<void>;
   municipalities: any[];
   fetchBooking: () => Promise<void>;
   fetchBookingAdmin: () => Promise<void>;
   fetchBookingById: (id: string) => Promise<void>;
-  fetchSearchHotels: () => Promise<void>;
+  fetchSearchHotels: (
+    startDate: Timestamp,
+    finishDate: Timestamp,
+    city: string,
+    travels: number
+  ) => Promise<void>;
   booking: any[];
   bookingSelect?: any;
   isLoading: boolean;
   setLoading: (state: boolean) => void;
+  hotelSelected?: Hotel;
+  setHotelSelected: (hotel: Hotel) => void;
+  //Lista de idRooms
+  listIdRooms: string[];
+  //Ciudad filtrada
+  focusCity: string;
+  //Cantidad de compañantes  > 1/ agrega viajeros extra al reservar
+  numberTravels: number;
 }
 
 const userInit: User = {
@@ -44,10 +59,27 @@ const userInit: User = {
   type: "travel",
 };
 
+const hotelInit: Hotel = {
+  id: "",
+  address: "",
+  checkInTime: "",
+  checkOutTime: "",
+  city: "",
+  comision: 0,
+  idImage: 0,
+  name: " ",
+  phoneNumber: "",
+  state: "active",
+};
+
 const initialState = {
   isAuth: false,
   isAdmin: false,
+  listIdRooms: [""],
+  focusCity: "",
+  numberTravels: 1,
   userInfo: userInit,
+  hotelSelected: hotelInit,
   isLoading: false,
   municipalities: [],
   hotels: [],
@@ -65,6 +97,7 @@ export const useGlobalStorage = create<State>()(
       return {
         ...initialState,
         setLoading: (status: boolean) => set({ isLoading: status }),
+        setHotelSelected: (hotel: Hotel) => set({ hotelSelected: hotel }),
         setUserInfo: (userInfo: User, isAuth: boolean) =>
           set({
             userInfo,
@@ -97,6 +130,19 @@ export const useGlobalStorage = create<State>()(
             isLoading: true,
           });
           const res = await getRoomsByHotel(idHotel);
+          if (res) {
+            set({
+              rooms: [...res],
+              isLoading: false,
+            });
+          }
+        },
+        fetchRoomsClient: async (idHotel: string) => {
+          const { listIdRooms } = get();
+          set({
+            isLoading: true,
+          });
+          const res = await getRoomsByFilter(idHotel, listIdRooms);
           if (res) {
             set({
               rooms: [...res],
@@ -160,14 +206,27 @@ export const useGlobalStorage = create<State>()(
             });
           }
         },
-        fetchSearchHotels: async () => {
+        fetchSearchHotels: async (
+          startDate: Timestamp,
+          finishDate: Timestamp,
+          city: string,
+          travels: number
+        ) => {
           set({
             isLoading: true,
           });
-          const res = await getHotels();
+          const res = await getHotelByFilter(
+            startDate,
+            finishDate,
+            city,
+            travels
+          );
           if (res) {
             set({
-              searchedHotels: [...res],
+              searchedHotels: [...res.hotels],
+              listIdRooms: [...res.listIdRooms],
+              focusCity: res.focusCity,
+              numberTravels: res.numberTravels,
               isLoading: false,
             });
           }

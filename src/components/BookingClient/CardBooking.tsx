@@ -3,7 +3,7 @@ import "./BookingClient.css";
 import DeleteAlert from '../AlertDialog/DeleteAlert';
 import { useGlobalStorage } from '../../store/global';
 import { useNavigate } from 'react-router-dom';
-import { timestampToString } from '../../utils/utils';
+import { HotelImages, timestampToString } from '../../utils/utils';
 import { changedStateBooking } from '../../services/bookingService';
 import { useState } from 'react';
 
@@ -52,7 +52,7 @@ export default function CardBooking() {
                                     maxW={{ base: '80px' }}
                                     maxH={{ base: '80px' }}
                                     borderRadius={'0.25rem'}
-                                    src='https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60'
+                                    src={HotelImages[reference.hotels.idImage]}
                                     alt='Caffe Latte'
                                 />
                             </Stack>

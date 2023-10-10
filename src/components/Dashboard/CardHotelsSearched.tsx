@@ -1,11 +1,20 @@
-import { Badge, Box, Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Flex, Grid, GridItem, Heading, Image, Stack, Text, Tooltip } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Flex, Grid, GridItem, Heading, Image, Stack, Text } from '@chakra-ui/react'
 import { useGlobalStorage } from '../../store/global'
 import { HotelImages } from '../../utils/utils'
-import { IconRooms, LocationNotFoundIcon } from '../shared/icons/CustomIcons'
-import DeleteAlert from '../AlertDialog/DeleteAlert'
+import { LocationNotFoundIcon } from '../shared/icons/CustomIcons'
+import { useNavigate } from 'react-router'
+import { Hotel } from '../../interfaces/Hotel'
 
 export const CardHotelsSearched = () => {
-  const hotels = useGlobalStorage(state => state.searchedHotels)
+  const { searchedHotels: hotels, setHotelSelected } = useGlobalStorage()
+  const navigate = useNavigate()
+
+
+  const handleGoRooms = (hotel: Hotel) => {
+    setHotelSelected(hotel)
+    navigate(`/dashboard/${hotel.id}`)
+
+  }
   return (
     <>
       {
@@ -47,31 +56,15 @@ export const CardHotelsSearched = () => {
                               {hotel.checkOutTime}
                             </Text>
                           </Flex>
-                          {hotel.state === 'active' && <Badge colorScheme='green'>Activo</Badge>}
-                          {hotel.state === 'inactive' && <Badge colorScheme='red'>Inactivo</Badge>}
-                        </Box>
-                        <Box alignSelf={'end'}>
-                          <Flex justifyContent={'space-between'}>
-                            <Text fontSize='xs' fontWeight={'semibold'} alignSelf={'end'} mr={1}>
-                              Comision:
-                            </Text>
-                            <Text fontSize='xs' alignSelf={'end'}>
-                              {(Number(hotel.comision) * 100)}%
-                            </Text>
-
-                          </Flex>
                         </Box>
                       </Flex>
                     </CardBody>
                     <Divider />
                     <CardFooter justifyContent={'end'}>
                       <ButtonGroup spacing='2' >
-                        <Tooltip hasArrow placement='top' label='Habitaciones' fontSize='md'>
-                          <Button variant='solid' colorScheme='green' >
-                            <IconRooms width={20} height={20} fill='#fff' />
-                          </Button>
-                        </Tooltip>
-                        <DeleteAlert idElement={hotel.id!} type='hotel' key={hotel.id} state={hotel.state} />
+                        <Button variant='solid' colorScheme='green' onClick={() => { handleGoRooms(hotel) }}>
+                          Ver Habitaciónes
+                        </Button>
                       </ButtonGroup>
                     </CardFooter>
                   </Card>

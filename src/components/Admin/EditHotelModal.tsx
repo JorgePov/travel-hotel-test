@@ -74,7 +74,7 @@ export const EditHotelModal = ({ onClose, isOpen, hotelInfo }: modalProps) => {
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Crear Nuevo Hotel</ModalHeader>
+        <ModalHeader>Modificar Hotel</ModalHeader>
         <ModalCloseButton />
         <form onSubmit={handleSubmit}>
           <ModalBody>

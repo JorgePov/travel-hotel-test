@@ -1,20 +1,35 @@
 import { Box, Button, Flex, Heading, Input, Text } from '@chakra-ui/react';
-import React, { useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import { BedIcon, Person, Shcedule } from './icons/CustomIcons';
 import ReactDatePicker from 'react-datepicker';
 import './Filters.css'
 import { useLocation } from 'react-router-dom';
 import { useGlobalStorage } from '../../store/global';
+import { Timestamp } from '@firebase/firestore';
+import Select from 'react-select';
+import { CustomMenuList } from '../shared/CustomMenuList'
 
 export const Filters = () => {
-  const fetchSearchHotels = useGlobalStorage(state => state.fetchSearchHotels)
+  const { fetchSearchHotels, numberTravels, municipalities } = useGlobalStorage()
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
+  const [travels, setTravels] = useState<number>(numberTravels);
   const location = useLocation();
 
-  const handleSearch = () => {
-    fetchSearchHotels()
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement
+    const { city } = Object.fromEntries(new FormData(form))
+    const newEndDate = new Date(endDate!)
+    newEndDate.setHours(newEndDate.getHours() + 8);
+    const newStartDate = new Date(startDate!)
+    try {
+      fetchSearchHotels(Timestamp.fromDate(newStartDate!), Timestamp.fromDate(newEndDate!), city as string, travels)
+    } catch (error) {
+      console.log(error)
+    }
   }
+
 
 
   return (
@@ -35,7 +50,7 @@ export const Filters = () => {
             width={'calc(100% - 10px)'}
             transform={'translate(-50%,-10px)'}
           >
-            <form style={{ margin: 0, padding: 0 }}>
+            <form style={{ margin: 0, padding: 0 }} onSubmit={handleSearch}>
               <Flex
                 bg='secundary.0'
                 padding={'4px'}
@@ -46,7 +61,7 @@ export const Filters = () => {
                 <Box bg='fontColor.white' flex={'1 1 auto'} borderRadius={'8px'}>
                   <Flex padding={'8px'} alignItems={'center'}>
                     <BedIcon width={24} height={24} fill='#000' style={{ marginInlineEnd: '8px' }} />
-                    <Input placeholder='¿A donde vas?' width={'100%'} size='md' color={'black'} />
+                    <Select placeholder='¿A donde vas?' name='city' options={municipalities} />
                   </Flex>
                 </Box>
                 <Box bg='fontColor.white' flex={'1 1 auto'} borderRadius={'8px'}>
@@ -78,10 +93,10 @@ export const Filters = () => {
                 <Box bg='fontColor.white' flex={'1 1 auto'} borderRadius={'8px'}>
                   <Flex padding={'8px'} alignItems={'center'} >
                     <Person width={24} height={24} fill='#000' style={{ marginInlineEnd: '8px' }} />
-                    <Input placeholder='Cuantas personas' width={'100%'} size='md' color={'black'} />
+                    <Input placeholder='Cuantas personas' type='number' width={'100%'} size='md' color={'black'} value={travels} onChange={(event) => { setTravels(Number(event.target.value)) }} />
                   </Flex>
                 </Box>
-                <Button onClick={handleSearch} height={''}>Buscar</Button>
+                <Button type='submit' height={''}>Buscar</Button>
               </Flex>
             </form>
           </Box>

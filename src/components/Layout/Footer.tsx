@@ -4,7 +4,7 @@ import { GithubIcon, LinkedinIcon } from '../shared/icons/CustomIcons'
 
 export default function Footer() {
     return (
-        <footer style={{ position: 'fixed', width: '100%', height: '40px', bottom: 0, background: '#003b95', color: 'white' }}>
+        <Box as='footer' width={'100%'} height={'40px'} bg={'primary.200'} color={'white'} mt={2}>
             <Flex alignItems={'center'} justifyContent={'center'} height={'100%'} gap={3}>
                 <Box>
                     Desarrollado por : Jorge Poveda
@@ -16,6 +16,6 @@ export default function Footer() {
                     <LinkedinIcon fill='#fff' width={20} height={20} />
                 </Link>
             </Flex>
-        </footer>
+        </Box>
     )
 }

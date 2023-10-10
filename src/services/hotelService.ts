@@ -6,9 +6,13 @@ import {
   getDoc,
   doc,
   updateDoc,
+  Timestamp,
+  orderBy,
 } from "firebase/firestore";
-import { hotelCollection } from "./db";
+import { bookingCollection, hotelCollection } from "./db";
 import { Hotel } from "../interfaces/Hotel";
+import { useGlobalStorage } from "../store/global";
+import { async } from "q";
 
 //traer todos
 export const getHotels = async (): Promise<Hotel[] | undefined> => {
@@ -20,6 +24,96 @@ export const getHotels = async (): Promise<Hotel[] | undefined> => {
       hotels.push({ id: doc.id, ...hotel });
     });
     return hotels;
+  }
+};
+
+/* export const getBookingById = async (idUser: string) => {
+  const q = query(bookingCollection, where("idUser", "==", idUser));
+  const querySnapshot = await getDocs(q);
+  const dataFilter = [];
+  for (const doc of querySnapshot.docs) {
+    const dataDoc = doc.data();
+    let arrayRef = {
+      hotels: {},
+      rooms: {},
+    };
+    for (const ref of dataDoc.referencias) {
+      const docRef = await getDoc(ref);
+      if (docRef.exists()) {
+        arrayRef = { ...arrayRef, [ref.parent.id]: docRef.data() };
+      }
+    }
+    dataFilter.push({
+      data: { id: doc.id, ...dataDoc },
+      reference: arrayRef,
+    });
+  }
+  return dataFilter;
+};*/
+
+const getListIdRooms = async (startDate: Timestamp, finishDate: Timestamp) => {
+  const startTravelQuery = query(
+    bookingCollection,
+    where("state", "==", "Reservada")
+  );
+  const queryRun = await getDocs(startTravelQuery);
+  const listIdRooms: string[] = [];
+  queryRun.docs.map((doc) => {
+    if (
+      (doc.data().startTravel.toMillis() >= startDate.toMillis() &&
+        finishDate.toMillis() >= doc.data().startTravel.toMillis()) ||
+      (doc.data().finishTravel.toMillis() <= finishDate.toMillis() &&
+        startDate.toMillis() <= doc.data().finishTravel.toMillis())
+    ) {
+      listIdRooms.push(doc.data().idRoom);
+    }
+    return doc;
+  });
+
+  return { listIdRooms };
+};
+
+const getHotelsByCity = async (city: string) => {
+  const q = query(
+    hotelCollection,
+    where("city", "==", city),
+    where("state", "==", "active")
+  );
+  const querySnapshot = await getDocs(q);
+  let hotels: Hotel[] = [];
+  querySnapshot.forEach((doc) => {
+    const hotel = doc.data() as Hotel;
+    hotels.push({ id: doc.id, ...hotel });
+  });
+  return { hotels };
+};
+
+interface dataFilter {
+  listIdRooms: string[];
+  focusCity: string;
+  hotels: Hotel[];
+  numberTravels: number;
+}
+
+export const getHotelByFilter = async (
+  startDate: Timestamp,
+  finishDate: Timestamp,
+  city: string,
+  travels: number
+): Promise<dataFilter | undefined> => {
+  try {
+    const { listIdRooms } = await getListIdRooms(startDate, finishDate);
+    const { hotels } = await getHotelsByCity(city);
+
+    const response = {
+      listIdRooms,
+      focusCity: city,
+      hotels: hotels,
+      numberTravels: travels,
+    };
+    return response;
+  } catch (error) {
+    console.log(error);
   }
 };
 

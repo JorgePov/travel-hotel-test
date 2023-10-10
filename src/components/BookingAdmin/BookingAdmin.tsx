@@ -13,7 +13,7 @@ export default function BookingAdmin() {
 
         <>
             {
-                !isLoading ?
+                isLoading ?
                     <Flex m={5} justifyContent={'center'}>
                         < Spinner
                             thickness='4px'

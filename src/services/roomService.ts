@@ -24,6 +24,25 @@ export const getRoomsByHotel = async (
   }
 };
 
+export const getRoomsByFilter = async (
+  idHotel: string,
+  listIDRooms: string[]
+): Promise<Room[] | undefined> => {
+  console.log(listIDRooms);
+
+  const q = query(roomCollection(idHotel), where("id", "not-in", listIDRooms));
+  const data = await getDocs(q);
+  if (data.docs.length) {
+    let rooms: Room[] = [];
+    data.forEach((doc) => {
+      const room = doc.data() as Room;
+      rooms.push({ id: doc.id, ...room });
+    });
+    console.log(rooms);
+    return rooms;
+  }
+};
+
 export const changedStateRoom = async (
   idRoom: string,
   idHotel: string,

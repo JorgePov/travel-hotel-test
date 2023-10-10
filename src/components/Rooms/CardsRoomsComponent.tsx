@@ -11,7 +11,7 @@ import { useParams } from 'react-router'
 
 const roomTypeInvert = {
   shared: 'Compartida',
-  simple: 'Simple',
+  simple: 'Sencilla',
   double: 'Doble',
   family: 'Familiar',
   suit: 'Suit'
