@@ -8,7 +8,7 @@ interface PersonalInfo {
   document: string;
   documentType: "CC" | "DE" | "PA" | string;
   email: string;
-  genre: string;
+  genre?: string;
   lastName: string;
   name: string;
   phoneNumber: string;

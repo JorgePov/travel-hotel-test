@@ -63,8 +63,8 @@ export const CardsRoomsComponent = () => {
                           {room.description}
                         </Text>
                       </Stack>
-                      {room.state === 'active' && <Badge colorScheme='green'>Activo</Badge>}
-                      {room.state === 'inactive' && <Badge colorScheme='red'>Inactivo</Badge>}
+                      {room.state === 'active' && <Badge borderRadius='full' colorScheme='teal'>Activo</Badge>}
+                      {room.state === 'inactive' && <Badge borderRadius='full' colorScheme='red'>Inactivo</Badge>}
                     </Box>
                     <Box justifyContent={'end'}>
                       <Flex justifyContent={'space-between'}>

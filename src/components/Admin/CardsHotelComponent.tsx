@@ -63,8 +63,8 @@ export const CardsHotelComponent = () => {
                           {hotel.checkOutTime}
                         </Text>
                       </Flex>
-                      {hotel.state === 'active' && <Badge colorScheme='green'>Activo</Badge>}
-                      {hotel.state === 'inactive' && <Badge colorScheme='red'>Inactivo</Badge>}
+                      {hotel.state === 'active' && <Badge borderRadius='full' colorScheme='teal'>Activo</Badge>}
+                      {hotel.state === 'inactive' && <Badge borderRadius='full' colorScheme='red'>Inactivo</Badge>}
                     </Box>
                     <Box alignSelf={'end'}>
                       <Flex justifyContent={'space-between'}>

@@ -116,7 +116,7 @@ export const createBooking = async (newBooking: Booking) => {
     });
     const referencias = [
       doc(hotelCollection, newBooking.idHotel),
-      doc(roomCollection(newBooking.idHotel), newBooking.idRoom),
+      doc(roomCollection(newBooking.idHotel!), newBooking.idRoom),
     ];
     await updateDoc(docRef, { referencias });
   } catch (e) {

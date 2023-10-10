@@ -1,19 +1,28 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useRef, useState } from 'react'
 import { useGlobalStorage } from '../../store/global'
 import { Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps } from '@chakra-ui/stepper'
 import { Box, Container, Flex } from '@chakra-ui/layout'
 import { Button } from '@chakra-ui/button'
 import { ArrowLeft, ArrowRight, ButtonFinish } from '../shared/icons/CustomIcons';
-import FirstStep from './Steps/FirstStep'
-import SecondStep from './Steps/SecondStep'
-import ThridStep from './Steps/ThridStep'
-import LastStep from './Steps/LastStep'
+import FirstStep from '../Steps/FirstStep'
+import SecondStep from '../Steps/SecondStep'
+import ThridStep from '../Steps/ThridStep'
+import LastStep from '../Steps/LastStep'
+import { useNavigate } from 'react-router-dom';
+import { EmergencyContact } from '../../interfaces/Booking'
+
+export type contactProps = {
+    goToNext: () => void;
+    goToPrevious: () => void;
+}
 
 export default function CreatedBooking() {
     const { roomSelected, hotelSelected, travelDate, numberTravels, focusCity, isLoading } = useGlobalStorage()
     const [contactEmergency, setContactEmergency] = useState<String>()
     const [travels, setTravels] = useState<String>()
+    const [emergencyContact, setEmergencyContact] = useState<EmergencyContact>()
+    const navigate = useNavigate()
 
 
 
@@ -25,11 +34,13 @@ export default function CreatedBooking() {
     ]
 
     const { activeStep, goToNext, goToPrevious, } = useSteps({
-        index: 1,
+        index: 0,
         count: steps.length,
     })
 
+
     const handlerGoToNext = () => {
+        goToNext()
 
     }
 
@@ -58,33 +69,11 @@ export default function CreatedBooking() {
             </Stepper>
 
             <Box>
-                {activeStep === 0 && <FirstStep />}
-                {activeStep === 1 && <SecondStep />}
-                {activeStep === 2 && <ThridStep />}
-                {activeStep === 3 && <LastStep />}
+                {activeStep === 0 && <FirstStep goToNext={goToNext} goToPrevious={goToPrevious} />}
+                {activeStep === 1 && <SecondStep goToNext={goToNext} goToPrevious={goToPrevious} />}
+                {activeStep === 2 && <ThridStep goToNext={goToNext} goToPrevious={goToPrevious} />}
+                {activeStep === 3 && <LastStep goToNext={goToNext} goToPrevious={goToPrevious} />}
             </Box>
-
-            <Flex justifyContent={'space-around'}>
-                {activeStep !== 0 ?
-                    <Button colorScheme='blue' onClick={goToPrevious}>
-                        <ArrowLeft width={24} height={24} fill='white' />
-                        Anterior
-                    </Button> : null
-                }
-                {activeStep !== 3 ?
-                    <Button colorScheme='blue' onClick={goToNext}>
-                        Siguiente
-                        <ArrowRight width={24} height={24} fill='white' />
-                    </Button> : null
-                }
-                {activeStep === 3 ?
-                    <Button colorScheme='green' onClick={goToPrevious}>
-                        Finalizar <ButtonFinish width={18} height={18} fill='none' />
-                    </Button> : null
-                }
-
-            </Flex>
-
         </Box>
     )
 

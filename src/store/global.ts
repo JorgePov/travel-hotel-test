@@ -7,6 +7,7 @@ import { User } from "../interfaces/User";
 import { getBookingById, getBookings } from "../services/bookingService";
 import { getRoomsByFilter, getRoomsByHotel } from "../services/roomService";
 import { Timestamp } from "@firebase/firestore";
+import { Booking } from "../interfaces/Booking";
 interface State {
   isAuth: boolean;
   isAdmin: boolean;
@@ -48,6 +49,8 @@ interface State {
     startDate: Timestamp;
     finishDate: Timestamp;
   };
+  setCreateDataBooking: (createDataBooking: Booking) => void;
+  createDataBooking: Booking;
 }
 
 const userInit: User = {
@@ -97,6 +100,7 @@ const initialState = {
   hotelSelected: hotelInit,
   roomSelected: roomInit,
   isLoading: false,
+  createDataBooking: {},
   municipalities: [],
   hotels: [],
   searchedHotels: [],
@@ -112,6 +116,9 @@ export const useGlobalStorage = create<State>()(
     (set, get) => {
       return {
         ...initialState,
+
+        setCreateDataBooking: (createDataBooking: Booking) =>
+          set({ createDataBooking: createDataBooking }),
         setLoading: (status: boolean) => set({ isLoading: status }),
         setHotelSelected: (hotel: Hotel) => set({ hotelSelected: hotel }),
         setRoomSelected: (room: Room) => set({ roomSelected: room }),
