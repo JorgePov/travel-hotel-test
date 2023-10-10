@@ -14,7 +14,6 @@ const roomTypeInvert = {
 
 }
 
-
 export const CardsRoomsClientComponent = () => {
   const navigate = useNavigate()
   const { rooms, hotelSelected, setRoomSelected } = useGlobalStorage()
