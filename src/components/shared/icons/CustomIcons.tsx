@@ -146,3 +146,45 @@ export function LocationNotFoundIcon({ style, height, width, fill }: SVGProps) {
     </svg>
   )
 }
+export function ArrowRight({ style, height, width, fill }: SVGProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      style={style} height={height} width={width} fill={fill}
+    >
+      <path
+        fillRule="evenodd"
+        d="M4 8a.5.5 0 01.5-.5h5.793L8.146 5.354a.5.5 0 11.708-.708l3 3a.5.5 0 010 .708l-3 3a.5.5 0 01-.708-.708L10.293 8.5H4.5A.5.5 0 014 8z"
+      />
+    </svg >
+  )
+}
+export function ArrowLeft({ style, height, width, fill }: SVGProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      style={style} height={height} width={width} fill={fill}
+    >
+      <path
+        fillRule="evenodd"
+        d="M12 8a.5.5 0 01-.5.5H5.707l2.147 2.146a.5.5 0 01-.708.708l-3-3a.5.5 0 010-.708l3-3a.5.5 0 11.708.708L5.707 7.5H11.5a.5.5 0 01.5.5z"
+      />
+    </svg>
+  )
+}
+
+export function ButtonFinish({ style, height, width, fill }: SVGProps) {
+  return (
+    < svg
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+      style={style} height={height} width={width} fill={fill}
+    >
+      <path d="M2 18a2 2 0 012-2h16a2 2 0 012 2v2H2v-2zM20 16a8 8 0 10-16 0M12 4v4M10 4h4" />
+    </svg >
+  )
+}
+
