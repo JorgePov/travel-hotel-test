@@ -76,7 +76,7 @@ export const CardHotelsSearched = () => {
           <Flex justifyContent={'center'} alignItems={'center'} height={'100%'}>
             <LocationNotFoundIcon width={50} height={50} />
             <Heading as='h5' size='sm'>
-              Porfavor realiza una busqueda o intenta con otros filtros
+              Por favor, realiza una búsqueda o intenta con otros filtros
             </Heading>
           </Flex>
       }

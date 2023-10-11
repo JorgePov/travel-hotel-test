@@ -34,7 +34,6 @@ export default function DeleteAlert({ idElement, idPather = '', type, state }: D
         onClose()
     }
     const deleteRoom = async () => {
-        console.log(idElement, idPather, stateInvert[state!])
         await changedStateRoom(idElement, idPather, stateInvert[state!])
         await fetchRooms(idPather)
         onClose()

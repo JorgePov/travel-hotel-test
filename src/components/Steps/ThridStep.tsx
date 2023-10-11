@@ -7,7 +7,7 @@ import { Travels } from '../../interfaces/User';
 
 
 export default function ThridStep({ goToNext, goToPrevious }: contactProps) {
-    const { setCreateDataBooking, createDataBooking, setShowAlert, numberTravels } = useGlobalStorage()
+    const { setCreateDataBooking, createDataBooking, setShowAlert } = useGlobalStorage()
 
     const initialPeopleData: Travels[] = Array.from({ length: (createDataBooking.numberTravels! - 1) }, () => ({
         name: "",

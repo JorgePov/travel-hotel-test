@@ -39,9 +39,9 @@ export const Filters = () => {
         <>
           <Box padding={'48px 0px 50px 0px'} color='fontColor.white'>
             <Heading fontSize={'48px'}  >
-              Encuentra tu próxima estancia
+              Planea tu próximo viaje
             </Heading>
-            <Text fontSize='2xl'>Busca ofertas en hoteles, casas y mucho más...</Text>
+            <Text fontSize='2xl'>Busca las mejores opciones de hoteles para tu destino.</Text>
           </Box>
           <Box
             left={'50%'}

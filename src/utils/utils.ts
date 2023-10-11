@@ -43,7 +43,6 @@ export function calculateDaysBetweenTimestamps(
   const secondsEnd = timestampEnd.seconds;
   const diferenciaEnSegundos = Math.abs(secondsEnd - secondsStart);
   const countDays = Math.floor(diferenciaEnSegundos / dayToSeconds);
-  console.log(countDays);
   return countDays;
 }
 

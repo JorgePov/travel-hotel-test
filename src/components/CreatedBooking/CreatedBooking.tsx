@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGlobalStorage } from '../../store/global'
 import FirstStep from '../Steps/FirstStep'
 import SecondStep from '../Steps/SecondStep'
 import ThridStep from '../Steps/ThridStep'
 import LastStep from '../Steps/LastStep'
 import { useParams } from 'react-router-dom';
-import { Box, Flex, Spinner, Stack, Step, StepIcon, StepIndicator, StepSeparator, StepStatus, Stepper, Text, useSteps } from '@chakra-ui/react'
+import { Box, Flex, Spinner, Stack, Step, StepIcon, StepIndicator, StepSeparator, StepStatus, Stepper, useSteps } from '@chakra-ui/react'
 
 export type contactProps = {
     goToNext: () => void;
@@ -19,7 +19,7 @@ type stepType = {
 
 
 export default function CreatedBooking() {
-    const { fetchBoockingById, setCreateDataBooking, numberTravels, isLoading, createDataBooking } = useGlobalStorage()
+    const { fetchBoockingById, setCreateDataBooking, numberTravels, isLoading } = useGlobalStorage()
     const { id } = useParams()
     const [steps, setSteps] = useState<stepType[]>([
         { title: 'Primero', description: 'Tu selección' },
@@ -34,14 +34,12 @@ export default function CreatedBooking() {
     })
 
     useEffect(() => {
-        console.log('ejecucion');
         setCreateDataBooking({})
         if (numberTravels! <= 1 && steps.length > 3) {
             setSteps(steps.filter(step => step.title !== 'Tercero'))
         }
         if (id) {
             fetchBoockingById(id)
-            console.log('cargar una existente');
         }
         return () => {
             if (id) {

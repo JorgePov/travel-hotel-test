@@ -1,3 +1,4 @@
+import confetti from "canvas-confetti";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { AlertProps } from "../components/Alert/AlertComponent";
@@ -14,6 +15,7 @@ import { getRoomsByFilter, getRoomsByHotel } from "../services/roomService";
 import { Timestamp } from "@firebase/firestore";
 import { Booking } from "../interfaces/Booking";
 import { calculateDaysBetweenTimestamps } from "../utils/utils";
+import { infoEmail, sendReservation } from "../services/emailService";
 interface State {
   isAuth: boolean;
   isAdmin: boolean;
@@ -59,7 +61,7 @@ interface State {
     finishDate: Timestamp;
   };
   setCreateDataBooking: (createDataBooking: Booking) => void;
-  fetchCreatedBooking: () => Promise<void>;
+  fetchCreatedBooking: (infoEmail: infoEmail) => Promise<void>;
   createDataBooking: Booking;
 }
 
@@ -173,12 +175,14 @@ export const useGlobalStorage = create<State>()(
             });
           }
         },
-        fetchCreatedBooking: async () => {
+        fetchCreatedBooking: async (infoEmail: infoEmail) => {
           const { createDataBooking } = get();
           set({
             isLoading: true,
           });
           await createBooking(createDataBooking);
+          await sendReservation(infoEmail);
+          confetti();
           set({
             isLoading: false,
           });

@@ -31,7 +31,6 @@ export default function FirstStep({ goToNext, goToPrevious }: contactProps) {
             totalDays: totalDays,
             billing
         })
-        console.log(createDataBooking);
         goToNext()
 
     }

@@ -6,7 +6,6 @@ import {
   getDoc,
   updateDoc,
   where,
-  and,
   orderBy,
 } from "firebase/firestore";
 import { bookingCollection, hotelCollection, roomCollection } from "./db";

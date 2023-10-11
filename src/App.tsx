@@ -7,7 +7,7 @@ import {
   Routes,
 } from "react-router-dom";
 import Login from "./components/Login/Login";
-import { ProtectedRoute } from "./utils/ProtectedRoute";
+import { ProtectedRoute, ProtectedRouteAdmin } from "./utils/ProtectedRoute";
 import NotFound from "./components/NotFound/NotFound";
 import { Layout } from "./components/Layout/Layout";
 import { useGlobalStorage } from "./store/global";
@@ -36,10 +36,12 @@ export function App() {
           <Route path="/register" element={<Register />} />
           <Route element={<Layout />}>
             <Route element={<ProtectedRoute redirectTo="/login" canActived={isAuth} />} >
-              <Route path="/admin" element={<DashboardAdmin />} />
-              <Route path="/admin/:id" element={<DashboardRoom />} />
-              <Route path="/admin/reservations" element={<BookingAdmin />} />
-              <Route path="/admin/reservations/:id" element={<DetailsBooking />} />
+              <Route element={<ProtectedRouteAdmin redirectTo="/dashboard" />} >
+                <Route path="/admin" element={<DashboardAdmin />} />
+                <Route path="/admin/:id" element={<DashboardRoom />} />
+                <Route path="/admin/reservations" element={<BookingAdmin />} />
+                <Route path="/admin/reservations/:id" element={<DetailsBooking />} />
+              </Route>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/:id" element={<RoomClient />} />
               <Route path="/dashboard/myreservations" element={<BookingClient />} />

@@ -14,7 +14,6 @@ export default function CardBooking() {
     const navegate = useNavigate();
 
     const handlerClick = async (id: string) => {
-        console.log(id)
         await fetchBookingById(id)
         if (isAdmin) {
             navegate(`/admin/reservations/${id}`)
@@ -110,7 +109,6 @@ export const ButtomComplited = ({ idBooking }: any) => {
     const handlerClickCompleted = async () => {
         setLoading(true)
         if (isAdmin) {
-            console.log(idBooking)
             await changedStateBooking(idBooking, 'Completada')
             await fetchBookingAdmin()
         }

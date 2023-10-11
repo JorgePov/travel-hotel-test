@@ -1,10 +1,13 @@
 import { useGlobalStorage } from '../../store/global'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { BedIcon, FlyIcon } from './icons/CustomIcons'
 import './Navlinks.css'
+import { Text } from '@chakra-ui/react'
 
 export const Navlinks = () => {
   const isadmin = useGlobalStorage(state => state.isAdmin)
+
+  const location = useLocation();
   return (
     <ul style={{ listStyle: 'none', color: '#fff' }}>
       <li style={{ display: 'flex', textAlign: 'center', userSelect: 'none', gap: '15px' }}>
@@ -12,32 +15,33 @@ export const Navlinks = () => {
           isadmin ?
             <>
               <NavLink to={'/admin'}
-                className={({ isActive }) => isActive ? "active" : "link__container"}  >
-                <BedIcon width={24} height={24} fill='#fff' style={{ marginInlineEnd: '8px' }} />
-                Lista de Hoteles
+                className={() => location.pathname === '/admin' ? "active" : "link__container"}  >
+                <BedIcon width={24} height={24} fill='#fff' />
+                <Text marginInlineStart={'8px'} display={{ base: 'none', sm: 'block' }}>Lista de Hoteles</Text>
+
               </NavLink>
               <NavLink to={'/admin/reservations'}
-                className={({ isActive }) => isActive ? "active" : "link__container"}>
-                <FlyIcon width={24} height={24} fill='#fff' style={{ marginInlineEnd: '8px' }} />
-                Lista de Reservas
+                className={() => location.pathname === '/admin/reservations' ? "active" : "link__container"}>
+                <FlyIcon width={24} height={24} fill='#fff' />
+                <Text marginInlineStart={'8px'} display={{ base: 'none', sm: 'block' }}>Lista de Reservas</Text>
               </NavLink>
             </>
             :
             <>
               <NavLink to={'/dashboard'}
-                className={({ isActive }) => isActive ? "active" : "link__container"}>
-                <BedIcon width={24} height={24} fill='#fff' style={{ marginInlineEnd: '8px' }} />
-                Planear Viaje
+                className={() => location.pathname === '/dashboard' ? "active" : "link__container"}>
+                <BedIcon width={24} height={24} fill='#fff' />
+                <Text marginInlineStart={'8px'} display={{ base: 'none', sm: 'block' }}>Planear Viaje</Text>
               </NavLink>
               <NavLink to={'/dashboard/myreservations'}
-                className={({ isActive }) => isActive ? "active" : "link__container"}>
-                <FlyIcon width={24} height={24} fill='#fff' style={{ marginInlineEnd: '8px' }} />
-                Mis Reservas
+                className={() => location.pathname === '/dashboard/myreservations' ? "active" : "link__container"}>
+                <FlyIcon width={24} height={24} fill='#fff' />
+                <Text marginInlineStart={'8px'} display={{ base: 'none', sm: 'block' }}>Mis Reservas</Text>
               </NavLink>
             </>
         }
 
       </li>
-    </ul>
+    </ul >
   )
 }
