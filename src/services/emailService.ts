@@ -53,7 +53,7 @@ export const sendReservation = async ({
         if (response.ok) {
           console.info("¡Tu correo ha sido enviado con éxito!");
         } else {
-          throw new Error("Error al enviar el correo");
+          console.error("Error al enviar el correo");
         }
       })
       .catch((error) => {
@@ -61,6 +61,3 @@ export const sendReservation = async ({
       });
   } catch (error) {}
 };
-
-export const sendCancelation = () => {};
-export const sendConfirmation = () => {};
