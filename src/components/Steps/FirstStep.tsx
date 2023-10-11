@@ -5,6 +5,7 @@ import { ArrowRight } from '../shared/icons/CustomIcons'
 import { useNavigate } from 'react-router-dom'
 import { timestampToStringFullDate, formatCurrency, roomTypeInvert } from '../../utils/utils';
 import { Billing } from '../../interfaces/Booking'
+import { Timestamp } from 'firebase/firestore'
 
 
 export default function FirstStep({ goToNext, goToPrevious }: contactProps) {
@@ -19,6 +20,8 @@ export default function FirstStep({ goToNext, goToPrevious }: contactProps) {
     }
 
     const handleGoToNext = () => {
+        const timestampFinishDate = new Timestamp(travelDate?.finishDate.seconds!, travelDate?.finishDate.nanoseconds!);
+        const timestampStartDate = new Timestamp(travelDate?.startDate.seconds!, travelDate?.startDate.nanoseconds!);
         setCreateDataBooking({
             ...createDataBooking,
             idHotel: hotelSelected?.id,
@@ -26,8 +29,8 @@ export default function FirstStep({ goToNext, goToPrevious }: contactProps) {
             idUser: userInfo?.id,
             numberTravels: numberTravels,
             state: 'Reservada',
-            finishTravel: travelDate?.finishDate,
-            startTravel: travelDate?.startDate,
+            finishTravel: timestampFinishDate,
+            startTravel: timestampStartDate,
             totalDays: totalDays,
             billing
         })
