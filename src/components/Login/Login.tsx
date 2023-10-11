@@ -97,18 +97,7 @@ export default function Login() {
                         ) : <Button type="submit" colorScheme="blue" size="lg" width="100%">
                             Iniciar sesión
                         </Button>}
-
-                        {isLoading ? (
-                            <Button
-                                colorScheme="teal"
-                                size="lg"
-                                fontSize="md"
-                                mt={4}
-                                disabled={true}
-                            >
-                                <Spinner />
-                            </Button>
-                        ) : <Button
+                        <Button
                             type="button"
                             colorScheme="teal"
                             size="lg"
@@ -116,7 +105,7 @@ export default function Login() {
                             onClick={handleClick}
                         >
                             Registrarse
-                        </Button>}
+                        </Button>
                     </Stack>
                 </form>
             </Card>

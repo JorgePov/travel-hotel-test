@@ -106,41 +106,41 @@ export default function Register() {
     };
 
     return (
-        <Center minH="100vh" bg='whiteAlpha.500'>
-            <Box p={8} borderWidth={1} borderRadius={8} boxShadow="lg" width="100%" margin="20px" bg='primary.200'>
+        <Center minH="100vh" bg={"grey"}>
+            <Box p={8} borderWidth={1} borderRadius={8} boxShadow="lg" width="100%" margin="20px" bg="primary.200" color={'white'}>
                 <form onSubmit={handleSubmit}>
-                    <Grid templateColumns={isMobile ? '1fr' : '1fr 1fr'} gap={4}>
+                    <Grid templateColumns={isMobile ? '1fr' : '1fr 1fr'} gap={4} >
                         <GridItem colSpan={isMobile ? 1 : 1}>
                             <Stack spacing={4}>
-                                <FormControl id="name" isRequired>
+                                <FormControl id="name" isRequired >
                                     <FormLabel>Nombre</FormLabel>
-                                    <Input name='name' type="text" />
+                                    <Input name='name' placeholder="Nombre" type="text" bg={'white'} color={'black'} />
                                 </FormControl>
 
                                 <FormControl id="lastName" isRequired>
                                     <FormLabel>Apellido</FormLabel>
-                                    <Input name='lastName' type="text" />
-                                </FormControl>
-
-                                <FormControl id="document" isRequired>
-                                    <FormLabel>Documento</FormLabel>
-                                    <Input name='document' type="text" />
+                                    <Input name='lastName' placeholder="Apellido" type="text" bg={'white'} color={'black'} />
                                 </FormControl>
 
                                 <FormControl id="documentType" isRequired>
                                     <FormLabel>Tipo de Documento</FormLabel>
-                                    <Select name='documentType' placeholder="Seleccionar tipo de documento">
+                                    <Select name='documentType' placeholder="Seleccionar tipo de documento" bg={'white'} color={'black'}>
                                         <option value="CC">Cédula de Ciudadanía</option>
                                         <option value="DE">Documento de Extranjería</option>
                                         <option value="PA">Pasaporte</option>
                                     </Select>
                                 </FormControl>
 
+                                <FormControl id="document" isRequired>
+                                    <FormLabel>Documento</FormLabel>
+                                    <Input name='document' placeholder="Documento" type="text" bg={'white'} color={'black'} />
+                                </FormControl>
+
                                 <FormControl id="phoneNumber" isRequired>
                                     <FormLabel>Teléfono</FormLabel>
                                     <InputGroup>
-                                        <InputLeftAddon children='+57' />
-                                        <Input name='phoneNumber' type='tel' placeholder='phone number' />
+                                        <InputLeftAddon children='+57' color={'black'} />
+                                        <Input name='phoneNumber' type='number' min={0} placeholder='Teléfono' bg={'white'} color={'black'} />
                                     </InputGroup>
                                 </FormControl>
 
@@ -150,13 +150,13 @@ export default function Register() {
                         <GridItem colSpan={isMobile ? 1 : 1}>
                             <Stack spacing={4}>
                                 <FormControl id="email" isRequired>
-                                    <FormLabel>Email</FormLabel>
-                                    <Input name='email' type="email" />
+                                    <FormLabel>Correo electrónico</FormLabel>
+                                    <Input name='email' placeholder='Correo electrónico' type="email" bg={'white'} color={'black'} />
                                 </FormControl>
 
                                 <FormControl id="genre" isRequired>
                                     <FormLabel>Género</FormLabel>
-                                    <Select name='genre' placeholder="Seleccionar genero">
+                                    <Select name='genre' placeholder="Seleccionar genero" bg={'white'} color={'black'}>
                                         <option value="male">Masculino</option>
                                         <option value="female">Femenino</option>
                                     </Select>
@@ -172,7 +172,8 @@ export default function Register() {
                                             type={show ? 'text' : 'password'}
                                             onChange={handlePasswordChange}
                                             value={password}
-                                            placeholder='Enter password'
+                                            placeholder='Contraseña'
+                                            bg={'white'} color={'black'}
                                         />
                                         <InputRightElement width='4.5rem'>
                                             <Button h='1.75rem' size='sm' onClick={handleClickShow}>
@@ -191,7 +192,8 @@ export default function Register() {
                                             type={showConfirm ? 'text' : 'password'}
                                             onChange={handleConfirmPasswordChange}
                                             value={confirmPassword}
-                                            placeholder='Enter password'
+                                            placeholder='Confirmar contraseña'
+                                            bg={'white'} color={'black'}
                                         />
                                         <InputRightElement width='4.5rem'>
                                             <Button h='1.75rem' size='sm' onClick={handleClickShowConfirm}>
@@ -204,9 +206,14 @@ export default function Register() {
                         </GridItem>
                     </Grid>
                     <Flex justify='center' gap='0.625rem'>
+                        <Button type="button" colorScheme="blue" size="lg"
+                            fontSize="md"
+                            mt={4} onClick={handleClick}>
+                            Ir a Iniciar Sesión
+                        </Button>
                         {isLoading ? (
                             <Button
-                                colorScheme="blue"
+                                colorScheme="teal"
                                 size="lg"
                                 fontSize="md"
                                 mt={4}
@@ -216,28 +223,13 @@ export default function Register() {
                             </Button>
                         ) : <Button
                             type="submit"
-                            colorScheme="blue"
+                            colorScheme="teal"
                             size="lg"
                             fontSize="md"
                             mt={4}
                         >
                             Registrarse
                         </Button>}
-                        {isLoading ? (
-                            <Button
-                                colorScheme="teal" size="lg"
-                                fontSize="md"
-                                mt={4}
-                                disabled={true}
-                            >
-                                <Spinner />
-                            </Button>
-                        ) : <Button type="button" colorScheme="teal" size="lg"
-                            fontSize="md"
-                            mt={4} onClick={handleClick}>
-                            Ir a Iniciar Sesión
-                        </Button>
-                        }
 
                     </Flex>
 

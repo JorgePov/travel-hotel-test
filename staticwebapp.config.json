@@ -1,10 +1,5 @@
 {
   "navigationFallback": {
     "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-  },
-  "routes": {
-    "/api/*": {
-      "allowedRoles": ["anonymous"]
-    }
   }
 }
