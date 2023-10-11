@@ -100,10 +100,14 @@ export default function DeleteAlert({ idElement, idPather = '', type, state }: D
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
-                            Estas seguro? No se podra revertir esta accion
+                            Estas seguro? {isAdmin ? type === 'booking' ? 'La reserva sera cancelada' : `El cliente no podra ver este ${type === 'room' ? 'habitacion' : 'hotel'}` : 'No se podra revertir esta accion'}
                         </AlertDialogBody>
 
                         <AlertDialogFooter>
+
+                            <Button ref={cancelRef} onClick={onClose} mr={4}>
+                                Salir
+                            </Button>
                             {isLoading ? (
                                 <Button
                                     colorScheme={state === "inactive" ? 'green' : 'red'}
@@ -114,9 +118,6 @@ export default function DeleteAlert({ idElement, idPather = '', type, state }: D
                             ) : <Button colorScheme={state === "inactive" ? 'green' : 'red'} onClick={handlerClick} ml={3}>
                                 {type === 'booking' ? 'Cancelar' : `${state === "active" ? 'Inactivar' : 'Activar'} `}
                             </Button>}
-                            <Button ref={cancelRef} onClick={onClose} >
-                                Salir
-                            </Button>
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialogOverlay>

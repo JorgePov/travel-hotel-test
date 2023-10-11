@@ -1,13 +1,13 @@
 import { Box, Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Flex, Grid, GridItem, Heading, Image, Stack, Text, } from '@chakra-ui/react'
 import { useGlobalStorage } from '../../store/global'
 import { Room } from '../../interfaces/Hotel'
-import { HotelImages, RoomImages, roomTypeInvert } from '../../utils/utils'
+import { HotelImages, RoomImages, roomTypeInvert, formatCurrency } from '../../utils/utils';
 import { useNavigate } from 'react-router'
 
 
 export const CardsRoomsClientComponent = () => {
   const navigate = useNavigate()
-  const { rooms, hotelSelected, setRoomSelected } = useGlobalStorage()
+  const { rooms, hotelSelected, setRoomSelected, totalDays } = useGlobalStorage()
 
   const handleClick = (room: Room) => {
     setRoomSelected(room)
@@ -104,7 +104,7 @@ export const CardsRoomsClientComponent = () => {
                             Precio:
                           </Text>
                           <Text fontSize='xs' alignSelf={'end'} fontWeight={'light'}>
-                            COP {(Number(room.price))}
+                            {formatCurrency(Number(room.price) * totalDays)}
                           </Text>
 
                         </Flex>
@@ -113,7 +113,7 @@ export const CardsRoomsClientComponent = () => {
                             Impuesto ({(Number(room.tax) * 100)}%):
                           </Text>
                           <Text fontSize='xs' fontWeight={'light'}>
-                            COP {(Number(room.tax) * Number(room.price))}
+                            {formatCurrency((Number(room.tax) * Number(room.price)) * totalDays)}
                           </Text>
                         </Flex>
                         <Flex justifyContent={'space-between'}>
@@ -121,7 +121,7 @@ export const CardsRoomsClientComponent = () => {
                             Precio total:
                           </Text>
                           <Text fontSize='xs' fontWeight={'light'}>
-                            COP {(Number(room.price) + (Number(room.tax) * Number(room.price)))}
+                            {formatCurrency((Number(room.price) + (Number(room.tax) * Number(room.price))) * totalDays)}
                           </Text>
                         </Flex>
                       </Box>

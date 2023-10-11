@@ -74,7 +74,7 @@ export const EditRoomModal = ({ onClose, isOpen, roomInfo }: modalProps) => {
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Modificar Habitación</ModalHeader>
+        <ModalHeader>Modificar Habitacion</ModalHeader>
         <ModalCloseButton />
         <form onSubmit={handleSubmit}>
           <ModalBody>
@@ -82,12 +82,12 @@ export const EditRoomModal = ({ onClose, isOpen, roomInfo }: modalProps) => {
               <GridItem colSpan={1}>
                 <Stack spacing={4}>
                   <FormControl id="numberRoom" isRequired>
-                    <FormLabel>Numero de habitación</FormLabel>
+                    <FormLabel>Numero de habitacion</FormLabel>
                     <Input name='numberRoom' type="text" value={nameRoom} onChange={e => setNameRoom(e.target.value)} disabled />
                   </FormControl>
 
                   <FormControl id="roomType" isRequired>
-                    <FormLabel>Tipo de habitación</FormLabel>
+                    <FormLabel>Tipo de habitacion</FormLabel>
                     <List name='roomType' placeholder="Seleccionar Tipo de habitacion" value={roomType} onChange={e => setRoomType(e.target.value)}>
                       <option value='shared'>Compartida</option>
                       <option value='simple'>Sencilla</option>

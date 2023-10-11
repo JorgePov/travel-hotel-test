@@ -1,4 +1,4 @@
-import { Card, CardBody, Heading, Image, Stack, Text, Box, Button, Flex, Spinner } from '@chakra-ui/react';
+import { Card, CardBody, Heading, Image, Stack, Text, Box, Button, Flex, Spinner, Badge } from '@chakra-ui/react';
 import "./BookingClient.css";
 import DeleteAlert from '../AlertDialog/DeleteAlert';
 import { useGlobalStorage } from '../../store/global';
@@ -69,7 +69,7 @@ export default function CardBooking() {
                                             {timestampToString(data.startTravel)} - {timestampToString(data.finishTravel)}, {reference.hotels.city}
                                         </Text>
                                         <Text mt={'2'} fontSize={'sm'} fontWeight={'normal'} lineHeight={'3'}>
-                                            {data.state}
+                                            <Badge borderRadius='full' colorScheme={data.state === 'Cancelada' ? 'red' : data.state === 'Completada' ? 'green' : 'purple'}>{data.state}</Badge>
                                         </Text>
                                     </CardBody>
                                 </Stack>
@@ -91,8 +91,9 @@ export default function CardBooking() {
                         }
 
                     </Card>
-                </ Box>
-            ))}
+                </ Box >
+            ))
+            }
         </>
 
     )

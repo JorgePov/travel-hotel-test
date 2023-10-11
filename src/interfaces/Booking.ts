@@ -23,7 +23,7 @@ export interface Billing {
   total: number;
 }
 
-interface Reference {
+export interface Reference {
   hotels?: Hotel;
   rooms?: Room;
 }

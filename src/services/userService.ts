@@ -11,24 +11,6 @@ import {
 } from "firebase/firestore";
 import { userCollection } from "./db";
 
-//traer a todos
-export const getUsers = async () => {
-  return await getDocs(userCollection).then((data) => {
-    return data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-  });
-};
-
-//traer por id
-export const getUsersById = async (idUser: string) => {
-  const q = doc(userCollection, idUser);
-  const data = await getDoc(q);
-  return data.data();
-};
-
-//actualizar User
 export const updatedUser = async (newUser: User) => {
   try {
     const hotelRef = doc(userCollection, newUser.id);
@@ -41,7 +23,6 @@ export const updatedUser = async (newUser: User) => {
   }
 };
 
-//crear usuario
 export const createdUser = async (newUser: User): Promise<User> => {
   const isExist = await userExist(newUser);
   if (isExist) {
@@ -50,11 +31,10 @@ export const createdUser = async (newUser: User): Promise<User> => {
   const docRef = await addDoc(userCollection, {
     ...newUser,
   });
-
   try {
     const docSnapshot = await getDoc(docRef);
-
-    const user: User = docSnapshot.data() as User;
+    const userData = docSnapshot.data() as User;
+    const user: User = { id: docSnapshot.id, ...userData };
     delete user.password;
     return user;
   } catch (error) {

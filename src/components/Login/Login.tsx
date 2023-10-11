@@ -57,7 +57,6 @@ export default function Login() {
     };
 
     useEffect(() => {
-        console.log('a')
         resetStorage()
     }, [resetStorage])
 

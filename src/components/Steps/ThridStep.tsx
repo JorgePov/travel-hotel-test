@@ -87,14 +87,14 @@ export default function ThridStep({ goToNext, goToPrevious }: contactProps) {
                                     </FormControl>
                                     <FormControl isRequired>
                                         <FormLabel>Documento</FormLabel>
-                                        <Input placeholder="Documento" type="text" value={person.document}
+                                        <Input placeholder="Documento" type="number" min={0} value={person.document}
                                             onChange={(e) => handleChange(e.target.value, index, 'document')} />
                                     </FormControl>
                                     <FormControl>
                                         <FormLabel fontWeight={'medium'}>Telefono</FormLabel>
                                         <InputGroup>
                                             <InputLeftAddon children='+57' />
-                                            <Input name='phoneNumber' type="number" placeholder="1111111111" value={person.phoneNumber}
+                                            <Input name='phoneNumber' type="number" min={0} placeholder="1111111111" value={person.phoneNumber}
                                                 onChange={(e) => handleChange(e.target.value, index, 'phoneNumber')} />
                                         </InputGroup>
                                     </FormControl>

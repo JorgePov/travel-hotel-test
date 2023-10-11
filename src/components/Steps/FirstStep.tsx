@@ -52,10 +52,10 @@ export default function FirstStep({ goToNext, goToPrevious }: contactProps) {
                         </Stack>
                         <Stack justifyContent={'start'} spacing={0} mb={3}>
                             <Text fontSize={'md'} textAlign={'center'} fontWeight={'medium'} mb={3}>  Informacion de hospedaje</Text>
-                            <Text fontSize={'md'} fontWeight={'bold'} mb={2}> {hotelSelected?.name} - Habitación {roomSelected?.numberRoom}</Text>
+                            <Text fontSize={'md'} fontWeight={'bold'} mb={2}> {hotelSelected?.name} - Habitacion {roomSelected?.numberRoom}</Text>
                             <Stack spacing={0}>
                                 <Flex>
-                                    <Text fontSize={'md'} fontWeight={'medium'}>Tipo de habitación: </Text>
+                                    <Text fontSize={'md'} fontWeight={'medium'}>Tipo de habitacion: </Text>
                                     <Text fontSize={'md'} fontWeight={'light'} ml={2}>{roomTypeInvert[roomSelected?.roomType!]} </Text>
                                 </Flex>
                                 <Flex>
@@ -107,7 +107,7 @@ export default function FirstStep({ goToNext, goToPrevious }: contactProps) {
             </Flex >
             <Flex justifyContent={'space-around'}>
                 <Button colorScheme='red' onClick={handleGoBack}>
-                    Habitaciónes
+                    Habitaciones
                 </Button>
                 <Button colorScheme='blue' onClick={handleGoToNext}>
                     Continuar

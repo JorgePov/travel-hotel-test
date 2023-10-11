@@ -3,7 +3,6 @@ import {
   addDoc,
   query,
   where,
-  getDoc,
   doc,
   updateDoc,
   Timestamp,
@@ -11,7 +10,6 @@ import {
 import { bookingCollection, hotelCollection } from "./db";
 import { Hotel } from "../interfaces/Hotel";
 
-//traer todos
 export const getHotels = async (): Promise<Hotel[] | undefined> => {
   const data = await getDocs(hotelCollection);
   if (data.docs.length) {
@@ -109,14 +107,6 @@ export const changedStateHotel = async (idHotel: string, newState: string) => {
   }
 };
 
-//traer por id
-export const getHotelsById = async (idhotel: string) => {
-  const q = doc(hotelCollection, idhotel);
-  const data = await getDoc(q);
-  return data.data();
-};
-
-//actualizar Hotel
 export const updatedHotel = async (newhotel: Hotel) => {
   try {
     const hotelRef = doc(hotelCollection, newhotel.id);
@@ -129,7 +119,6 @@ export const updatedHotel = async (newhotel: Hotel) => {
   }
 };
 
-//Crear Hotel
 export const createdHotel = async (newhotel: Hotel) => {
   try {
     const isExist = await hotelExist(newhotel);

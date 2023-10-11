@@ -55,7 +55,7 @@ export const CreateRoomModal = ({ onClose, isOpen }: modalProps) => {
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Crear Nueva Habitación</ModalHeader>
+        <ModalHeader>Crear Nueva Habitacion</ModalHeader>
         <ModalCloseButton />
         <form onSubmit={handleSubmit}>
           <ModalBody>
@@ -63,12 +63,12 @@ export const CreateRoomModal = ({ onClose, isOpen }: modalProps) => {
               <GridItem colSpan={1}>
                 <Stack spacing={4}>
                   <FormControl id="numberRoom" isRequired>
-                    <FormLabel>Numero de habitación</FormLabel>
+                    <FormLabel>Numero de habitacion</FormLabel>
                     <Input name='numberRoom' type="text" />
                   </FormControl>
 
                   <FormControl id="roomType" isRequired>
-                    <FormLabel>Tipo de habitación</FormLabel>
+                    <FormLabel>Tipo de habitacion</FormLabel>
                     <List name='roomType' placeholder="Seleccionar Tipo de habitacion">
                       <option value='shared'>Compartida</option>
                       <option value='simple'>Sencilla</option>

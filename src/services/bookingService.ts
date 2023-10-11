@@ -8,8 +8,20 @@ import {
   where,
   orderBy,
 } from "firebase/firestore";
-import { bookingCollection, hotelCollection, roomCollection } from "./db";
-import { Booking, BookingApi } from "../interfaces/Booking";
+import {
+  bookingCollection,
+  hotelCollection,
+  roomCollection,
+  userCollection,
+} from "./db";
+import { Booking, BookingApi, Reference } from "../interfaces/Booking";
+import { infoEmail, sendCancelation } from "./emailService";
+import {
+  formatCurrency,
+  roomTypeInvert,
+  timestampToStringFullDate,
+} from "../utils/utils";
+import { User } from "../interfaces/User";
 
 export const getBookings = async () => {
   const querySnapshot = await getDocs(bookingCollection);
@@ -56,20 +68,19 @@ export const getBookingById = async (
   return bookingData;
 };
 
-export const getBookingByIdUser = async (idUser: string) => {
+export const getBookingByIdUser = async (
+  idUser: string
+): Promise<BookingApi[] | undefined> => {
   const q = query(
     bookingCollection,
     where("idUser", "==", idUser),
     orderBy("startTravel", "asc")
   );
   const querySnapshot = await getDocs(q);
-  const dataFilter = [];
+  const dataFilter: BookingApi[] = [];
   for (const doc of querySnapshot.docs) {
     const dataDoc = doc.data();
-    let arrayRef = {
-      hotels: {},
-      rooms: {},
-    };
+    let arrayRef: Reference = {};
     for (const ref of dataDoc.referencias) {
       const docRef = await getDoc(ref);
       if (docRef.exists()) {
@@ -102,9 +113,48 @@ export const changedStateBooking = async (
 ) => {
   try {
     const bookingRef = doc(bookingCollection, idBooking);
+    const querySnapshot = await getDoc(bookingRef);
+    let bookingData: BookingApi = {
+      data: querySnapshot.data(),
+    };
+    if (querySnapshot.exists()) {
+      for (const ref of querySnapshot.data().referencias) {
+        const docRef = await getDoc(ref);
+        if (docRef.exists()) {
+          bookingData.reference = {
+            ...bookingData.reference,
+            [ref.parent.id]: docRef.data(),
+          };
+        }
+      }
+    }
+
+    const userRef = doc(userCollection, bookingData.data?.idUser);
+    const userSnapshot = await getDoc(userRef);
+    const user = userSnapshot.data() as User;
+
+    let emailsTravels = "";
+    if (bookingData.data?.travels) {
+      const emails = bookingData.data.travels.map((objeto) => objeto.email);
+      emailsTravels = emails.join(", ");
+    }
+
+    const dataEmail: infoEmail = {
+      emailTo: user.email,
+      otherEmail: emailsTravels,
+      hotelName: bookingData.reference?.hotels?.name!,
+      startTravel: timestampToStringFullDate(bookingData.data?.startTravel!),
+      finishTravel: timestampToStringFullDate(bookingData.data?.finishTravel!),
+      numberRoom: bookingData.reference?.rooms?.numberRoom!,
+      roomType: `Habitacion ${
+        roomTypeInvert[bookingData.reference?.rooms?.roomType!]
+      }`,
+      totalPrice: formatCurrency(bookingData.data?.billing?.total!),
+    };
     await updateDoc(bookingRef, {
       state: newState,
     });
+    await sendCancelation(dataEmail);
   } catch (error) {
     console.error("Error al actualizar:", error);
   }

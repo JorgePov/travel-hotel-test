@@ -31,12 +31,12 @@ export const Navlinks = () => {
               <NavLink to={'/dashboard'}
                 className={() => location.pathname === '/dashboard' ? "active" : "link__container"}>
                 <BedIcon width={24} height={24} fill='#fff' />
-                <Text marginInlineStart={'8px'} display={{ base: 'none', sm: 'block' }}>Planear Viaje</Text>
+                <Text marginInlineStart={'8px'} display={{ base: 'none', sm: 'block' }}>Planear tu viaje</Text>
               </NavLink>
               <NavLink to={'/dashboard/myreservations'}
                 className={() => location.pathname === '/dashboard/myreservations' ? "active" : "link__container"}>
                 <FlyIcon width={24} height={24} fill='#fff' />
-                <Text marginInlineStart={'8px'} display={{ base: 'none', sm: 'block' }}>Mis Reservas</Text>
+                <Text marginInlineStart={'8px'} display={{ base: 'none', sm: 'block' }}>Mis reservas</Text>
               </NavLink>
             </>
         }

@@ -34,7 +34,7 @@ const SecondStep = ({ goToNext, goToPrevious }: contactProps) => {
                                     <FormLabel fontWeight={'medium'}>Telefono</FormLabel>
                                     <InputGroup>
                                         <InputLeftAddon children='+57' />
-                                        <Input name='phoneNumber' type="number" value={phoneNumber} onChange={(event) => setPhoneNumber(event.target.value)} />
+                                        <Input name='phoneNumber' type="number" min={0} value={phoneNumber} onChange={(event) => setPhoneNumber(event.target.value)} />
                                     </InputGroup>
                                 </FormControl>
                             </Stack>

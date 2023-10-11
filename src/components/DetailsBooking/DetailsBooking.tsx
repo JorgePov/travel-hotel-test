@@ -1,5 +1,5 @@
 import { useGlobalStorage } from '../../store/global';
-import { Avatar, Container, Divider, Flex, Image, Stack, Text } from '@chakra-ui/react';
+import { Avatar, Badge, Container, Divider, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { timestampToString, formatCurrency, HotelImages } from '../../utils/utils';
 
 export const DetailsBooking = () => {
@@ -22,11 +22,15 @@ export const DetailsBooking = () => {
                     </Stack>
                     <Stack w='80%' p={4} >
                         <Text fontSize='xl' fontWeight='bold' >{reference.hotels.name}</Text>
+
+                        <Text fontSize={'sm'} fontWeight={'normal'} lineHeight={'3'}>
+                            <Badge borderRadius='full' colorScheme={data.state === 'Cancelada' ? 'red' : data.state === 'Completada' ? 'green' : 'purple'}>{data.state}</Badge>
+                        </Text>
                         <Text fontSize='xs' ><strong>Dirección:</strong> {reference.hotels.address}</Text>
                         <Text fontSize='xs' ><strong>Teléfono:</strong>  {reference.hotels.phoneNumber}</Text>
                     </Stack>
                 </Stack>
-                <Stack direction={'row'} justifyContent={'space-evenly'}>
+                <Stack direction={'row'} alignItems={'center'} justifyContent={'space-evenly'}>
                     <Stack textAlign={'center'}>
                         <Text fontSize='xs' fontWeight='bold'  >Entrada</Text>
                         <Text fontSize='xs'  >{timestampToString(data.startTravel)}</Text>

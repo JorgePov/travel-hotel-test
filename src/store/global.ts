@@ -181,9 +181,10 @@ export const useGlobalStorage = create<State>()(
           set({
             isLoading: true,
           });
-          await createBooking(createDataBooking);
-          await sendReservation(infoEmail);
-          confetti();
+          await createBooking(createDataBooking).then((r) => {
+            sendReservation(infoEmail);
+          });
+          await confetti();
           set({
             isLoading: false,
           });

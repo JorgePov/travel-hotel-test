@@ -63,7 +63,7 @@ export const CardHotelsSearched = () => {
                     <CardFooter justifyContent={'end'}>
                       <ButtonGroup spacing='2' >
                         <Button variant='solid' colorScheme='green' onClick={() => { handleGoRooms(hotel) }}>
-                          Ver Habitaciónes
+                          Ver Habitaciones
                         </Button>
                       </ButtonGroup>
                     </CardFooter>

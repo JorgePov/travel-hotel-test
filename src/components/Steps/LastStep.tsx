@@ -16,7 +16,6 @@ export default function LastStep({ goToNext, goToPrevious }: contactProps) {
         if (createDataBooking.travels) {
             const emails = createDataBooking.travels.map(objeto => objeto.email);
             emailsTravels = emails.join(", ");
-
         }
         const dataEmail: infoEmail = {
             emailTo: userInfo?.email!,
