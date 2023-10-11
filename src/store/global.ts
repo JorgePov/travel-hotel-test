@@ -63,6 +63,7 @@ interface State {
   setCreateDataBooking: (createDataBooking: Booking) => void;
   fetchCreatedBooking: (infoEmail: infoEmail) => Promise<void>;
   createDataBooking: Booking;
+  resetStorage: () => void;
 }
 
 const userInit: User = {
@@ -129,7 +130,7 @@ export const useGlobalStorage = create<State>()(
     (set, get) => {
       return {
         ...initialState,
-
+        resetStorage: () => set(initialState),
         setCreateDataBooking: (createDataBooking: Booking) =>
           set({ createDataBooking: createDataBooking }),
         setLoading: (status: boolean) => set({ isLoading: status }),

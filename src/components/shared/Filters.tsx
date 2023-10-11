@@ -10,9 +10,9 @@ import Select from 'react-select';
 
 export const Filters = () => {
   const { fetchSearchHotels, numberTravels, municipalities } = useGlobalStorage()
-  const [startDate, setStartDate] = useState<Date>();
+  const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>();
-  const [travels, setTravels] = useState<number>(numberTravels!);
+  const [travels, setTravels] = useState<number>(numberTravels! || 1);
   const [city, setCity] = useState<string>('');
   const location = useLocation();
 
@@ -29,6 +29,13 @@ export const Filters = () => {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const maxMonths = (): Date => {
+    const date = new Date()
+    date.setDate(0)
+    date.setMonth(date.getMonth() + 3)
+    return date
   }
 
 
@@ -72,6 +79,8 @@ export const Filters = () => {
                       selected={startDate}
                       onChange={(date) => setStartDate(date!)}
                       selectsStart
+                      minDate={new Date()}
+                      maxDate={maxMonths()}
                       startDate={startDate}
                       endDate={endDate}
                       placeholderText='Fecha Inicial'

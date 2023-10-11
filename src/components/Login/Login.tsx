@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { loginData } from '../../interfaces/User';
 import {
     Box,
@@ -16,7 +16,7 @@ import { useGlobalStorage } from '../../store/global';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-    const { setUserInfo, setShowAlert, getIsAdmin } = useGlobalStorage()
+    const { setUserInfo, setShowAlert, getIsAdmin, resetStorage } = useGlobalStorage()
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -54,9 +54,12 @@ export default function Login() {
             })
             form.reset()
         })
-
     };
 
+    useEffect(() => {
+        console.log('a')
+        resetStorage()
+    }, [resetStorage])
 
     return (
         <Box
