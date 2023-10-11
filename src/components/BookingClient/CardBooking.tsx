@@ -25,75 +25,84 @@ export default function CardBooking() {
 
     return (
         <>
-            {booking.map(({ data, reference }) => (
-                <Box my={5} key={data.id}>
-                    <Box mb={5}>
-                        <Text fontSize={{ base: 'xl', sm: '2xl' }} fontWeight='bold' >{reference.hotels.city}</Text>
-                        <Text fontSize='sm'  >{timestampToString(data.startTravel)} - {timestampToString(data.finishTravel)}</Text>
-                    </Box>
 
-                    <Card
-                        direction={{ base: 'column', sm: 'row' }}
-                        overflow='hidden'
-                        variant='outline'
-                        alignItems='center'
-                        p={'1.5rem'}
-                        boxShadow={'0 2px 8px 0 rgba(26,26,26,0.16)'}
-                        cursor={'pointer'}
-                        className='hoverBox'
-                        justifyItems={'center'}
+            {booking.length === 0 ?
+                <>
+                    <Text fontSize={'md'} fontWeight={'medium'} textAlign={'center'} mt={8}>No tienes viajes registrados en este momento. ¡Es el momento perfecto para comenzar a planificar tu próxima aventura!</Text>
+                </> :
+                <>
+                    {booking.map(({ data, reference }) => (
+                        <Box my={5} key={data.id}>
+                            <Box mb={5}>
+                                <Text fontSize={{ base: 'xl', sm: '2xl' }} fontWeight='bold' >{reference.hotels.city}</Text>
+                                <Text fontSize='sm'  >{timestampToString(data.startTravel)} - {timestampToString(data.finishTravel)}</Text>
+                            </Box>
 
-                    >
-                        <Flex direction={{ base: 'column', sm: 'row' }} alignItems='center' flex={'1 1 auto'} onClick={() => handlerClick(data.id)} w={'100%'}>
+                            <Card
+                                direction={{ base: 'column', sm: 'row' }}
+                                overflow='hidden'
+                                variant='outline'
+                                alignItems='center'
+                                p={'1.5rem'}
+                                boxShadow={'0 2px 8px 0 rgba(26,26,26,0.16)'}
+                                cursor={'pointer'}
+                                className='hoverBox'
+                                justifyItems={'center'}
+
+                            >
+                                <Flex direction={{ base: 'column', sm: 'row' }} alignItems='center' flex={'1 1 auto'} onClick={() => handlerClick(data.id)} w={'100%'}>
 
 
-                            <Stack direction='row' spacing={4}>
-                                <Image
-                                    objectFit='cover'
-                                    maxW={{ base: '80px' }}
-                                    maxH={{ base: '80px' }}
-                                    borderRadius={'0.25rem'}
-                                    src={HotelImages[reference.hotels.idImage]}
-                                    alt='Caffe Latte'
-                                />
-                            </Stack>
+                                    <Stack direction='row' spacing={4}>
+                                        <Image
+                                            objectFit='cover'
+                                            maxW={{ base: '80px' }}
+                                            maxH={{ base: '80px' }}
+                                            borderRadius={'0.25rem'}
+                                            src={HotelImages[reference.hotels.idImage]}
+                                            alt='Caffe Latte'
+                                        />
+                                    </Stack>
 
-                            <Stack direction={'row'} flex={{ sm: '1 1 auto' }} my={{ base: 4, sm: 0 }} w={'100%'}>
-                                <Stack direction='row' flex={'1 1 auto'}>
-                                    <CardBody p={0} ml={{ sm: '1.5rem' }}>
-                                        <Heading size={'1rem'}>{reference.hotels.name}</Heading>
-                                        <Text fontSize={'sm'} fontWeight={'normal'} lineHeight={'3'}>
-                                            {reference.rooms.name}
-                                        </Text>
-                                        <Text mt={'2'} fontSize={'sm'} fontWeight={'normal'} lineHeight={'3'}>
-                                            {timestampToString(data.startTravel)} - {timestampToString(data.finishTravel)}, {reference.hotels.city}
-                                        </Text>
-                                        <Text mt={'2'} fontSize={'sm'} fontWeight={'normal'} lineHeight={'3'}>
-                                            <Badge borderRadius='full' colorScheme={data.state === 'Cancelada' ? 'red' : data.state === 'Completada' ? 'green' : 'purple'}>{data.state}</Badge>
-                                        </Text>
-                                    </CardBody>
-                                </Stack>
-                                <Stack direction='row' spacing={4} alignSelf={'start'}>
-                                    <Text mt={'2'} fontSize={'sm'} fontWeight={'bold'} lineHeight={'3'}>
-                                        {formatCurrency(data?.billing?.total)}
-                                    </Text>
-                                </Stack>
-                            </Stack>
-                        </Flex>
+                                    <Stack direction={'row'} flex={{ sm: '1 1 auto' }} my={{ base: 4, sm: 0 }} w={'100%'}>
+                                        <Stack direction='row' flex={'1 1 auto'}>
+                                            <CardBody p={0} ml={{ sm: '1.5rem' }}>
+                                                <Heading size={'1rem'}>{reference.hotels.name}</Heading>
+                                                <Text fontSize={'sm'} fontWeight={'normal'} lineHeight={'3'}>
+                                                    {reference.rooms.name}
+                                                </Text>
+                                                <Text mt={'2'} fontSize={'sm'} fontWeight={'normal'} lineHeight={'3'}>
+                                                    {timestampToString(data.startTravel)} - {timestampToString(data.finishTravel)}, {reference.hotels.city}
+                                                </Text>
+                                                <Text mt={'2'} fontSize={'sm'} fontWeight={'normal'} lineHeight={'3'}>
+                                                    <Badge borderRadius='full' colorScheme={data.state === 'Cancelada' ? 'red' : data.state === 'Completada' ? 'green' : 'purple'}>{data.state}</Badge>
+                                                </Text>
+                                            </CardBody>
+                                        </Stack>
+                                        <Stack direction='row' spacing={4} alignSelf={'start'}>
+                                            <Text mt={'2'} fontSize={'sm'} fontWeight={'bold'} lineHeight={'3'}>
+                                                {formatCurrency(data?.billing?.total)}
+                                            </Text>
+                                        </Stack>
+                                    </Stack>
+                                </Flex>
 
-                        {
-                            data.state === 'Reservada' ? <>
-                                <Stack direction='column' spacing={4} alignSelf={'start'} ml={4} display={{ base: 'contents', sm: 'flex' }} >
-                                    <ButtomComplited idBooking={data.id} />
-                                    <DeleteAlert idElement={data.id} type='booking' />
-                                </Stack>
-                            </> : null
-                        }
+                                {
+                                    data.state === 'Reservada' ? <>
+                                        <Stack direction='column' spacing={4} alignSelf={'start'} ml={4} display={{ base: 'contents', sm: 'flex' }} >
+                                            <ButtomComplited idBooking={data.id} />
+                                            <DeleteAlert idElement={data.id} type='booking' />
+                                        </Stack>
+                                    </> : null
+                                }
 
-                    </Card>
-                </ Box >
-            ))
+                            </Card>
+                        </ Box >
+                    ))
+                    }
+                </>
             }
+
         </>
 
     )
