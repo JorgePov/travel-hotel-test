@@ -66,80 +66,88 @@ export const CardsRoomsClientComponent = () => {
             </Flex>
           </Card>
         </ Box>
-        <Grid templateColumns='repeat(auto-fill,minmax(300px,1fr))' gap={6} >
-          {
-            rooms.map((room) => (
-              <GridItem w='100%' key={room.id} >
-                <Card maxW='sm'>
-                  <CardBody>
-                    <Flex justifyContent={'center'}>
-                      <Image
-                        src={RoomImages[room.roomType]}
-                        objectFit={'cover'}
-                        alt='Green double couch with wooden legs'
-                        borderRadius='lg'
 
-                        minH={'170px'}
-                        maxH={'170px'}
-                      />
-                    </Flex>
-                    <Stack mt='2' spacing='0'>
-                      <Heading size='md'>Habitacion {room.numberRoom} - {roomTypeInvert[room.roomType]} </Heading>
-                      <Text fontSize='xs' >{room.ubication}</Text>
-                    </Stack>
-                    <Flex>
-                      <Box flex={'1 1 auto'}>
-                        <Stack spacing='0' >
-                          <Text fontSize='sm' fontWeight={'semibold'}>
-                            descripcion:
-                          </Text>
-                          <Text fontSize='xs'>
-                            {room.description}
-                          </Text>
-                        </Stack>
-                      </Box>
-                      <Box justifyContent={'end'}>
-                        <Flex justifyContent={'space-between'}>
-                          <Text fontSize='xs' fontWeight={'semibold'} alignSelf={'end'} mr={1}>
-                            Precio:
-                          </Text>
-                          <Text fontSize='xs' alignSelf={'end'} fontWeight={'light'}>
-                            {formatCurrency(Number(room.price) * totalDays)}
-                          </Text>
+        {rooms.length === 0 ?
+          <>
+            <Text fontSize={'md'} fontWeight={'bold'} textAlign={'center'} mt={8}>Lamentablemente, no tenemos habitaciones disponibles en este momento.</Text>
+          </>
+          :
+          <Grid templateColumns='repeat(auto-fill,minmax(300px,1fr))' gap={6} >
+            {
+              rooms.map((room) => (
+                <GridItem w='100%' key={room.id} >
+                  <Card maxW='sm'>
+                    <CardBody>
+                      <Flex justifyContent={'center'}>
+                        <Image
+                          src={RoomImages[room.roomType]}
+                          objectFit={'cover'}
+                          alt='Green double couch with wooden legs'
+                          borderRadius='lg'
 
-                        </Flex>
-                        <Flex justifyContent={'space-between'}>
-                          <Text fontSize='xs' fontWeight={'semibold'} alignSelf={'end'} mr={1}>
-                            Impuesto ({(Number(room.tax) * 100)}%):
-                          </Text>
-                          <Text fontSize='xs' fontWeight={'light'}>
-                            {formatCurrency((Number(room.tax) * Number(room.price)) * totalDays)}
-                          </Text>
-                        </Flex>
-                        <Flex justifyContent={'space-between'}>
-                          <Text fontSize='xs' fontWeight={'semibold'} alignSelf={'end'} mr={1}>
-                            Precio total:
-                          </Text>
-                          <Text fontSize='xs' fontWeight={'light'}>
-                            {formatCurrency((Number(room.price) + (Number(room.tax) * Number(room.price))) * totalDays)}
-                          </Text>
-                        </Flex>
-                      </Box>
-                    </Flex>
-                  </CardBody>
-                  <Divider />
-                  <CardFooter justifyContent={'end'}>
-                    <ButtonGroup spacing='2' >
-                      <Button variant='solid' colorScheme='blue' onClick={() => { handleClick(room) }} >
-                        Reservar
-                      </Button>
-                    </ButtonGroup>
-                  </CardFooter>
-                </Card>
-              </GridItem >
-            ))
-          }
-        </Grid >
+                          minH={'170px'}
+                          maxH={'170px'}
+                        />
+                      </Flex>
+                      <Stack mt='2' spacing='0'>
+                        <Heading size='md'>Habitacion {room.numberRoom} - {roomTypeInvert[room.roomType]} </Heading>
+                        <Text fontSize='xs' >{room.ubication}</Text>
+                      </Stack>
+                      <Flex>
+                        <Box flex={'1 1 auto'}>
+                          <Stack spacing='0' >
+                            <Text fontSize='sm' fontWeight={'semibold'}>
+                              descripcion:
+                            </Text>
+                            <Text fontSize='xs'>
+                              {room.description}
+                            </Text>
+                          </Stack>
+                        </Box>
+                        <Box justifyContent={'end'}>
+                          <Flex justifyContent={'space-between'}>
+                            <Text fontSize='xs' fontWeight={'semibold'} alignSelf={'end'} mr={1}>
+                              Precio:
+                            </Text>
+                            <Text fontSize='xs' alignSelf={'end'} fontWeight={'light'}>
+                              {formatCurrency(Number(room.price) * totalDays)}
+                            </Text>
+
+                          </Flex>
+                          <Flex justifyContent={'space-between'}>
+                            <Text fontSize='xs' fontWeight={'semibold'} alignSelf={'end'} mr={1}>
+                              Impuesto ({(Number(room.tax) * 100)}%):
+                            </Text>
+                            <Text fontSize='xs' fontWeight={'light'}>
+                              {formatCurrency((Number(room.tax) * Number(room.price)) * totalDays)}
+                            </Text>
+                          </Flex>
+                          <Flex justifyContent={'space-between'}>
+                            <Text fontSize='xs' fontWeight={'semibold'} alignSelf={'end'} mr={1}>
+                              Precio total:
+                            </Text>
+                            <Text fontSize='xs' fontWeight={'light'}>
+                              {formatCurrency((Number(room.price) + (Number(room.tax) * Number(room.price))) * totalDays)}
+                            </Text>
+                          </Flex>
+                        </Box>
+                      </Flex>
+                    </CardBody>
+                    <Divider />
+                    <CardFooter justifyContent={'end'}>
+                      <ButtonGroup spacing='2' >
+                        <Button variant='solid' colorScheme='blue' onClick={() => { handleClick(room) }} >
+                          Reservar
+                        </Button>
+                      </ButtonGroup>
+                    </CardFooter>
+                  </Card>
+                </GridItem >
+              ))
+            }
+          </Grid >
+        }
+
       </Box>
     </>
 

@@ -22,6 +22,7 @@ export const getRoomsByHotel = async (
     });
     return rooms;
   }
+  return [];
 };
 
 export const getRoomsByFilter = async (
@@ -39,6 +40,7 @@ export const getRoomsByFilter = async (
     });
     return rooms;
   }
+  return [];
 };
 
 export const changedStateRoom = async (
