@@ -97,7 +97,7 @@ export const DetailsBooking = () => {
                                         <Avatar bg='red.500' />
                                         <Stack direction={'column'}>
                                             <Text fontSize='md' >Nombre: {name}</Text>
-                                            <Text fontSize='md' >Email: {email}</Text>
+                                            <Text fontSize='md' >Correo electrónico: {email}</Text>
                                             <Text fontSize='md' >Telefono: {phoneNumber}</Text>
                                         </Stack>
                                     </Stack>

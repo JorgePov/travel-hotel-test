@@ -209,7 +209,7 @@ export default function Register() {
                         <Button type="button" colorScheme="blue" size="lg"
                             fontSize="md"
                             mt={4} onClick={handleClick}>
-                            Ir a Iniciar Sesión
+                            Accede a tu cuenta
                         </Button>
                         {isLoading ? (
                             <Button

@@ -66,15 +66,15 @@ export default function ThridStep({ goToNext, goToPrevious }: contactProps) {
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Email</FormLabel>
+                                        <FormLabel>Correo electrónico</FormLabel>
                                         <Input
                                             name='email'
-                                            placeholder="Email"
+                                            placeholder="Correo electrónico"
                                             value={person.email}
                                             onChange={(e) => handleChange(e.target.value, index, 'email')}
                                         />
                                     </FormControl>
-                                    <FormControl id="documentType" isRequired>
+                                    <FormControl isRequired>
                                         <FormLabel>Tipo de Documento</FormLabel>
                                         <Select name='documentType' placeholder="Seleccionar tipo de documento" value={person.documentType}
                                             onChange={(e) => handleChange(e.target.value, index, 'documentType')}
@@ -85,12 +85,12 @@ export default function ThridStep({ goToNext, goToPrevious }: contactProps) {
                                             <option value="PA">Pasaporte</option>
                                         </Select>
                                     </FormControl>
-                                    <FormControl id="document" isRequired>
+                                    <FormControl isRequired>
                                         <FormLabel>Documento</FormLabel>
-                                        <Input name='document' placeholder="Documento" type="text" value={person.document}
+                                        <Input placeholder="Documento" type="text" value={person.document}
                                             onChange={(e) => handleChange(e.target.value, index, 'document')} />
                                     </FormControl>
-                                    <FormControl id="phoneNumber">
+                                    <FormControl>
                                         <FormLabel fontWeight={'medium'}>Telefono</FormLabel>
                                         <InputGroup>
                                             <InputLeftAddon children='+57' />

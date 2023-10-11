@@ -1,5 +1,6 @@
 {
   "navigationFallback": {
-    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+    "rewrite": "/index.html",
+    "write": "/index.html"
   }
 }
