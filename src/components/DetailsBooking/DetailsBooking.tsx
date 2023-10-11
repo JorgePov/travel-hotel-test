@@ -8,34 +8,37 @@ export const DetailsBooking = () => {
     const { data, reference } = bookingSelect;
     return (
         <Container maxW='container.xl' my={4} border={'1px'}>
-            <Flex>
-                <Stack direction='row' spacing={2} alignSelf={'center'}>
-                    <Image
-                        objectFit='cover'
-                        maxW={{ base: '80px' }}
-                        maxH={{ base: '80px' }}
-                        borderRadius={'0.25rem'}
-                        src={HotelImages[reference.hotels.idImage]}
-                        alt='Caffe Latte'
-                    />
+            <Flex direction={{ base: 'column', sm: 'row' }}>
+                <Stack direction='row' flex={'1 1 auto'}>
+                    <Stack direction='row' spacing={2} alignSelf={'center'}>
+                        <Image
+                            objectFit='cover'
+                            maxW={{ base: '80px' }}
+                            maxH={{ base: '80px' }}
+                            borderRadius={'0.25rem'}
+                            src={HotelImages[reference.hotels.idImage]}
+                            alt='Caffe Latte'
+                        />
+                    </Stack>
+                    <Stack w='80%' p={4} >
+                        <Text fontSize='xl' fontWeight='bold' >{reference.hotels.name}</Text>
+                        <Text fontSize='xs' ><strong>Dirección:</strong> {reference.hotels.address}</Text>
+                        <Text fontSize='xs' ><strong>Teléfono:</strong>  {reference.hotels.phoneNumber}</Text>
+                    </Stack>
                 </Stack>
-                <Stack w='80%' p={4} >
-                    <Text fontSize='xl' fontWeight='bold' >{reference.hotels.name}</Text>
-                    <Text fontSize='xs' ><strong>Dirección:</strong> {reference.hotels.address}</Text>
-                    <Text fontSize='xs' ><strong>Teléfono:</strong>  {reference.hotels.phoneNumber}</Text>
-
-                </Stack>
-                <Stack w='20%' textAlign={'center'}>
-                    <Text fontSize='xs' fontWeight='bold'  >Entrada</Text>
-                    <Text fontSize='xs'  >{timestampToString(data.startTravel)}</Text>
-                    <Text fontSize='xs' fontWeight='bold' >Check-in:</Text>
-                    <Text fontSize='xs'  >{reference.hotels.checkInTime}</Text>
-                </Stack>
-                <Stack w='20%' textAlign={'center'}>
-                    <Text fontSize='xs' fontWeight='bold'  >Salida</Text>
-                    <Text fontSize='xs'  >{timestampToString(data.finishTravel)}</Text>
-                    <Text fontSize='xs' fontWeight='bold' >Check-out:</Text>
-                    <Text fontSize='xs'  >{reference.hotels.checkOutTime}</Text>
+                <Stack direction={'row'} justifyContent={'space-evenly'}>
+                    <Stack textAlign={'center'}>
+                        <Text fontSize='xs' fontWeight='bold'  >Entrada</Text>
+                        <Text fontSize='xs'  >{timestampToString(data.startTravel)}</Text>
+                        <Text fontSize='xs' fontWeight='bold' >Check-in:</Text>
+                        <Text fontSize='xs'  >{reference.hotels.checkInTime}</Text>
+                    </Stack>
+                    <Stack textAlign={'center'}>
+                        <Text fontSize='xs' fontWeight='bold'  >Salida</Text>
+                        <Text fontSize='xs'  >{timestampToString(data.finishTravel)}</Text>
+                        <Text fontSize='xs' fontWeight='bold' >Check-out:</Text>
+                        <Text fontSize='xs'  >{reference.hotels.checkOutTime}</Text>
+                    </Stack>
                 </Stack>
             </Flex >
 
