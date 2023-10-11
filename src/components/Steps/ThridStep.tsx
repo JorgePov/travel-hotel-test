@@ -50,7 +50,7 @@ export default function ThridStep({ goToNext, goToPrevious }: contactProps) {
     return (
         <>
             <Flex justifyContent={'center'}>
-                <Card variant={'elevated'} my={4} w={'65%'} >
+                <Card variant={'elevated'} my={4} w={{ base: '100%', sm: '65%' }} >
                     <Box p={5}>
                         <Text fontSize={'4xl'} textAlign={'center'} fontWeight={'medium'} mb={3}> Informacion de Acompañantes</Text>
                         <Stack spacing={2}>

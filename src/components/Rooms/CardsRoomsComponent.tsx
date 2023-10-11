@@ -25,7 +25,7 @@ export const CardsRoomsComponent = () => {
         {
           rooms.map((room) => (
             <GridItem w='100%' key={room.id} >
-              <Card maxW='sm'>
+              <Card maxW={{ base: '100%', sm: 'sm' }}>
                 <CardBody>
                   <Flex justifyContent={'center'}>
                     <Image
