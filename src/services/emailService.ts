@@ -20,6 +20,30 @@ export const sendReservation = async ({
   otherEmail,
 }: infoEmail) => {
   try {
+    console.log(
+      process.env.REACT_APP_EMAIL_SERVICE,
+      process.env.REACT_APP_EMAIL_RED,
+      process.env.REACT_APP_API_EMAIL,
+      {
+        email_to: emailTo,
+        subject_text: "Confirmación de Cancelación de Reserva de Hotel",
+        other_email: otherEmail,
+
+        titulo: "Confirmación de Cancelación de Reserva de Hotel",
+        body_top:
+          "Te confirmamos que tu solicitud de cancelación de la reserva de hotel ha sido procesada con éxito.",
+        body_down:
+          "Si tienes alguna pregunta o necesitas asistencia adicional, no dudes en ponerte en contacto con nosotros. esperamos poder servirte en futuras ocasiones.",
+        footer: "¡Esperamos que tengas una viaje agradable!",
+
+        hotelName: hotelName,
+        startTravel: startTravel,
+        finishTravel: finishTravel,
+        numberRoom: numberRoom,
+        roomType: roomType,
+        totalPrice: totalPrice,
+      }
+    );
     const data = {
       service_id: process.env.REACT_APP_EMAIL_SERVICE,
       template_id: process.env.REACT_APP_EMAIL_INFO,
@@ -73,6 +97,30 @@ export const sendCancelation = async ({
   otherEmail,
 }: infoEmail) => {
   try {
+    console.log(
+      process.env.REACT_APP_EMAIL_SERVICE,
+      process.env.REACT_APP_EMAIL_RED,
+      process.env.REACT_APP_API_EMAIL,
+      {
+        email_to: emailTo,
+        subject_text: "Confirmación de Cancelación de Reserva de Hotel",
+        other_email: otherEmail,
+
+        titulo: "Confirmación de Cancelación de Reserva de Hotel",
+        body_top:
+          "Te confirmamos que tu solicitud de cancelación de la reserva de hotel ha sido procesada con éxito.",
+        body_down:
+          "Si tienes alguna pregunta o necesitas asistencia adicional, no dudes en ponerte en contacto con nosotros. esperamos poder servirte en futuras ocasiones.",
+        footer: "¡Esperamos que tengas una viaje agradable!",
+
+        hotelName: hotelName,
+        startTravel: startTravel,
+        finishTravel: finishTravel,
+        numberRoom: numberRoom,
+        roomType: roomType,
+        totalPrice: totalPrice,
+      }
+    );
     const data = {
       service_id: process.env.REACT_APP_EMAIL_SERVICE,
       template_id: process.env.REACT_APP_EMAIL_RED,

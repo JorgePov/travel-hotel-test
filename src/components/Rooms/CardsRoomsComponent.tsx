@@ -48,7 +48,7 @@ export const CardsRoomsComponent = () => {
                         <Text fontSize='sm' fontWeight={'semibold'}>
                           descripcion:
                         </Text>
-                        <Text fontSize='xs'>
+                        <Text fontSize='xs' >
                           {room.description}
                         </Text>
                       </Stack>
