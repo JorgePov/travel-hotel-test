@@ -97,7 +97,6 @@ export const sendCancelation = async ({
   otherEmail,
 }: infoEmail) => {
   try {
-    console.log(process.env.REACT_APP_API_KEY_FIREBASE);
     const data = {
       service_id: process.env.REACT_APP_EMAIL_SERVICE,
       template_id: process.env.REACT_APP_EMAIL_RED,

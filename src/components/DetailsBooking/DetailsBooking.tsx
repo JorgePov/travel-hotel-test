@@ -1,13 +1,25 @@
 import { useGlobalStorage } from '../../store/global';
 import { Avatar, Badge, Container, Divider, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { timestampToString, formatCurrency, HotelImages } from '../../utils/utils';
+import { useNavigate } from 'react-router-dom';
 
 export const DetailsBooking = () => {
     const bookingSelect = useGlobalStorage(state => state.bookingSelect)
     const isAdmin = useGlobalStorage(state => state.isAdmin)
     const { data, reference } = bookingSelect;
+    const navigate = useNavigate();
+
+    const handleBackBookings = () => {
+        if (isAdmin) {
+            navigate('/admin/reservations')
+        } else {
+            navigate('/dashboard/myreservations')
+        }
+    }
+
+
     return (
-        <Container maxW='container.xl' my={4} border={'1px'}>
+        <Container maxW='container.xl' my={4} border={'1px'} onClick={handleBackBookings} cursor={'pointer'}>
             <Flex direction={{ base: 'column', sm: 'row' }}>
                 <Stack direction='row' flex={'1 1 auto'}>
                     <Stack direction='row' spacing={2} alignSelf={'center'}>

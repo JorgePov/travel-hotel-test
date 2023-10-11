@@ -5,6 +5,7 @@ import { useGlobalStorage } from '../../store/global';
 
 export default function BookingClient() {
     const { fetchBooking, isLoading } = useGlobalStorage()
+
     useEffect(() => {
         fetchBooking()
     }, [fetchBooking])

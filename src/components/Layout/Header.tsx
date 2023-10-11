@@ -11,7 +11,7 @@ export default function Header() {
                 <nav >
                     <Flex justifyContent={'center'} alignItems={'center'} padding={'8px 0px 16px 0px'} >
                         <Center>
-                            <Heading color='fontColor.white' fontSize={'1.5rem'}>Booking</Heading>
+                            <Heading color='fontColor.white' fontSize={'1.5rem'}>Booking App</Heading>
                         </Center>
                         <Spacer />
                         <AvatarTemplate />
