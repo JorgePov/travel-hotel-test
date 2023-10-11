@@ -23,7 +23,7 @@ export default function BookingClient() {
                         />
                     </Flex> :
                     <Container maxW='container.xl' mt={4}>
-                        <Text fontSize='4xl' fontWeight='bold' >Reservas y viajes</Text>
+                        <Text fontSize={{ base: '2xl', sm: '4xl' }} fontWeight='bold' >Reservas y viajes</Text>
                         <CardBooking />
                     </Container >
             }
