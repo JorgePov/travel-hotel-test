@@ -7,6 +7,7 @@ import {
   updateDoc,
   where,
   and,
+  orderBy,
 } from "firebase/firestore";
 import { bookingCollection, hotelCollection, roomCollection } from "./db";
 import { Booking, BookingApi } from "../interfaces/Booking";
@@ -57,7 +58,11 @@ export const getBookingById = async (
 };
 
 export const getBookingByIdUser = async (idUser: string) => {
-  const q = query(bookingCollection, where("idUser", "==", idUser));
+  const q = query(
+    bookingCollection,
+    where("idUser", "==", idUser),
+    orderBy("startTravel", "asc")
+  );
   const querySnapshot = await getDocs(q);
   const dataFilter = [];
   for (const doc of querySnapshot.docs) {
@@ -108,10 +113,6 @@ export const changedStateBooking = async (
 
 export const createBooking = async (newBooking: Booking) => {
   try {
-    const isExist = await bookingExist(newBooking);
-    if (isExist) {
-      return " existe";
-    }
     const docRef = await addDoc(bookingCollection, {
       ...newBooking,
     });
@@ -123,21 +124,4 @@ export const createBooking = async (newBooking: Booking) => {
   } catch (e) {
     console.error("Error adding document: ", e);
   }
-};
-
-const bookingExist = async (booking: Booking) => {
-  const q = query(
-    bookingCollection,
-    and(
-      where("idHotel", "==", booking.idHotel),
-      where("idRoom", "==", booking.idRoom),
-      where("startTravel", ">=", booking.startTravel),
-      where("finishTravel", "<=", booking.finishTravel)
-    )
-  );
-  const data = await getDocs(q);
-  if (data.docs.length) {
-    return true;
-  }
-  return false;
 };

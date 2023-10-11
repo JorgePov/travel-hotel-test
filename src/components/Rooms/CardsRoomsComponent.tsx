@@ -4,7 +4,7 @@ import { IconEdit } from '../shared/icons/CustomIcons'
 import DeleteAlert from '../AlertDialog/DeleteAlert'
 import { useState } from 'react'
 import { Room } from '../../interfaces/Hotel'
-import { RoomImages, roomTypeInvert } from '../../utils/utils'
+import { RoomImages, formatCurrency, roomTypeInvert } from '../../utils/utils'
 import { EditRoomModal } from './EditRoomModal'
 import { useParams } from 'react-router'
 
@@ -61,7 +61,7 @@ export const CardsRoomsComponent = () => {
                           Precio:
                         </Text>
                         <Text fontSize='xs' alignSelf={'end'}>
-                          COP {(Number(room.price))}
+                          {formatCurrency(Number(room.price))}
                         </Text>
 
                       </Flex>
@@ -70,7 +70,7 @@ export const CardsRoomsComponent = () => {
                           Impuesto ({(Number(room.tax) * 100)}%):
                         </Text>
                         <Text fontSize='xs'>
-                          COP {(Number(room.tax) * Number(room.price))}
+                          {formatCurrency(Number((Number(room.tax) * Number(room.price))))}
                         </Text>
                       </Flex>
                       <Flex justifyContent={'space-between'}>
@@ -78,7 +78,7 @@ export const CardsRoomsComponent = () => {
                           Precio total:
                         </Text>
                         <Text fontSize='xs'>
-                          COP {(Number(room.price) + (Number(room.tax) * Number(room.price)))}
+                          {formatCurrency(Number((Number(room.price) + (Number(room.tax) * Number(room.price)))))}
                         </Text>
                       </Flex>
                     </Box>

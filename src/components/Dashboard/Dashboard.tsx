@@ -4,11 +4,14 @@ import { useGlobalStorage } from '../../store/global'
 import { useEffect } from 'react'
 
 export default function Dashboard() {
-    const { isLoading, fetchMunicipalities } = useGlobalStorage()
+    const { isLoading, fetchMunicipalities, cleanSearchedHotels } = useGlobalStorage()
 
     useEffect(() => {
         fetchMunicipalities()
-    }, [fetchMunicipalities])
+        return () => {
+            cleanSearchedHotels()
+        }
+    }, [cleanSearchedHotels, fetchMunicipalities])
 
     return (
         <>

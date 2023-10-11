@@ -19,7 +19,7 @@ type stepType = {
 
 
 export default function CreatedBooking() {
-    const { fetchBoockingById, setCreateDataBooking, numberTravels, isLoading } = useGlobalStorage()
+    const { fetchBoockingById, setCreateDataBooking, numberTravels, isLoading, createDataBooking } = useGlobalStorage()
     const { id } = useParams()
     const [steps, setSteps] = useState<stepType[]>([
         { title: 'Primero', description: 'Tu selección' },
@@ -35,6 +35,7 @@ export default function CreatedBooking() {
 
     useEffect(() => {
         console.log('ejecucion');
+        setCreateDataBooking({})
         if (numberTravels! <= 1 && steps.length > 3) {
             setSteps(steps.filter(step => step.title !== 'Tercero'))
         }
@@ -78,10 +79,21 @@ export default function CreatedBooking() {
                         </Stack>
 
                         <Box>
-                            {activeStep === 0 && <FirstStep goToNext={goToNext} goToPrevious={goToPrevious} />}
-                            {activeStep === 1 && <SecondStep goToNext={goToNext} goToPrevious={goToPrevious} />}
-                            {activeStep === 2 && <ThridStep goToNext={goToNext} goToPrevious={goToPrevious} />}
-                            {activeStep === 3 && <LastStep goToNext={goToNext} goToPrevious={goToPrevious} />}
+                            {
+                                steps.length > 3 ?
+                                    <>
+                                        {activeStep === 0 && <FirstStep goToNext={goToNext} goToPrevious={goToPrevious} />}
+                                        {activeStep === 1 && <SecondStep goToNext={goToNext} goToPrevious={goToPrevious} />}
+                                        {activeStep === 2 && <ThridStep goToNext={goToNext} goToPrevious={goToPrevious} />}
+                                        {activeStep === 3 && <LastStep goToNext={goToNext} goToPrevious={goToPrevious} />}
+                                    </> :
+                                    <>
+                                        {activeStep === 0 && <FirstStep goToNext={goToNext} goToPrevious={goToPrevious} />}
+                                        {activeStep === 1 && <SecondStep goToNext={goToNext} goToPrevious={goToPrevious} />}
+                                        {activeStep === 2 && <LastStep goToNext={goToNext} goToPrevious={goToPrevious} />}
+                                    </>
+                            }
+
                         </Box>
                     </Box>
             }

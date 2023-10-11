@@ -3,7 +3,7 @@ import "./BookingClient.css";
 import DeleteAlert from '../AlertDialog/DeleteAlert';
 import { useGlobalStorage } from '../../store/global';
 import { useNavigate } from 'react-router-dom';
-import { HotelImages, timestampToString } from '../../utils/utils';
+import { HotelImages, formatCurrency, timestampToString } from '../../utils/utils';
 import { changedStateBooking } from '../../services/bookingService';
 import { useState } from 'react';
 
@@ -14,6 +14,7 @@ export default function CardBooking() {
     const navegate = useNavigate();
 
     const handlerClick = async (id: string) => {
+        console.log(id)
         await fetchBookingById(id)
         if (isAdmin) {
             navegate(`/admin/reservations/${id}`)
@@ -73,7 +74,7 @@ export default function CardBooking() {
                             </Stack>
                             <Stack direction='row' spacing={4} alignSelf={'start'}>
                                 <Text mt={'2'} fontSize={'sm'} fontWeight={'bold'} lineHeight={'3'}>
-                                    COP {reference.rooms.price}
+                                    {formatCurrency(data?.billing?.total)}
                                 </Text>
                             </Stack>
                         </Flex>

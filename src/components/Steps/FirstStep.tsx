@@ -36,6 +36,10 @@ export default function FirstStep({ goToNext, goToPrevious }: contactProps) {
 
     }
 
+    const handleGoBack = () => {
+        navigate(`/dashboard/${hotelSelected?.id}`)
+    }
+
     return (
         <>
             <Flex justifyContent={'center'}>
@@ -100,7 +104,7 @@ export default function FirstStep({ goToNext, goToPrevious }: contactProps) {
                 </Card >
             </Flex >
             <Flex justifyContent={'space-around'}>
-                <Button colorScheme='red' onClick={() => navigate(`/dashboard/${hotelSelected?.id}`)}>
+                <Button colorScheme='red' onClick={handleGoBack}>
                     Habitaciónes
                 </Button>
                 <Button colorScheme='blue' onClick={handleGoToNext}>

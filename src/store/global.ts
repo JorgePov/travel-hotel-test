@@ -5,6 +5,7 @@ import { getHotelByFilter, getHotels } from "../services/hotelService";
 import { Hotel, Room } from "../interfaces/Hotel";
 import { User } from "../interfaces/User";
 import {
+  createBooking,
   getBookingById,
   getBookingByIdUser,
   getBookings,
@@ -30,7 +31,7 @@ interface State {
   fetchRooms: (idHotel: string) => Promise<void>;
   fetchRoomsClient: (idHotel: string) => Promise<void>;
   fetchMunicipalities: () => Promise<void>;
-  municipalities: any[];
+  municipalities: never[];
   fetchBooking: () => Promise<void>;
   fetchBookingAdmin: () => Promise<void>;
   fetchBookingById: (id: string) => Promise<void>;
@@ -46,6 +47,7 @@ interface State {
   setLoading: (state: boolean) => void;
   hotelSelected?: Hotel;
   setHotelSelected: (hotel: Hotel) => void;
+  cleanSearchedHotels: () => void;
   roomSelected?: Room;
   setRoomSelected: (room: Room) => void;
   fetchBoockingById: (idBooking: string) => Promise<void>;
@@ -57,6 +59,7 @@ interface State {
     finishDate: Timestamp;
   };
   setCreateDataBooking: (createDataBooking: Booking) => void;
+  fetchCreatedBooking: () => Promise<void>;
   createDataBooking: Booking;
 }
 
@@ -130,6 +133,7 @@ export const useGlobalStorage = create<State>()(
         setLoading: (status: boolean) => set({ isLoading: status }),
         setHotelSelected: (hotel: Hotel) => set({ hotelSelected: hotel }),
         setRoomSelected: (room: Room) => set({ roomSelected: room }),
+        cleanSearchedHotels: () => set({ searchedHotels: [] }),
         setUserInfo: (userInfo: User, isAuth: boolean) =>
           set({
             userInfo,
@@ -168,6 +172,16 @@ export const useGlobalStorage = create<State>()(
               isLoading: false,
             });
           }
+        },
+        fetchCreatedBooking: async () => {
+          const { createDataBooking } = get();
+          set({
+            isLoading: true,
+          });
+          await createBooking(createDataBooking);
+          set({
+            isLoading: false,
+          });
         },
         fetchRoomsClient: async (idHotel: string) => {
           const { listIdRooms } = get();
@@ -274,7 +288,7 @@ export const useGlobalStorage = create<State>()(
               searchedHotels: [...res.hotels],
               listIdRooms: [...res.listIdRooms],
               focusCity: res.focusCity,
-              numberTravels: res.numberTravels,
+              numberTravels: travels,
               travelDate: res.travelDate,
               totalDays: calculateDaysBetweenTimestamps(
                 res.travelDate.startDate,

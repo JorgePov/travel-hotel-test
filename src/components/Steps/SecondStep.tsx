@@ -6,8 +6,8 @@ import { contactProps } from '../CreatedBooking/CreatedBooking';
 
 const SecondStep = ({ goToNext, goToPrevious }: contactProps) => {
     const { setCreateDataBooking, createDataBooking } = useGlobalStorage()
-    const [name, setName] = useState<string>('')
-    const [phoneNumber, setPhoneNumber] = useState<string>('')
+    const [name, setName] = useState<string>(createDataBooking.emergencyContact?.name || '')
+    const [phoneNumber, setPhoneNumber] = useState<string>(createDataBooking.emergencyContact?.phoneNumber || '')
 
     const handleGoToNext = () => {
         setCreateDataBooking({
@@ -15,9 +15,7 @@ const SecondStep = ({ goToNext, goToPrevious }: contactProps) => {
                 name, phoneNumber
             }
         })
-        console.log(createDataBooking);
         goToNext()
-
     }
 
     return (

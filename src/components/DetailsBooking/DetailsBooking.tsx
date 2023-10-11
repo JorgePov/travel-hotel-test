@@ -1,6 +1,6 @@
 import { useGlobalStorage } from '../../store/global';
 import { Avatar, Container, Divider, Flex, Image, Stack, Text } from '@chakra-ui/react';
-import { timestampToString } from '../../utils/utils';
+import { timestampToString, formatCurrency, HotelImages } from '../../utils/utils';
 
 export const DetailsBooking = () => {
     const bookingSelect = useGlobalStorage(state => state.bookingSelect)
@@ -15,7 +15,7 @@ export const DetailsBooking = () => {
                         maxW={{ base: '80px' }}
                         maxH={{ base: '80px' }}
                         borderRadius={'0.25rem'}
-                        src='https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60'
+                        src={HotelImages[reference.hotels.idImage]}
                         alt='Caffe Latte'
                     />
                 </Stack>
@@ -47,7 +47,7 @@ export const DetailsBooking = () => {
 
                         <Text fontSize='md' >Precio</Text>
 
-                        <Text fontSize='xs' >COP {reference.rooms.price}</Text>
+                        <Text fontSize='xs' >{formatCurrency(data?.billing?.price)}</Text>
                     </Stack>
                     <Stack direction='row' justifyContent={'space-between'}>
                         <Stack direction='row' >
@@ -55,13 +55,13 @@ export const DetailsBooking = () => {
                             <Text fontSize='xs' alignSelf={'center'} >%{reference.rooms.tax * 100}</Text>
 
                         </Stack>
-                        <Text fontSize='xs' >COP {reference.rooms.price * reference.rooms.tax}</Text>
+                        <Text fontSize='xs' >{formatCurrency(data?.billing?.tax)}</Text>
                     </Stack>
                     <Stack direction='row' justifyContent={'space-between'}>
 
                         <Text fontSize='md' >Precio Total</Text>
 
-                        <Text fontSize='xs' >COP {reference.rooms.price + (reference.rooms.price * reference.rooms.tax)}</Text>
+                        <Text fontSize='xs' >{formatCurrency(data?.billing?.total)}</Text>
                     </Stack>
                 </Stack>
             </Flex>
@@ -74,7 +74,7 @@ export const DetailsBooking = () => {
                                     <Text fontSize='md' color={'green.500'}>Ganancia </Text>
                                     <Text fontSize='xs' alignSelf={'center'} color={'green.500'}>%{reference.hotels.comision * 100}</Text>
                                 </Stack>
-                                <Text fontSize='xs' color={'green.500'}>COP {reference.rooms.price * reference.hotels.comision}</Text>
+                                <Text fontSize='xs' color={'green.500'}>{formatCurrency(data?.billing?.price * reference.hotels.comision)}</Text>
                             </Stack>
                         </Stack>
                     </Flex>
